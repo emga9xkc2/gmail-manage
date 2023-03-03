@@ -16,14 +16,80 @@
 
             <input class="w3-input w3-border" id="numThread" type="number" placeholder="Thread" min="1"
                 style="width: 75%;">
-
-
         </div>
+        <br>
+        <br>
+        <br>
+
+
+        <div class="w3-bar">
+            <button class="w3-bar-item w3-button w3-green" style="width:100%" id="configotp">Config OTP</button>
+        </div>
+
+        <br>
+        <div class="w3-bar">
+            <button class="w3-bar-item w3-button w3-blue" style="width:100%" id="updateversion">Cập nhật phiên bản
+                mới</button>
+        </div>
+        <div class="w3-border" id="progresss" style="visibility: hidden;">
+            <div id="progress" class="w3-container w3-padding w3-blue" style="width: 0%; visibility: hidden;">
+                <div class="w3-center" id="progressValue" style="visibility: hidden;">0%</div>
+            </div>
+        </div>
+        <div id="hdsdStatus"></div>
     </div>
 </div>
 
 <script>
+    $('#configotp').bind('click', function () {
+        eel.openFile("verifyphone.txt")
+    })
+    eel.expose(update_progress);
+    function update_progress(percent) {
+        percent = percent.toString()
+        var progressValue = ""
+        if (percent.includes("_")) {
+            progressValue = " " + percent.split("_")[1]
+            percent = percent.split("_")[0]
+            if (progressValue.includes("/")) {
+                progressValue = "(" + progressValue + ")"
+            }
+        }
+        percent = parseInt(percent)
+        if (percent == 0) {
+            $("#progresss").css("visibility", "visible")
+            $("#progress").css("visibility", "visible")
+            $("#progressValue").css("visibility", "visible")
+            return
+        }
+        $("#progress").css("width", percent + "%")
+        if (percent > 0) {
+            $("#progressValue").html(percent + "%" + progressValue);
+        }
+        // $("#progress").val(percent)
+    }
 
+    $("#updateversion").bind("click", function () {
+        // alert("1234")
+        setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    <h3>Xin chờ...</h3>
+                </div>`)
+        update_progress(0)
+        eel.autoUpdate()(function (callback) {
+            var mess = callback.mess
+            if (mess == "success") {
+                setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    <h3>Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới</h3>
+                </div>`)
+            } else {
+                setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                    <h3>Cập nhật thất bại</h3>
+                </div>`)
+            }
+            console.log(callback)
+        }
+        )
+    });
     $("#optionProxy").bind('contextmenu', function (ev) {
         ev.stopPropagation();
         ev.preventDefault();
@@ -113,6 +179,7 @@
             $("#changepass").prop("checked", strToBool(hconfig.changepass));
             $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
             $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
+            $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
             $("#apikeyactive").val(hconfig.apikeyactive);
             console.log(hconfig)
         });

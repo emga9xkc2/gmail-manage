@@ -9,7 +9,7 @@ import winreg as reg
 # PYTHONPATH=...
 
 
-class hfile:
+class hfile2:
     def dirScript():
         file_path = sys.path[0]
         if not ":" in file_path:
@@ -20,7 +20,7 @@ class hfile:
         platform = sys.platform
         if platform.endswith("win32"):
             if not ":" in filename:
-                filename = hfile.dirScript() + "/" + filename
+                filename = hfile2.dirScript() + "/" + filename
         filename = filename.replace("\\", "/")
         while True:
             if "//" in filename:
@@ -34,23 +34,23 @@ class hfile:
         return filename
 
     def listDir(dir2):
-        dir2 = hfile.fixFileName(dir2)
+        dir2 = hfile2.fixFileName(dir2)
         return next(os.walk(dir2))[1]
 
     def copyDir(src, dst):
         try:
-            src = hfile.fixFileName(src)
-            dst = hfile.fixFileName(dst)
+            src = hfile2.fixFileName(src)
+            dst = hfile2.fixFileName(dst)
             copy_tree(src, dst)
         except Exception as e:
             pass
 
     def createDir(dir):
-        dir = hfile.fixFileName(dir)
+        dir = hfile2.fixFileName(dir)
         os.makedirs(dir, exist_ok=True)
 
     def checkExists(fileorfoler):
-        fileorfoler = hfile.fixFileName(fileorfoler)
+        fileorfoler = hfile2.fixFileName(fileorfoler)
         if fileorfoler == None:
             return False
         return os.path.exists(fileorfoler)
@@ -68,7 +68,7 @@ class hfile:
             return ""
 
     def deleteDir(dir):
-        dir = hfile.fixFileName(dir)
+        dir = hfile2.fixFileName(dir)
         shutil.rmtree(dir)
 
     def deleteFile(filename):
@@ -82,17 +82,18 @@ class hfile:
         if not filenamedes:
             filenamedes = pathzip
         print("Extracting: " + filenamedes)
-        pathzip = hfile.fixFileName(pathzip)
-        folder = hfile.fixFileName(folder)
+        pathzip = hfile2.fixFileName(pathzip)
+        folder = hfile2.fixFileName(folder)
         with zipfile.ZipFile(pathzip, "r") as zip_ref:
-            folderextract = hfile.fixFileName(folder)
+            folderextract = hfile2.fixFileName(folder)
             zip_ref.extractall(folderextract)
-        hfile.deleteFile(pathzip)
+        hfile2.deleteFile(pathzip)
         print("Extract Success")
 
-hfile.createDir("/data/")
+hfile2.createDir("/data/")
 
 from tqdm import tqdm
+
 
 
 def startThread(funcname, list_args=None):
@@ -160,13 +161,13 @@ def createShortcut(title, target="", wDir="", arguments="", icon=""):
             title = "Main.lnk"
         if os.path.exists(title):
             return
-        path = hfile.fixFileName(title)
-        target = hfile.fixFileName(target)
-        wDir = hfile.fixFileName(wDir)
-        arguments = hfile.fixFileName(arguments)
-        icon = hfile.fixFileName(icon)
-        if not hfile.checkExists(icon):
-            icon = hfile.fixFileName("setup/images/icon.ico")
+        path = hfile2.fixFileName(title)
+        target = hfile2.fixFileName(target)
+        wDir = hfile2.fixFileName(wDir)
+        arguments = hfile2.fixFileName(arguments)
+        icon = hfile2.fixFileName(icon)
+        if not hfile2.checkExists(icon):
+            icon = hfile2.fixFileName("setup/images/icon.ico")
         from win32com.client import Dispatch
 
         shell = Dispatch("WScript.Shell")
@@ -202,10 +203,10 @@ orbitaPath = roamingPath + "\\nightowl\\orbita\\"
 tempPath = roamingPath + "\\nightowl\\temp\\"
 chromeProfile = roamingPath + "\\nightowl\\chrome\\"
 sshPath = roamingPath + "\\nightowl\\ssh\\"
-hfile.createDir(sshPath)
-hfile.createDir(scriptPath)
-hfile.createDir(orbitaPath)
-hfile.createDir(tempPath)
+hfile2.createDir(sshPath)
+hfile2.createDir(scriptPath)
+hfile2.createDir(orbitaPath)
+hfile2.createDir(tempPath)
 
 
 def md5(str2):
@@ -214,23 +215,23 @@ def md5(str2):
 
 def fixFileGithub(url, folderMain, folderExtract):
     if "/my-script/" in url:
-        if hfile.checkExists(folderMain):
-            hfile.copyDir(folderMain, folderExtract)
-            hfile.deleteDir(folderMain)
+        if hfile2.checkExists(folderMain):
+            hfile2.copyDir(folderMain, folderExtract)
+            hfile2.deleteDir(folderMain)
 
 
 def downloadExtract(url, folderExtract, fileNameCheckDownloadDone=None):
     if fileNameCheckDownloadDone:
         if folderExtract in fileNameCheckDownloadDone:
             fileNameCheckDownloadDone = fileNameCheckDownloadDone.replace(folderExtract, "")
-        if hfile.checkExists(folderExtract + "//" + fileNameCheckDownloadDone):
+        if hfile2.checkExists(folderExtract + "//" + fileNameCheckDownloadDone):
             return
     tempFile = tempPath + md5(url) + ".zip"
     if url.startswith("https://drive.google.com"):
         downloadDrive(url, tempFile, fileNameCheckDownloadDone)
     else:
         download(url, tempFile)
-    hfile.extractZip(tempFile, folderExtract, fileNameCheckDownloadDone)
+    hfile2.extractZip(tempFile, folderExtract, fileNameCheckDownloadDone)
     fixFileGithub(url, folderExtract + "/my-script-main/", folderExtract)
     if fileNameCheckDownloadDone:
         return downloadExtract(url, folderExtract, fileNameCheckDownloadDone)
@@ -266,13 +267,20 @@ if not os.path.exists(scriptPathAppend):
 
 def setupPythonPath(title):
     filename = "main.py"
-    filename = hfile.fixFileName(filename)
-    if not hfile.checkExists(filename):
+    filename = hfile2.fixFileName(filename)
+    if not hfile2.checkExists(filename):
         filename = "main.pyc"
-        filename = hfile.fixFileName(filename)
+        filename = hfile2.fixFileName(filename)
     createShortcut(title.split("_")[0].strip().upper() + ".lnk", r"C:\Windows\py.exe", "", '"' + filename + '"', "web/static/favicon.ico")
 
-
+import socket
+def free_port() -> int:
+    free_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    free_socket.bind(("127.0.0.1", 0))
+    free_socket.listen(1)
+    port: int = free_socket.getsockname()[1]
+    free_socket.close()
+    return port
 
 printer = False
 lasttime = time.time()
@@ -290,19 +298,19 @@ def waitDownload(path):
 
 
 while True:
-    if not hfile.checkExists(scriptPath_check):
+    if not hfile2.checkExists(scriptPath_check):
         waitDownload(scriptPath_check)
         time.sleep(1)
         continue
-    elif not hfile.checkExists(orbita_browser_108_check):
+    elif not hfile2.checkExists(orbita_browser_108_check):
         waitDownload(orbita_browser_108_check)
         time.sleep(1)
         continue
-    elif not hfile.checkExists(orbita_font_check):
+    elif not hfile2.checkExists(orbita_font_check):
         waitDownload(orbita_font_check)
         time.sleep(1)
         continue
-    elif not hfile.checkExists(orbita_profiles_check):
+    elif not hfile2.checkExists(orbita_profiles_check):
         waitDownload(orbita_profiles_check)
         time.sleep(1)
         continue

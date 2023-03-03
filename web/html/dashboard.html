@@ -154,7 +154,7 @@
                             msgBox("Hãy chọn những mail cần chạy trước");
                             return;
                         }
-                        eel.runAccounts(selected)();
+                        eel.runAccountsThread(selected)();
                     });
                     $("#deleteall-item").bind("click", function () {
                         if (selected.length == 0) {
