@@ -4,5 +4,5 @@
 @rmdir /s /q "%appdata%\nightowl\myscript"
 @rmdir /s /q "%temp%\gen_py"
 powershell.exe -executionpolicy ByPass -File python.ps1
-@py ../main.py
+@py ../main.pyc
 @timeout /t 100
