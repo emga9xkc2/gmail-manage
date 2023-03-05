@@ -17,7 +17,7 @@ timestring
 pyautogui
 eel
 
-pytesseract
+#pytesseract
 Pillow
 
 wmi
