@@ -3,7 +3,7 @@ greenlet==1.1.3
 gevent==21.12.0
 pycryptodome
 tqdm
-playwright
+playwright==1.31.1
 #
 # gevent
 requests
