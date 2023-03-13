@@ -1,4 +1,7 @@
 <div id="home" class="w3-container tabs">
+
+    <div class="w3-right"><input type="checkbox" id="checkpause"><label for="checkpause">
+            Tạm dừng</label></div>
     <br>
     <!-- <button onclick="updateMails()" class="w3-button w3-teal w3-right">Cập nhật danh sách mail</button> -->
     <table class="w3-table-all" id="tableMails">
@@ -25,7 +28,9 @@
 
 </div>
 <script>
-
+    $("#checkpause").bind("click", function () {
+        eel.setPause(this.checked)()
+    });
     function pagination(c, m) {
         var current = c,
             last = m,
@@ -304,7 +309,7 @@
             var success = callback.success;
             var data = callback.data;
             // console.log(msg);
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Status</th></tr></thead>`;
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Country</th><th>Status</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -315,6 +320,7 @@
                     <td><input type="checkbox" name="mails" value="${element.id}"></input></td>
                     <td>${i}</td>
                     <td><input type="text"  value="${element.email} | ${element.password} | ${element.emailrecovery} | ${element.phonerecovery}"></td>
+                    <td><input type="text"  value="${element.country != null ? element.country : ''}"></td>
                     <td><input type="text"  value="${element.status}"></td>
                 </tr>`;
                 // console.log(element);

@@ -4,7 +4,7 @@
     <br>
     <div class="w3-row">
         <div class="w3-third">
-            <select class="w3-select" id="optionProxy" style="width: 75%;">
+            <select class="w3-select" name="textsetting" id="optionproxy" style="width: 75%;">
                 <option value="noproxy">NO PROXY</option>
                 <option value="hmanew">HMA NEW</option>
                 <option value="tmproxy">TMPROXY</option>
@@ -14,8 +14,8 @@
         </div>
         <div class="w3-third">
 
-            <input class="w3-input w3-border" id="numThread" type="number" placeholder="Thread" min="1"
-                style="width: 75%;">
+            <input class="w3-input w3-border" name="textsetting" id="numthread" type="number" placeholder="Thread"
+                min="1" style="width: 75%;">
         </div>
         <br>
         <br>
@@ -95,7 +95,7 @@
         }
         )
     });
-    $("#optionProxy").bind('contextmenu', function (ev) {
+    $("#optionproxy").bind('contextmenu', function (ev) {
         ev.stopPropagation();
         ev.preventDefault();
 
@@ -103,7 +103,7 @@
         menuItems.forEach(function (item) {
             item.remove()
         });
-        var optionProxySelect = $('#optionProxy').find(":selected");
+        var optionProxySelect = $('#optionproxy').find(":selected");
         var text_optionProxySelect = optionProxySelect.text();
         var value_optionProxySelect = optionProxySelect.val();
         var menu = document.createElement("div");
@@ -140,12 +140,14 @@
         })
         return false;
     });
-    $('#optionProxy').on('change', function () {
-        eel.updateSetting(this.id, this.value)()
+    $('*[name="textsetting"]').on('change', function () {
+        eel.updateSetting("text_" + this.id, this.value)()
     });
-    $('#numThread').on('change', function () {
-        eel.updateSetting(this.id, this.value)()
-    });
+    // $('#numThread').on('change', function () {
+    //     eel.updateSetting(this.id, this.value)()
+    // });
+
+
 
     eel.loadSetting()(function (callback) {
         data = callback.data;
@@ -174,18 +176,31 @@
         }
         setHtmlCssSelector("#load-chucnangjs", html);
         $("*[name='checksetting']").bind('click', function (ev) {
-            eel.updateSetting(this.id, this.checked)()
+            eel.updateSetting("check" + "_" + this.id, this.checked)()
         });
         eel.getSetting()(function (callback) {
             var hconfig = callback.hconfig
-            console.log(hconfig)
-            $("#numThread").val(hconfig.numthread);
-            $("#optionProxy").val(hconfig.optionproxy);
-            $("#changepass").prop("checked", strToBool(hconfig.changepass));
-            $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
-            $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
-            $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
-            $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
+            for (let key in hconfig) {
+                var value = hconfig[key]
+                if (key.startsWith("check_")) {
+                    var id = key.split("_")[1]
+                    $("#" + id).prop("checked", strToBool(value));
+                }
+                if (key.startsWith("text_")) {
+                    var id = key.split("_")[1]
+                    $("#" + id).val(value);
+                    console.log(id);
+                }
+                console.log(key + ": " + hconfig[key]);
+            }
+            // console.log(hconfig)
+            // $("#numThread").val(hconfig.numthread);
+            // $("#optionProxy").val(hconfig.optionproxy);
+            // $("#changepass").prop("checked", strToBool(hconfig.changepass));
+            // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
+            // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
+            // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
+            // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
             $("#apikeyactive").val(hconfig.apikeyactive);
 
             console.log(hconfig)
