@@ -309,7 +309,7 @@
             var success = callback.success;
             var data = callback.data;
             // console.log(msg);
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Country</th><th>Status</th></tr></thead>`;
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Date Create</th><th>Youtube</th><th>Country</th><th>Status</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -320,6 +320,8 @@
                     <td><input type="checkbox" name="mails" value="${element.id}"></input></td>
                     <td>${i}</td>
                     <td><input type="text"  value="${element.email} | ${element.password} | ${element.emailrecovery} | ${element.phonerecovery}"></td>
+                    <td><input type="text"  value="${element.datecreate != null ? element.datecreate : ''}"></td>
+                    <td><input type="text"  value="${element.youtube != null ? element.youtube : ''}"></td>
                     <td><input type="text"  value="${element.country != null ? element.country : ''}"></td>
                     <td><input type="text"  value="${element.status}"></td>
                 </tr>`;
