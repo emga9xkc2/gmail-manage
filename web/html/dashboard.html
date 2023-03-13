@@ -129,15 +129,15 @@
                     menu.style.boxShadow = "0px 0px 10px gray";
                     menu.style.padding = "10px";
                     menu.innerHTML = `
-                <div class="menu-item" id="select-item">Chọn</div>
+                <div class="menu-item" id="select-item">Select</div>
                 <div class="menu-item" id="deselect-item">Bỏ chọn</div>
     <div class="menu-item" id="copy-item">Sao chép</div>
-    <div class="menu-item" id="selectall-item-no-running">Chọn tất cả mail chưa chạy</div>
-    <div class="menu-item" id="selectall-item-running">Chọn tất cả mail đã chạy</div>
-    <div class="menu-item" id="deselectall-item">Bỏ chọn tất cả</div>
-    <div class="menu-item" id="deleteall-item">Xóa các mail đã chọn</div>
-    <div class="menu-item" id="exportall-item">Xuất các mail đã chọn</div>
-    <div class="menu-item" id="runall-item">Chạy các mail đã chọn</div>
+    <div class="menu-item" id="selectall-item-no-running">Select email that has not been run</div>
+    <div class="menu-item" id="selectall-item-running">Select email has been running</div>
+    <div class="menu-item" id="deselectall-item">Deselect all</div>
+    <div class="menu-item" id="deleteall-item">Delete selected mails</div>
+    <div class="menu-item" id="exportall-item">Export selected mails</div>
+    <div class="menu-item" id="runall-item">Run selected mails</div>
     `;
 
                     document.body.appendChild(menu);
@@ -156,40 +156,40 @@
                     });
                     $("#runall-item").bind("click", function () {
                         if (selected.length == 0) {
-                            msgBox("Hãy chọn những mail cần chạy trước");
+                            msgBox("Please select the mail to run first");
                             return;
                         }
                         eel.runAccountsThread(selected)();
                     });
                     $("#deleteall-item").bind("click", function () {
                         if (selected.length == 0) {
-                            msgBox("Hãy chọn những mail cần xóa trước");
+                            msgBox("Please select the emails to delete first");
                             return;
                         }
                         eel.deleteAccounts(selected)(function (callback) {
                             var msg = callback.msg
                             console.log(msg)
                             if (msg == "Success") {
-                                alert("Xóa mail thành công")
+                                alert("Delete email successfully")
                                 updateMails(0)
                                 selected = []
                             } else {
-                                alert("Xóa mail thất bại")
+                                alert("Delete email failed")
                             }
                         });
                     });
                     $("#exportall-item").bind("click", function () {
                         if (selected.length == 0) {
-                            msgBox("Hãy chọn những mail cần export trước");
+                            msgBox("Please select the mail to export first");
                             return;
                         }
                         eel.exportAccounts(selected)(function (callback) {
                             var msg = callback.msg
                             console.log(msg)
                             if (msg == "Success") {
-                                alert("Export mail thành công")
+                                alert("Export email successfully")
                             } else {
-                                alert("Export mail thất bại")
+                                alert("Export mail failed")
                             }
                         });
                     });
