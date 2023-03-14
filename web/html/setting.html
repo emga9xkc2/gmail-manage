@@ -23,9 +23,11 @@
 
 
         <div class="w3-bar">
-            <button class="w3-bar-item w3-button w3-green" style="width:50%" id="configotp">Config OTP</button>
-            <button class="w3-bar-item w3-button w3-yellow" style="width:50%" id="restoreDisableContent">Restore Disable
+            <button class="w3-bar-item w3-button w3-green" style="width:33%" id="configotp">Config OTP</button>
+            <button class="w3-bar-item w3-button w3-yellow" style="width:33%" id="restoreDisableContent">Restore Disable
                 Content</button>
+            <button class="w3-bar-item w3-button w3-blue" style="width:33%" id="restoreDisableContact">Restore Disable
+                Contact</button>
         </div>
 
         <br>
@@ -48,6 +50,9 @@
     })
     $('#restoreDisableContent').bind('click', function () {
         eel.openFile("restoredisablecontent.txt")
+    })
+    $('#restoreDisableContact').bind('click', function () {
+        eel.openFile("restoredisablecontact.txt")
     })
     eel.expose(update_progress);
     function update_progress(percent) {
