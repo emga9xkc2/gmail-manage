@@ -143,5 +143,6 @@ function msgBox(text) {
 }
 
 eel.getTitle()(function (callback) {
+    // console.log(callback);
     document.title = callback;
 });
