@@ -320,10 +320,13 @@
                     <td><input type="checkbox" name="mails" value="${element.id}"></input></td>
                     <td>${i}</td>
                     <td><input type="text"  value="${element.email} | ${element.password} | ${element.emailrecovery} | ${element.phonerecovery}"></td>
-                    <td><input type="text"  value="${element.datecreate != null ? element.datecreate : ''}"></td>
-                    <td><input type="text"  value="${element.youtube != null ? element.youtube : ''}"></td>
-                    <td><input type="text"  value="${element.country != null ? element.country : ''}"></td>
-                    <td><input type="text"  value="${element.status}"></td>
+
+
+                    <td>${element.datecreate != null && element.datecreate != '' ? `<input type="text" value="${element.datecreate}">` : ''}</td>
+                    <td>${element.youtube != null && element.youtube != '' ? `<input type="text" value="${element.youtube}">` : ''}</td>
+                    <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
+                    <td>${element.status != null && element.status != '' ? `<input type="text" value="${element.status}">` : ''}</td>
+
                 </tr>`;
                 // console.log(element);
             }

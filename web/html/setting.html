@@ -4,13 +4,12 @@
     <br>
     <div class="w3-row">
         <div class="w3-third">
-            <select class="w3-select" name="textsetting" id="optionproxy" style="width: 75%;"
-                aria-placeholder="NO PROXY">
-                <option value="noproxy">NO PROXY</option>
+            <select class="w3-select" name="textsetting" id="optionproxy" style="width: 75%;" placeholder="NO PROXY">
+                <option value="noproxy" selected>NO PROXY</option>
                 <option value="hmanew">HMA NEW</option>
                 <option value="tmproxy">TMPROXY</option>
                 <option value="listproxy">LIST PROXY</option>
-                <option value="vypr">VYPR</option>
+                <!-- <option value="vypr">VYPR</option> -->
             </select>
         </div>
         <div class="w3-third">
@@ -189,6 +188,7 @@
                 }
                 if (key.startsWith("text_")) {
                     var id = key.split("_")[1]
+
                     $("#" + id).val(value);
                     console.log(id);
                 }
