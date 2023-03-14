@@ -132,8 +132,9 @@
                 <div class="menu-item" id="select-item">Select</div>
                 <div class="menu-item" id="deselect-item">Deselect</div>
     <div class="menu-item" id="copy-item">Sao chép</div>
-    <div class="menu-item" id="selectall-item-no-running">Select email that has not been run</div>
-    <div class="menu-item" id="selectall-item-running">Select email has been running</div>
+    <div class="menu-item" id="selectall-item">Select all mails</div>
+    <div class="menu-item" id="selectall-item-no-running">Select mails that has not been run</div>
+    <div class="menu-item" id="selectall-item-running">Select mails has been running</div>
     <div class="menu-item" id="deselectall-item">Deselect all</div>
     <div class="menu-item" id="deleteall-item">Delete selected mails</div>
     <div class="menu-item" id="exportall-item">Export selected mails</div>
@@ -231,6 +232,21 @@
                     });
                     $("#selectall-item-no-running").bind("click", function () {
                         eel.selectMails("")(function (callback) {
+                            var data = callback.data
+                            selected = selected.concat(data);
+                            selected = selected.map(number => number.toString());
+                            // console.log(selected)
+                            checkboxEvent()
+                        })
+                        // checkboxes = document.getElementsByName("mails");
+                        // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        //     checkboxes[i].checked = true;
+                        //     value = checkboxes[i].value;
+                        //     selectedPush(value);
+                        // }
+                    });
+                    $("#selectall-item").bind("click", function () {
+                        eel.selectMails("all")(function (callback) {
                             var data = callback.data
                             selected = selected.concat(data);
                             selected = selected.map(number => number.toString());
