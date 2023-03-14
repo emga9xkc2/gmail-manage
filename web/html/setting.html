@@ -23,11 +23,13 @@
 
 
         <div class="w3-bar">
-            <button class="w3-bar-item w3-button w3-green" style="width:33%" id="configotp">Config OTP</button>
-            <button class="w3-bar-item w3-button w3-yellow" style="width:33%" id="restoreDisableContent">Restore Disable
-                Content</button>
-            <button class="w3-bar-item w3-button w3-blue" style="width:33%" id="restoreDisableContact">Restore Disable
-                Contact</button>
+            <button class="w3-bar-item w3-button w3-green" style="width:25%" id="configotp">Config otp</button>
+            <button class="w3-bar-item w3-button w3-red" style="width:25%" id="emailrecoverydomain">Email recovery
+                domain</button>
+            <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="restoreDisableContent">Restore disable
+                content</button>
+            <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="restoreDisableContact">Restore disable
+                contact</button>
         </div>
 
         <br>
@@ -47,6 +49,9 @@
 <script>
     $('#configotp').bind('click', function () {
         eel.openFile("verifyphone.txt")
+    })
+    $('#emailrecoverydomain').bind('click', function () {
+        eel.openFile("emailrecoverydomain.txt")
     })
     $('#restoreDisableContent').bind('click', function () {
         eel.openFile("restoredisablecontent.txt")
