@@ -309,7 +309,7 @@
             var success = callback.success;
             var data = callback.data;
             // console.log(msg);
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Date Create</th><th>Youtube</th><th>Country</th><th>Status</th></tr></thead>`;
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Date Create</th><th>Youtube</th><th>Country</th><th>GVoice</th><th>Status</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -325,6 +325,7 @@
                     <td>${element.datecreate != null && element.datecreate != '' ? `<input type="text" value="${element.datecreate}">` : ''}</td>
                     <td>${element.youtube != null && element.youtube != '' ? `<input type="text" value="${element.youtube}">` : ''}</td>
                     <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
+                    <td>${element.googlevoice != null && element.googlevoice != '' ? `<input type="text" value="${element.googlevoice}">` : ''}</td>
                     <td>${element.status != null && element.status != '' ? `<input type="text" value="${element.status}">` : ''}</td>
 
                 </tr>`;

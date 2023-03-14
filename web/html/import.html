@@ -2,7 +2,7 @@
     <br>
     <div class="w3-row">
         <textarea id="iaccount" rows="15" style="width: 100%; resize: none;border: 1px solid #ccc;"
-            placeholder="Nhập đường dẫn file hoặc danh sách account"></textarea>
+            placeholder="Enter the list of accounts"></textarea>
 
     </div>
 
@@ -21,18 +21,18 @@
     function oimport() {
         var iaccount = getValue("#iaccount");
         eel.oimport(iaccount)(function (callback) {
-            var msg = callback.data;
+            // var msg = callback.data;
+            // console.log(msg)
 
-
-            setHtmlCssSelector(
-                "#saveSettingStatus",
-                `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
-                    <h3>Upload mail thành công</h3>
-                    <p>${msg}</p>
-                </div>`
-            );
+            // setHtmlCssSelector(
+            //     "#saveSettingStatus",
+            //     `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+            //         <h3>Upload mail success</h3>
+            //         <p>${msg}</p>
+            //     </div>`
+            // );
             updateMails(1)
-            console.log(callback);
+            // console.log(callback);
         });
     }
 </script>
