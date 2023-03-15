@@ -4,8 +4,10 @@
             Pause</label></div>
     <br>
     <!-- <button onclick="updateMails()" class="w3-button w3-teal w3-right">Cập nhật danh sách mail</button> -->
-    <table class="w3-table-all" id="tableMails">
-    </table>
+    <div style="overflow-y: scroll; height: 650px;">
+        <table class="w3-table-all" id="tableMails">
+        </table>
+    </div>
     <!-- <div id="load_page"> -->
     <div id="app" class="container">
         <ul class="page">
@@ -315,7 +317,7 @@
     function updateMails(numberPage) {
         currentPage = numberPage;
 
-        const limit = 15;
+        const limit = 1500;
         const skip = (numberPage - 1) * limit;
         eel.get_mails(
             skip,
