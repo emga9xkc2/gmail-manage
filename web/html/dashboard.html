@@ -166,34 +166,35 @@
                     });
                     $("#deleteall-item").bind("click", function () {
                         if (selected.length == 0) {
-                            msgBox("Please select the emails to delete first");
+                            toastError("Please select the emails to delete first");
                             return;
                         }
                         eel.deleteAccounts(selected)(function (callback) {
-                            var msg = callback.msg
-                            console.log(msg)
-                            if (msg == "Success") {
-                                alert("Delete email successfully")
-                                updateMails(0)
-                                selected = []
-                            } else {
-                                alert("Delete email failed")
-                            }
+                            updateMails(0)
+                            // var msg = callback.msg
+                            // console.log(msg)
+                            // if (msg == "Success") {
+                            //     alert("Delete email successfully")
+                            //     updateMails(0)
+                            //     selected = []
+                            // } else {
+                            //     alert("Delete email failed")
+                            // }
                         });
                     });
                     $("#exportall-item").bind("click", function () {
                         if (selected.length == 0) {
-                            msgBox("Please select the mail to export first");
+                            toastError("Please select the mail to export first");
                             return;
                         }
                         eel.exportAccounts(selected)(function (callback) {
-                            var msg = callback.msg
-                            console.log(msg)
-                            if (msg == "Success") {
-                                alert("Export email successfully")
-                            } else {
-                                alert("Export mail failed")
-                            }
+                            // var msg = callback.msg
+                            // console.log(msg)
+                            // if (msg == "Success") {
+                            //     alert("Export email successfully")
+                            // } else {
+                            //     alert("Export mail failed")
+                            // }
                         });
                     });
                     // Thêm sự kiện cho menu xóa
@@ -327,7 +328,7 @@
             var success = callback.success;
             var data = callback.data;
             // console.log(msg);
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Date Create</th><th>Youtube</th><th>Country</th><th>GVoice</th><th>Status</th></tr></thead>`;
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select All</th><th>ID</th><th>Email | Password | Recovery</th><th>Date Create</th><th>Youtube</th><th>Country</th><th>GVoice</th><th>Status</th><th>Delete Phone</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -345,6 +346,7 @@
                     <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
                     <td>${element.googlevoice != null && element.googlevoice != '' ? `<input type="text" value="${element.googlevoice}">` : ''}</td>
                     <td>${element.status != null && element.status != '' ? `<input type="text" value="${element.status}">` : ''}</td>
+                    <td>${element.statusdeletephone != null && element.statusdeletephone != '' ? `<input type="text" value="${element.statusdeletephone}">` : ''}</td>
 
                 </tr>`;
                 // console.log(element);
