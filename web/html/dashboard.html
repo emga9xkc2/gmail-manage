@@ -159,7 +159,7 @@
                     });
                     $("#runall-item").bind("click", function () {
                         if (selected.length == 0) {
-                            msgBox("Please select the mail to run first");
+                            toastError("Please select the mail to run first");
                             return;
                         }
                         eel.runAccountsThread(selected)();
