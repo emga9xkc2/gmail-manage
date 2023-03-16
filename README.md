@@ -5,7 +5,7 @@
 
 <b>2. Hướng dẫn sử dụng</b>
 
--   Mở file GMAIL MANAGE. Đợi giao diện hiện lên (khoảng 1 vài giây)
+-   Mở file GMAIL MANAGE. Nếu không thấy file GMAIL MANAGE hãy mở file main. Đợi giao diện hiện lên (khoảng 1 vài giây)
 -   Thêm mail => Vào import nhập list mail định dạng user|pass|emailrecovery|phonerecovery rồi ấn import
 -   Dùng Proxy để change ip => Vào cài đặt chọn Proxy cần sử dụng. để thêm proxy thì bấm chuột phải vào Proxy vừa chọn rồi bấm Edit Proxy
 -   Dùng VPN để change ip => Vào cài đặt chọn VPN cần sử dụng. để thêm quốc gia VPN random thì bấm chuột phải vào VPN vừa chọn rồi bấm Edit VPN. Lưu ý: Cần phải đăng nhập sẵn VPN vào máy tính
