@@ -119,7 +119,12 @@
                     row = table.rows[rowIndex];
                     // console.log(row.innerHTML);
                     selectedData = row.innerHTML;
-
+                    statusElm = row.querySelector('input[name="status"]')
+                    statusValue = ""
+                    if (statusElm) {
+                        statusValue = statusElm.value
+                    }
+                    // console.log(statusValue)
                     // Tạo menu chuột phải
                     const menu = document.createElement("div");
                     menu.setAttribute("name", "menus");
@@ -137,6 +142,7 @@
     <div class="menu-item" id="selectall-item">Select all mails</div>
     <div class="menu-item" id="selectall-item-no-running">Select mails that has not been run</div>
     <div class="menu-item" id="selectall-item-running">Select mails has been running</div>
+    <div class="menu-item" id="selectall-item-status" value="${statusValue}">Select mails with status is '${statusValue}'</div>
     <div class="menu-item" id="deselectall-item">Deselect all</div>
     <div class="menu-item" id="deleteall-item">Delete selected mails</div>
     <div class="menu-item" id="exportall-item">Export selected mails</div>
@@ -144,6 +150,9 @@
     `;
 
                     document.body.appendChild(menu);
+                    if (statusValue == "") {
+                        $("#selectall-item-status").css("display", "none");
+                    }
                     $("#copy-item").css("display", "none");
                     const checkbox = row.querySelector("input[type='checkbox']");
                     const checked = checkbox.checked;
@@ -224,6 +233,23 @@
                             selected = selected.concat(data);
                             selected = selected.map(number => number.toString());
                             // console.log(selected)
+                            checkboxEvent()
+                        })
+                        // checkboxes = document.getElementsByName("mails");
+                        // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        //     checkboxes[i].checked = true;
+                        //     value = checkboxes[i].value;
+                        //     selectedPush(value);
+                        // }
+                    });
+                    $("#selectall-item-status").bind("click", function () {
+                        var value = $(this).attr("value");
+
+                        eel.selectMails(value)(function (callback) {
+                            var data = callback.data
+                            selected = selected.concat(data);
+                            selected = selected.map(number => number.toString());
+                            console.log(selected)
                             checkboxEvent()
                         })
                         // checkboxes = document.getElementsByName("mails");
@@ -345,7 +371,7 @@
                     <td>${element.youtube != null && element.youtube != '' ? `<input type="text" value="${element.youtube}">` : ''}</td>
                     <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
                     <td>${element.googlevoice != null && element.googlevoice != '' ? `<input type="text" value="${element.googlevoice}">` : ''}</td>
-                    <td>${element.status != null && element.status != '' ? `<input type="text" value="${element.status}">` : ''}</td>
+                    <td>${element.status != null && element.status != '' ? `<input type="text" name="status" value="${element.status}">` : ''}</td>
                     <td>${element.statusdeletephone != null && element.statusdeletephone != '' ? `<input type="text" value="${element.statusdeletephone}">` : ''}</td>
 
                 </tr>`;
