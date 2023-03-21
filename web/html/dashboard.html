@@ -174,10 +174,15 @@
                         eel.runAccountsThread(selected)();
                     });
                     $("#deleteall-item").bind("click", function () {
+                        if (confirm("Delete confirmation!") == false) {
+                            toastWarning("Cannel delete");
+                            return;
+                        }
                         if (selected.length == 0) {
                             toastError("Please select the emails to delete first");
                             return;
                         }
+
                         eel.deleteAccounts(selected)(function (callback) {
                             updateMails(0)
                             // var msg = callback.msg
