@@ -10,7 +10,7 @@ requests
 
 SQLAlchemy
 
-timestring
+#timestring
 
 
 # pymem
@@ -21,7 +21,7 @@ eel
 Pillow
 
 
-psutil
+#psutil
 pyautoit
 pynput
 # aes-everywhere
