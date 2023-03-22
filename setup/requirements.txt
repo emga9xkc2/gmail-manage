@@ -21,7 +21,7 @@ eel
 Pillow
 
 
-win32gui
+psutil
 pyautoit
 pynput
 # aes-everywhere
