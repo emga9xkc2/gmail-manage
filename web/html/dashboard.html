@@ -1,5 +1,6 @@
 <div id="home" class="w3-container tabs">
 
+    <!-- <p id="numsuccess" class="w3-half w3-left">Success</p> -->
     <div class="w3-right"><input type="checkbox" id="checkpause"><label for="checkpause">
             Pause</label></div>
     <br>
@@ -25,6 +26,12 @@
             <li class="page__btn" id="next_page"><span class="material-icons">chevron_right</span></li>
         </ul>
     </div>
+    <div class="w3-bar">
+        <div class="w3-bar-item w3-black" id="numsuccess" style="width:50%">...</div>
+        <div class="w3-bar-item w3-black" id="selected" style="width:50%">...</div>
+    </div>
+
+
     <!-- </div> -->
 
 
@@ -224,6 +231,8 @@
                         );
                         checkbox.checked = true;
                         selectedPush(checkbox.value);
+                        showSelected()
+
                     });
                     $("#deselect-item").bind("click", function () {
                         const checkbox = row.querySelector(
@@ -231,6 +240,7 @@
                         );
                         checkbox.checked = false;
                         selectedRemove(checkbox.value);
+                        showSelected()
                     });
                     $("#selectall-item-running").bind("click", function () {
                         eel.selectMails("1")(function (callback) {
@@ -327,7 +337,6 @@
     }
     function checkboxEvent() {
         const checkboxes = document.querySelectorAll("input[name='mails']");
-        // console.log(selected)
         checkboxes.forEach(function (checkbox) {
             if (selected.includes(checkbox.value)) {
                 checkbox.checked = true;
@@ -345,6 +354,7 @@
                 }
             });
         });
+        showSelected()
     }
     function updateMails(numberPage) {
         currentPage = numberPage;
@@ -402,7 +412,9 @@
             });
         });
     }
-
+    function showSelected() {
+        setHtmlCssSelector("#selected", "Selected: " + selected.length)
+    }
     function clickPage() {
         return new Promise((resolve, reject) => {
             $("#back_page").click(function () {
