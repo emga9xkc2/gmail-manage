@@ -20,7 +20,7 @@ eel
 #pytesseract
 Pillow
 
-wmi
+
 psutil
 pyautoit
 pynput
