@@ -20,8 +20,9 @@ eel
 #pytesseract
 Pillow
 
-
+wmi
 psutil
+
 pyautoit
 pynput
 # aes-everywhere
