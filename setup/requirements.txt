@@ -24,7 +24,7 @@ wmi
 psutil
 
 pyautoit
-#pynput
+pynput
 # aes-everywhere
 # ahk
 # ahk[binary]
