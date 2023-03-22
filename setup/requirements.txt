@@ -14,7 +14,7 @@ SQLAlchemy
 
 
 # pymem
-pyautogui
+#pyautogui
 eel
 
 #pytesseract
@@ -24,7 +24,7 @@ wmi
 psutil
 
 pyautoit
-pynput
+#pynput
 # aes-everywhere
 # ahk
 # ahk[binary]
