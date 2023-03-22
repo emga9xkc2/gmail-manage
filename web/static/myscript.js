@@ -54,7 +54,11 @@ function pythonToJS(x) {
     const txtArea = document.getElementById("nhatkyhoatdong");
     txtArea.value = x + "\r\n" + txtArea.value;
 }
+function setHtmlCssSelector(cssSelector, html) {
+    $(cssSelector).html(html);
+}
 eel.expose(pythonToJS);
+eel.expose(setHtmlCssSelector);
 eel.expose(toastError);
 eel.expose(toastSuccess);
 eel.expose(toastWarning);
@@ -88,9 +92,7 @@ function getCheckboxChecked(cssSelector) {
 function setCheckboxCssSelector(cssSelector, check) {
     $(cssSelector).prop("checked", check);
 }
-function setHtmlCssSelector(cssSelector, html) {
-    $(cssSelector).html(html);
-}
+
 function setValueCssSelector(cssSelector, html) {
     $(cssSelector).val(html);
 }
