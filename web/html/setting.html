@@ -58,14 +58,14 @@
 
 <script>
     function checkVersionInfo() {
-        $("#updateversion").hide();
+        // $("#updateversion").hide();
         let condition = false; // biến kiểm tra điều kiện
         function checkForUpdates() {
             eel.getNewVersion()(function (callback) {
                 var newversion = callback
                 if (newversion.indexOf(".") > 0) {
                     setHtmlCssSelector("#updateversion", "Update new version: " + newversion)
-                    $("#updateversion").show();
+                    // $("#updateversion").show();
                     condition = true
                 }
             });
