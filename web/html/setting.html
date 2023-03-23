@@ -43,8 +43,9 @@
 
         <br>
         <div class="w3-bar">
-            <button class="w3-bar-item w3-button w3-blue" style="width:100%" id="updateversion">Update version
-                new</button>
+
+            <button class="w3-bar-item w3-button w3-blue" style="width:100%" id="updateversion">Update new
+                version</button>
         </div>
         <div class="w3-border" id="progresss" style="visibility: hidden;">
             <div id="progress" class="w3-container w3-padding w3-blue" style="width: 0%; visibility: hidden;">
@@ -56,6 +57,31 @@
 </div>
 
 <script>
+    function checkVersionInfo() {
+        $("#updateversion").hide();
+        let condition = false; // biến kiểm tra điều kiện
+        function checkForUpdates() {
+            eel.getNewVersion()(function (callback) {
+                var newversion = callback
+                if (newversion.indexOf(".") > 0) {
+                    setHtmlCssSelector("#updateversion", "Update new version: " + newversion)
+                    $("#updateversion").show();
+                    condition = true
+                }
+            });
+        }
+        checkForUpdates(); // chạy lần đầu tiên
+        let xhrIntervalId = setInterval(function () {
+            if (condition) {
+                console.log("stop")
+                clearInterval(xhrIntervalId); // dừng vòng lặp khi điều kiện đúng
+            } else {
+                console.log("nostop")
+                checkForUpdates();
+            }
+        }, 5000);
+    }
+    checkVersionInfo()
     $('#configotp').bind('click', function () {
         eel.openFile("verifyphone.txt")
     })
