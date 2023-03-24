@@ -12,6 +12,7 @@
                 <option value="listtmproxy">LIST TMPROXY</option>
                 <option value="listproxy">LIST PROXY</option>
                 <option value="vypr">VYPR</option>
+                <option value="ipvanish">IPVanish</option>
             </select>
         </div>
         <div class="w3-third">
@@ -53,6 +54,19 @@
             </div>
         </div>
         <div id="hdsdStatus"></div>
+
+        <div class="w3-bar">
+            <div class="w3-bar-item w3-right">
+                <input class="w3-radio" type="radio" name="radiongonngu" value="vietnamese">
+                <label>Vietnamese</label>
+            </div>
+            <div class="w3-bar-item w3-right">
+                <input class="w3-radio" type="radio" name="radiongonngu" value="english" checked="">
+                <label>English</label>
+            </div>
+
+
+        </div>
     </div>
 </div>
 
@@ -197,6 +211,13 @@
     $('*[name="textsetting"]').on('change', function () {
         eel.updateSetting("text_" + this.id, this.value)()
     });
+    $('*[name="radiongonngu"]').on('change', function () {
+
+        eel.updateSetting("radiongonngu", this.value)
+
+        // console.log(this.value, this.checked)
+        // eel.updateSetting("radio_" + this.id, this.value)()
+    });
     // $('#numThread').on('change', function () {
     //     eel.updateSetting(this.id, this.value)()
     // });
@@ -244,9 +265,9 @@
                     var id = key.split("_")[1]
 
                     $("#" + id).val(value);
-                    console.log(id);
+                    // console.log(id);
                 }
-                console.log(key + ": " + hconfig[key]);
+                // console.log(key + ": " + hconfig[key]);
             }
             // console.log(hconfig)
             // $("#numThread").val(hconfig.numthread);
@@ -258,7 +279,7 @@
             // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
             $("#apikeyactive").val(hconfig.apikeyactive);
 
-            console.log(hconfig)
+            // console.log(hconfig)
         });
     });
 
