@@ -2,12 +2,13 @@
     <br>
     <div class="w3-row">
         <textarea class="lang" id="iaccount" rows="15" style="width: 100%; resize: none;border: 1px solid #ccc;"
-            placeholder="Enter the list of accounts"></textarea>
+            placeholder="Enter the list of accounts.
+Format: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3..."></textarea>
 
     </div>
 
     <br>
-    <!-- <input type="file" id="ifile"> -->
+    <!-- <input type=" file" id="ifile"> -->
     <button onclick="oimport()" class="w3-button w3-teal w3-right">Import</button>
     <br>
     <br>
@@ -17,10 +18,7 @@
 </div>
 
 <script>
-    var lang = localStorage.getItem("lang")
-    if (lang == "vi") {
-        $("#iaccount").attr("placeholder", "Nhập danh sách tài khoản mật khẩu")
-    }
+
     function oimport() {
         var iaccount = getValue("#iaccount");
         eel.oimport(iaccount)(function (callback) {
