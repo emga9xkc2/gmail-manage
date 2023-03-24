@@ -1,7 +1,7 @@
 <div id="import" class="w3-container tabs" style="display:none">
     <br>
     <div class="w3-row">
-        <textarea id="iaccount" rows="15" style="width: 100%; resize: none;border: 1px solid #ccc;"
+        <textarea class="lang" id="iaccount" rows="15" style="width: 100%; resize: none;border: 1px solid #ccc;"
             placeholder="Enter the list of accounts"></textarea>
 
     </div>
@@ -17,7 +17,10 @@
 </div>
 
 <script>
-
+    var lang = localStorage.getItem("lang")
+    if (lang == "vi") {
+        $("#iaccount").attr("placeholder", "Nhập danh sách tài khoản mật khẩu")
+    }
     function oimport() {
         var iaccount = getValue("#iaccount");
         eel.oimport(iaccount)(function (callback) {

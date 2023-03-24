@@ -74,11 +74,18 @@
     function checkVersionInfo() {
         // $("#updateversion").hide();
         let condition = false; // biến kiểm tra điều kiện
+        var text = "Update new version"
+        var lang = localStorage.getItem("lang")
+        if (lang == "vi") {
+            text = "Cập nhật phiên bản mới"
+        }
+
         function checkForUpdates() {
             eel.getNewVersion()(function (callback) {
                 var newversion = callback
                 if (newversion.indexOf(".") > 0) {
-                    setHtmlCssSelector("#updateversion", "Update new version: " + newversion)
+
+                    setHtmlCssSelector("#updateversion", text + ": " + newversion)
                     // $("#updateversion").show();
                     condition = true
                 }
@@ -214,7 +221,11 @@
     $('*[name="radiongonngu"]').on('change', function () {
 
         eel.updateSetting("radiongonngu", this.value)
-
+        if (this.value == "english") {
+            toastSuccess("Please press F5 to update the language again");
+        } else {
+            toastSuccess("Hãy bấm F5 để cập nhật lại ngôn ngữ");
+        }
         // console.log(this.value, this.checked)
         // eel.updateSetting("radio_" + this.id, this.value)()
     });
@@ -253,8 +264,11 @@
         $("*[name='checksetting']").bind('click', function (ev) {
             eel.updateSetting("check" + "_" + this.id, this.checked)()
         });
+
         eel.getSetting()(function (callback) {
+            var setlang = "en"
             var hconfig = callback.hconfig
+            var lang = callback.lang
             for (let key in hconfig) {
                 var value = hconfig[key]
                 if (key.startsWith("check_")) {
@@ -263,8 +277,19 @@
                 }
                 if (key.startsWith("text_")) {
                     var id = key.split("_")[1]
-
                     $("#" + id).val(value);
+                    // console.log(id);
+                }
+                if (key.startsWith("radio")) {
+                    if (key == "radiongonngu") {
+                        setlang = "en"
+                        if (value == "vietnamese") {
+                            setlang = "vi"
+                        }
+                        localStorage.setItem('lang', setlang)
+                        localStorage.setItem('langdata', JSON.stringify(lang))
+                    }
+                    $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
                     // console.log(id);
                 }
                 // console.log(key + ": " + hconfig[key]);
@@ -277,7 +302,42 @@
             // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
             // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
             // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
+
             $("#apikeyactive").val(hconfig.apikeyactive);
+            if (setlang == "vi") {
+                // console.log(typeof lang)
+                function fixLabel(label) {
+                    label = label.trim().replace(`
+                `, " ")
+
+                    return label
+                }
+                $("label").each(function () {
+                    var labelText = fixLabel($(this).text());
+                    var newvalue = lang[labelText];
+                    if (newvalue) {
+                        $(this).html(" " + newvalue);
+                    }
+                    // console.log(labelText, newvalue)
+                })
+                $("button").each(function () {
+                    var labelText = fixLabel($(this).text());
+                    var newvalue = lang[labelText];
+                    if (newvalue) {
+                        $(this).html(newvalue);
+                    }
+                    // console.log(labelText, newvalue)
+                })
+                $(".lang").each(function () {
+                    var labelText = fixLabel($(this).text());
+                    var labelTextSplit = labelText.split(":")[0]
+                    var newvalue = lang[labelTextSplit];
+                    if (newvalue) {
+                        $(this).html(labelText.replace(labelTextSplit, newvalue));
+                    }
+                    // console.log(labelText, newvalue)
+                })
+            }
 
             // console.log(hconfig)
         });

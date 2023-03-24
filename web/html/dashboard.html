@@ -1,7 +1,7 @@
 <div id="home" class="w3-container tabs">
 
     <!-- <p id="numsuccess" class="w3-half w3-left">Success</p> -->
-    <div class="w3-right"><input type="checkbox" id="checkpause"><label for="checkpause">
+    <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
             Pause</label></div>
     <br>
     <!-- <button onclick="updateMails()" class="w3-button w3-teal w3-right">Cập nhật danh sách mail</button> -->
@@ -27,9 +27,9 @@
         </ul>
     </div>
     <div class="w3-bar">
-        <div class="w3-bar-item w3-white" id="numsuccess" style="width:33%">...</div>
-        <div class="w3-bar-item w3-white" id="version" style="width:33%">...</div>
-        <div class="w3-bar-item w3-white w3-right-align" id="selected" style="width:33%">...</div>
+        <div class="w3-bar-item w3-white lang" id="numsuccess" style="width:33%">...</div>
+        <div class="w3-bar-item w3-white lang" id="version" style="width:33%">...</div>
+        <div class="w3-bar-item w3-white w3-right-align lang" id="selected" style="width:33%">...</div>
 
     </div>
 
@@ -147,7 +147,7 @@
                     menu.innerHTML = `
                 <div class="menu-item" id="select-item">Select</div>
                 <div class="menu-item" id="deselect-item">Deselect</div>
-    <div class="menu-item" id="copy-item">Sao chép</div>
+    <div class="menu-item" id="copy-item">Copy</div>
     <div class="menu-item" id="selectall-item">Select all mails</div>
     <div class="menu-item" id="selectall-item-no-running">Select mails that has not been run</div>
     <div class="menu-item" id="selectall-item-running">Select mails has been running</div>
@@ -159,6 +159,28 @@
     `;
 
                     document.body.appendChild(menu);
+
+                    var langselect = localStorage.getItem("lang")
+                    var lang = JSON.parse(localStorage.getItem("langdata"))
+                    // console.log(lang)
+                    if (langselect == "vi") {
+                        $(".menu-item").each(function () {
+                            var labelText = $(this).text().trim();
+
+                            var newvalue = lang[labelText];
+                            if (newvalue) {
+                                $(this).html(newvalue);
+                            } else {
+                                if (labelText.startsWith("Select mails with status is")) {
+                                    newvalue = labelText.replace("Select mails with status is", "Chọn mail trạng thái là")
+                                    $(this).html(newvalue);
+                                }
+                            }
+                            console.log(labelText, newvalue)
+                        })
+                    }
+
+
                     if (statusValue == "") {
                         $("#selectall-item-status").css("display", "none");
                     }
@@ -417,11 +439,17 @@
         });
     }
     function showSelected() {
-        setHtmlCssSelector("#selected", "Selected: " + selected.length)
+        var text = "Selected"
+        var langselect = localStorage.getItem("lang")
+        if (langselect == "vi") {
+            text = "Đã chọn"
+        }
+
+        setHtmlCssSelector("#selected", text + ": " + selected.length)
+
     }
 
     eel.getVersion()(function (callback) {
-
         setHtmlCssSelector("#version", "Current version: " + callback)
     });
 
