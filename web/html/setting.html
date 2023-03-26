@@ -40,6 +40,8 @@
                 domain</button>
             <button class="w3-bar-item w3-button w3-red" style="width:25%" id="passwordrandom">Password random
             </button>
+            <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="openhconfig">Open hconfig
+            </button>
         </div>
 
         <br>
@@ -103,6 +105,9 @@
         }, 5000);
     }
     checkVersionInfo()
+    $('#openhconfig').bind('click', function () {
+        eel.openFile("hconfig.ini")
+    })
     $('#configotp').bind('click', function () {
         eel.openFile("verifyphone.txt")
     })
