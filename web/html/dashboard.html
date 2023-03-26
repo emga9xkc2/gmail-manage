@@ -393,7 +393,7 @@
             var success = callback.success;
             var data = callback.data;
             // console.log(msg);
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th>ID</th><th>Account</th><th>Date</th><th>Youtube</th><th>Country</th><th>GVoice</th><th>Status</th><th>DelPhone</th><th>YouPre</th><th>Payment</th><th>ConfirmSecurity</th></tr></thead>`;
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th>ID</th><th>Account</th><th>Date</th><th>Youtube</th><th>Country</th><th>GVoice</th><th>Status</th><th>DelPhone</th><th>YouPre</th><th>Payment</th><th>ConfirmSecurity</th><th>Logout</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -415,6 +415,7 @@
                     <td>${element.youtubepre != null && element.youtubepre != '' ? `<input type="text" value="${element.youtubepre}">` : ''}</td>
                     <td>${element.paymentmethod != null && element.paymentmethod != '' ? `<input type="text" value="${element.paymentmethod}">` : ''}</td>
                     <td>${element.statusconfirmsecurity != null && element.statusconfirmsecurity != '' ? `<input type="text" value="${element.statusconfirmsecurity}">` : ''}</td>
+                    <td>${element.devicelogout != null && element.devicelogout != '' ? `<input type="text" value="${element.devicelogout}">` : ''}</td>
 
                 </tr>`;
                 // console.log(element);
