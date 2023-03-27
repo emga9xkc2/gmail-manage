@@ -216,6 +216,7 @@
 
                         eel.deleteAccounts(selected)(function (callback) {
                             updateMails(0)
+                            selected = []
                             // var msg = callback.msg
                             // console.log(msg)
                             // if (msg == "Success") {
