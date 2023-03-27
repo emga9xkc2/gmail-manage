@@ -84,14 +84,15 @@
 
         function checkForUpdates() {
             eel.getNewVersion()(function (callback) {
+                console.log(callback)
                 var newversion = callback
                 if (newversion.indexOf(".") > 0) {
-
                     setHtmlCssSelector("#updateversion", text + ": " + newversion)
                     // $("#updateversion").show();
                     condition = true
                 }
             });
+
         }
         checkForUpdates(); // chạy lần đầu tiên
         let xhrIntervalId = setInterval(function () {
@@ -156,19 +157,28 @@
 
     $("#updateversion").bind("click", function () {
         // alert("1234")
+        var text1 = "Waiting..."
+        var text2 = "Update successful. Please open the software again"
+        var text3 = "Update failed"
+        var langselect = localStorage.getItem("lang")
+        if (langselect == "vi") {
+            text1 = "Xin chờ..."
+            text2 = "Cập nhật thành công, hãy mở lại ứng dụng."
+            text3 = "Cập nhật thất bại"
+        }
         setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
-                    <h3>Waiting...</h3>
+                    <h3>${text1}</h3>
                 </div>`)
         update_progress(0)
         eel.autoUpdate()(function (callback) {
             var mess = callback.mess
             if (mess == "success") {
                 setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
-                    <h3>Update successful. Please open the software again</h3>
+                    <h3>${text2}</h3>
                 </div>`)
             } else {
                 setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
-                    <h3>Update failed</h3>
+                    <h3>${text3}</h3>
                 </div>`)
             }
             console.log(callback)
