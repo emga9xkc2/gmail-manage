@@ -1,6 +1,38 @@
+<style>
+    .btn {
+        background-color: DodgerBlue;
+        border: none;
+        color: white;
+        padding: 12px 16px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Darker background on mouse-over */
+    .btn:hover {
+        background-color: RoyalBlue;
+    }
+</style>
+
+<div id="id01" class="w3-modal">
+    <div class="w3-modal-content">
+        <div class="w3-container">
+            <span onclick="document.getElementById('id01').style.display='none'"
+                class="w3-button w3-display-topright">&times;</span>
+            <div id="load-hidedash"></div>
+        </div>
+    </div>
+</div>
+
 <div id="home" class="w3-container tabs">
 
     <!-- <p id="numsuccess" class="w3-half w3-left">Success</p> -->
+    <div class="w3-bar">
+        <button class="btn" id="settingdash"><i class="fa fa-cog"></i></button>
+
+
+
+    </div>
     <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
             Pause</label></div>
     <br>
@@ -39,6 +71,52 @@
 
 </div>
 <script>
+    eel.loadHideColumn()(function (callback) {
+        data = callback.data;
+        i = -1;
+        html = "";
+        j = 0;
+        adder = false;
+        for (const key in data) {
+            adder = false;
+            const value = data[key];
+            i = i + 1;
+            j = j + 1;
+            if (i % 3 === 0) {
+                html = html + `<div class="w3-row">`;
+            }
+            html =
+                html +
+                `<div class="w3-third"><input type="checkbox" name="checkhidedash" id="hide${key}"><label for="${key}"> ${value}</label></div>`;
+            if (j % 3 === 0) {
+                html = html + `</div>`;
+                adder = true;
+            }
+        }
+        if (adder == false) {
+            html = html + `</div>`;
+        }
+        setHtmlCssSelector("#load-hidedash", html);
+        $("*[name='checkhidedash']").bind('click', function (ev) {
+            eel.updateSetting("check" + "_" + this.id, this.checked)()
+        });
+        eel.getSetting()(function (callback) {
+            var setlang = "en"
+            var hconfig = callback.hconfig
+            var lang = callback.lang
+            for (let key in hconfig) {
+                var value = hconfig[key]
+                if (key.startsWith("check_")) {
+                    var id = key.split("_")[1]
+                    $("#" + id).prop("checked", strToBool(value));
+                }
+            }
+        })
+    });
+    $("#settingdash").bind("click", function () {
+        $("#id01").css("display", "block")
+    });
+
     $("#checkpause").bind("click", function () {
         eel.setPause(this.checked)()
     });
@@ -394,7 +472,9 @@
             var success = callback.success;
             var data = callback.data;
             // console.log(msg);
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th>ID</th><th>Account</th><th>Date</th><th>Youtube</th><th>Country</th><th>GVoice</th><th>Status</th><th>DelPhone</th><th>YouPre</th><th>Payment</th><th>ConfirmSecurity</th><th>Logout</th></tr></thead>`;
+
+
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -422,6 +502,27 @@
                 // console.log(element);
             }
             setHtmlCssSelector("#tableMails", thead);
+
+            eel.getSetting()(function (callback) {
+                var hconfig = callback.hconfig
+                var lang = callback.lang
+                for (let key in hconfig) {
+                    var value = hconfig[key]
+
+                    if (key.startsWith("check_") && strToBool(value)) {
+                        var id = key.split("_")[1]
+                        if (id.startsWith("hide")) {
+                            id = id.substring(4)
+                            var columnIndex = $('th[name="' + id + '"]').index();
+                            $('table td:nth-child(' + (columnIndex + 1) + '), table th:nth-child(' + (columnIndex + 1) + ')').hide();
+                            // $('*[name="' + id + '"]').hide()
+                        }
+                    }
+                }
+            })
+
+
+
             checkboxEvent()
             $("#select-table").bind("click", function () {
                 var checkboxes1 = document.getElementsByName("mails");
