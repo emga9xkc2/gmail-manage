@@ -57,8 +57,12 @@ function pythonToJS(x) {
 function setHtmlCssSelector(cssSelector, html) {
     $(cssSelector).html(html);
 }
+function setValueCssSelector(cssSelector, value) {
+    $(cssSelector).val(html);
+}
 eel.expose(pythonToJS);
 eel.expose(setHtmlCssSelector);
+eel.expose(setValueCssSelector);
 eel.expose(toastError);
 eel.expose(toastSuccess);
 eel.expose(toastWarning);
