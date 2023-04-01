@@ -492,7 +492,7 @@
                     <td>${element.youtube != null && element.youtube != '' ? `<input type="text" value="${element.youtube}">` : ''}</td>
                     <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
                     <td>${element.googlevoice != null && element.googlevoice != '' ? `<input type="text" value="${element.googlevoice}">` : ''}</td>
-                    <td><input type="text" name="status" value="${element.status != null && element.status != '' ? `` : ''}"></td>
+                    <td><input type="text" name="status" value="${element.status != null && element.status != '' ? element.status : ''}"></td>
                     <td>${element.statusdeletephone != null && element.statusdeletephone != '' ? `<input type="text" value="${element.statusdeletephone}">` : ''}</td>
                     <td>${element.youtubepre != null && element.youtubepre != '' ? `<input type="text" value="${element.youtubepre}">` : ''}</td>
                     <td>${element.paymentmethod != null && element.paymentmethod != '' ? `<input type="text" value="${element.paymentmethod}">` : ''}</td>
