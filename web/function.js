@@ -1,12 +1,6 @@
 $(document).ready(function () {
-    loadDashboard()
-        .then(loadImport)
-        .then(loadAccount)
-        .then(loadLogs)
-        .then(loadSetting);
-    $.getScript("/codinglab.js", function () {
-        // Code để gọi hàm hoặc xử lý dữ liệu tại đây
-    });
+    loadDashboard().then(loadSetting);
+    $.getScript("/codinglab.js", function () {});
     loadSidebar();
 });
 
@@ -38,54 +32,13 @@ function loadDashboard() {
         });
     });
 }
-function loadImport() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: "html/import.html",
-            success: function (result) {
-                $("#load-import").html(result);
-                resolve();
-            },
-            error: function (error) {
-                reject(error);
-            },
-        });
-    });
-}
+
 function loadSetting() {
     return new Promise((resolve, reject) => {
         $.ajax({
             url: "html/setting.html",
             success: function (result) {
                 $("#load-setting").html(result);
-                resolve();
-            },
-            error: function (error) {
-                reject(error);
-            },
-        });
-    });
-}
-function loadLogs() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: "html/logs.html",
-            success: function (result) {
-                $("#load-logs").html(result);
-                resolve();
-            },
-            error: function (error) {
-                reject(error);
-            },
-        });
-    });
-}
-function loadAccount() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: "html/account.html",
-            success: function (result) {
-                $("#load-account").html(result);
                 resolve();
             },
             error: function (error) {
