@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    loadDashboard().then(loadSetting);
+    loadDashboard();
     $.getScript("/codinglab.js", function () {});
     loadSidebar();
 });
@@ -24,21 +24,6 @@ function loadDashboard() {
             url: "html/dashboard.html",
             success: function (result) {
                 $("#load-dashboard").html(result);
-                resolve();
-            },
-            error: function (error) {
-                reject(error);
-            },
-        });
-    });
-}
-
-function loadSetting() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: "html/setting.html",
-            success: function (result) {
-                $("#load-setting").html(result);
                 resolve();
             },
             error: function (error) {
