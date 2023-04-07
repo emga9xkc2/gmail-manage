@@ -1,23 +1,8 @@
 $(document).ready(function () {
     loadDashboard();
     $.getScript("/codinglab.js", function () {});
-    loadSidebar();
 });
 
-function loadSidebarHtml() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: "html/sidebar.html",
-            success: function (result) {
-                $("#load-sidebar").html(result);
-                resolve();
-            },
-            error: function (error) {
-                reject(error);
-            },
-        });
-    });
-}
 function loadDashboard() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -53,29 +38,6 @@ function openMenu(evt, cityName) {
     document.getElementById("title").textContent = linkName;
 }
 
-function loadSidebar() {
-    let arrow = document.querySelectorAll(".arrow");
-    for (var i = 0; i < arrow.length; i++) {
-        arrow[i].addEventListener("click", (e) => {
-            let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-            arrowParent.classList.toggle("showMenu");
-        });
-    }
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    // console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("close");
-    });
-
-    // let logout = document.querySelector(".logout");
-    // logout.addEventListener("click", () => {
-    // 	eel.openFileDialog()(function (callback) {
-    // 		console.log(callback)
-    // 	}
-    // 	)
-    // });
-}
 function msgBox(text) {
     alert(text);
 }

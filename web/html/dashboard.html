@@ -472,9 +472,8 @@
             if (setlang == "vi") {
                 // console.log(typeof lang)
                 function fixLabel(label) {
-                    label = label.trim().replace(`
-                `, " ")
-
+                    label = label.trim()
+                    label = label.replace(/\s+/g, ' ');
                     return label
                 }
                 $("label").each(function () {
@@ -488,6 +487,7 @@
                 $("button").each(function () {
                     var labelText = fixLabel($(this).text());
                     var newvalue = lang[labelText];
+                    console.log(labelText, newvalue)
                     if (newvalue) {
                         $(this).html(newvalue);
                     }
