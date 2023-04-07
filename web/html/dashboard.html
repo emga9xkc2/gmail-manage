@@ -8,7 +8,22 @@
         cursor: pointer;
     }
 
+    .settingcss {
+        background-color: rgb(218, 18, 25);
+        border: none;
+        color: white;
+        padding: 1px 5px;
+        font-size: 10px;
+        cursor: pointer;
+        margin-left: 8px;
+        border-radius: 7px;
+    }
+
     /* Darker background on mouse-over */
+    .settingcss:hover {
+        background-color: rgb(200, 22, 156);
+    }
+
     .btn:hover {
         background-color: RoyalBlue;
     }
@@ -159,12 +174,8 @@
                     <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="configcaptcha">Config
                         captcha</button>
 
-                    <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="restoreDisableContent">Restore
-                        disable
-                        content</button>
-                    <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="restoreDisableContact">Restore
-                        disable
-                        contact</button>
+
+
                     <button class="w3-bar-item w3-button w3-red" style="width:25%" id="emailrecoveryrandom">Email
                         recovery
                         random</button>
@@ -223,6 +234,7 @@
 
 
 <script>
+
     function checkVersionInfo() {
         // $("#updateversion").hide();
         let condition = false; // biến kiểm tra điều kiện
@@ -258,6 +270,7 @@
     checkVersionInfo()
     $('#openhconfig').bind('click', function () {
         eel.openFile("hconfig.ini")
+
     })
     $('#configotp').bind('click', function () {
         eel.openFile("verifyphone.txt")
@@ -398,6 +411,20 @@
     //     eel.updateSetting(this.id, this.value)()
     // });
 
+    function addSetting(id) {
+        var checkbox = $("#" + id);
+
+        if (id === "changedisplayname") {
+            var html = '<button class="settingcss" name="main" id="settingchangedisplayname" title="Add list name"><i class="fa fa-cog"></i></button>';
+            checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#settingchangedisplayname').bind('click', function () { eel.openFile("settingchangedisplayname.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+        }
+
+        if (id === "restoredisable") {
+            var html1 = '<button class="settingcss" name="main" id="settingrestoredisablecontent" title="Setting Content"><i class="fa fa-cog"></i></button>';
+            var html2 = '<button class="settingcss" name="main" id="settingrestoredisablecontact" title="Setting Contact"><i class="fa fa-cog"></i></button>';
+            checkbox.prop("checked") ? (checkbox.next("label").after(html1), checkbox.next("label").after(html2), $('#settingrestoredisablecontent').bind('click', function () { eel.openFile("restoredisablecontent.txt") }), $('#settingrestoredisablecontact').bind('click', function () { eel.openFile("restoredisablecontact.txt") })) : (checkbox.next("label").next("button.settingcss").remove(), checkbox.next("label").next("button.settingcss").remove());
+        }
+    }
 
 
     eel.loadSetting()(function (callback) {
@@ -427,6 +454,7 @@
         }
         setHtmlCssSelector("#load-chucnangjs", html);
         $("*[name='checksetting']").bind('click', function (ev) {
+            addSetting(this.id)
             eel.updateSetting("check" + "_" + this.id, this.checked)()
         });
 
@@ -438,7 +466,9 @@
                 var value = hconfig[key]
                 if (key.startsWith("check_")) {
                     var id = key.split("_")[1]
-                    $("#" + id).prop("checked", strToBool(value));
+                    var istrue = strToBool(value)
+                    $("#" + id).prop("checked", istrue);
+
                 }
                 if (key.startsWith("text_")) {
                     var id = key.split("_")[1]
@@ -487,7 +517,7 @@
                 $("button").each(function () {
                     var labelText = fixLabel($(this).text());
                     var newvalue = lang[labelText];
-                    console.log(labelText, newvalue)
+                    // console.log(labelText, newvalue)
                     if (newvalue) {
                         $(this).html(newvalue);
                     }
@@ -623,6 +653,7 @@
                 var value = hconfig[key]
                 if (key.startsWith("check_")) {
                     var id = key.split("_")[1]
+                    addSetting(id)
                     $("#" + id).prop("checked", strToBool(value));
                 }
             }
