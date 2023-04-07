@@ -989,7 +989,7 @@
             // console.log(msg);
 
 
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th></tr></thead>`;
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -1013,6 +1013,7 @@
                     <td>${element.statusconfirmsecurity != null && element.statusconfirmsecurity != '' ? `<input type="text" value="${element.statusconfirmsecurity}">` : ''}</td>
                     <td>${element.devicelogout != null && element.devicelogout != '' ? `<input type="text" value="${element.devicelogout}">` : ''}</td>
                     <td>${element.chplay != null && element.chplay != '' ? `<input type="text" value="${element.chplay}">` : ''}</td>
+                    <td>${element.displayname != null && element.displayname != '' ? `<input type="text" value="${element.displayname}">` : ''}</td>
 
                 </tr>`;
                 // console.log(element);
