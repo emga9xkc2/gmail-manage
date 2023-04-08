@@ -384,8 +384,8 @@
         }
         var checkbox = $("#" + id);
         if (id === "changedisplayname") {
-            var html = '<button class="settingcss" name="main" id="settingchangedisplayname" title="Add list name"><i class="fa fa-cog"></i></button>';
-            checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#settingchangedisplayname').bind('click', function () { eel.openFile("settingchangedisplayname.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+            var html = '<button class="settingcss" name="main" id="listdisplayname" title="Add list name (first last)"><i class="fa fa-cog"></i></button>';
+            checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#listdisplayname').bind('click', function () { eel.openFile("listdisplayname.txt") })) : checkbox.next("label").next("button.settingcss").remove();
         }
 
         if (id === "restoredisable") {
