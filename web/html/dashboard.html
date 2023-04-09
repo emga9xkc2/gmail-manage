@@ -50,6 +50,7 @@
         <button class="btn" name="main" id="tab_setting" title="Setting"><i class="fa fa-cog"></i></button>
         <button class="btn" name="main" id="tab_log" title="Logs"><i class="fa fa-paper-plane"></i></button>
         <button class="btn" name="main" id="tab_account" title="License"><i class="fa fa-id-card-o"></i></button>
+        <button class="btn" id="tab_folder" title="Open data folder"><i class="fa fa-folder"></i></button>
 
 
 
@@ -71,15 +72,6 @@
                 <ul class="page">
                     <li class="page__btn" id="back_page"><span class="material-icons">chevron_left</span></li>
                     <li class="page__numbers">1</li>
-                    <li class="page__numbers">2</li>
-                    <li class="page__numbers">3</li>
-                    <li class="page__numbers">4</li>
-                    <li class="page__numbers">5</li>
-                    <li class="page__numbers">6</li>
-                    <li class="page__numbers">7</li>
-                    <li class="page__numbers">8</li>
-                    <li class="page__numbers">9</li>
-                    <li class="page__numbers">10</li>
                     <li class="page__btn" id="next_page"><span class="material-icons">chevron_right</span></li>
                 </ul>
             </div>
@@ -283,6 +275,9 @@
     })
     $('#passwordrandom').bind('click', function () {
         eel.openFile("passwordrandom.txt")
+    })
+    $('#tab_folder').bind('click', function () {
+        eel.openFolder("data/")
     })
     $('#emailrecoverydomain').bind('click', function () {
         eel.openFile("emailrecoverydomain.txt")
