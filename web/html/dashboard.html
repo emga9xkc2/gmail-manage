@@ -6,6 +6,8 @@
         padding: 10px 15px;
         font-size: 12px;
         cursor: pointer;
+        width: 41.16px;
+        margin-bottom: 5px;
     }
 
     .settingcss {
@@ -43,23 +45,30 @@
 
     <!-- <p id="numsuccess" class="w3-half w3-left">Success</p> -->
     <div class="w3-bar">
+        <div class="khoangcach">
+            <button class="btn" name="main" id="tab_home" title="Home"><i class="fa fa-home"></i></button>
+            <button class="btn" name="main" id="tab_import" title="Import"><i class="fa fa-upload"></i></i></button>
+            <button class="btn" name="main" id="tab_setting" title="Setting"><i class="fa fa-cog"></i></button>
+            <button class="btn" name="main" id="tab_log" title="Logs"><i class="fa fa-paper-plane"></i></button>
+            <button class="btn" name="main" id="tab_account" title="License"><i class="fa fa-id-card-o"></i></button>
+            <button class="btn" id="tab_folder" title="Open data folder"><i class="fa fa-folder"></i></button>
+        </div>
+        <div class="khoangcach">
+            <button class="btn" style="color: red;" id="stop" title="Stop"><i class="fa fa-stop"></i></button>
+            <button class="btn" style="color: yellow;" id="reload" title="Reload"><i class="fa fa-refresh"></i></button>
+            <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
+                    Pause</label></div>
 
+        </div>
 
-        <button class="btn" name="main" id="tab_home" title="Home"><i class="fa fa-home"></i></button>
-        <button class="btn" name="main" id="tab_import" title="Import"><i class="fa fa-upload"></i></i></button>
-        <button class="btn" name="main" id="tab_setting" title="Setting"><i class="fa fa-cog"></i></button>
-        <button class="btn" name="main" id="tab_log" title="Logs"><i class="fa fa-paper-plane"></i></button>
-        <button class="btn" name="main" id="tab_account" title="License"><i class="fa fa-id-card-o"></i></button>
-        <button class="btn" id="tab_folder" title="Open data folder"><i class="fa fa-folder"></i></button>
-
-
-
-        <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
-                Pause</label></div>
 
     </div>
 
-    <br>
+
+
+
+
+
     <!-- <button onclick="updateMails()" class="w3-button w3-teal w3-right">Cập nhật danh sách mail</button> -->
     <div id="main">
         <div class="tab_home">
@@ -171,7 +180,7 @@
 
 
                 <div class="w3-bar">
-                    <button class="w3-bar-item w3-button w3-green" style="width:25%" id="configotp">Config otp</button>
+
                     <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="configcaptcha">Config
                         captcha</button>
 
@@ -269,13 +278,21 @@
         }, 5000);
     }
     checkVersionInfo()
+    $('#stop').bind('click', function () {
+        if (confirm("Stop confirmation!") == false) {
+            toastWarning("Cannel stop");
+            return;
+        }
+        eel.setRunning(false)
+    })
+    $('#reload').bind('click', function () {
+        updateMails(1)
+    })
     $('#openhconfig').bind('click', function () {
         eel.openFile("hconfig.ini")
 
     })
-    $('#configotp').bind('click', function () {
-        eel.openFile("verifyphone.txt")
-    })
+
     $('#configcaptcha').bind('click', function () {
         eel.openFile("apikeycaptcha.txt")
     })
@@ -387,6 +404,14 @@
             }
         }
         var checkbox = $("#" + id);
+        if (id === "verifyphone") {
+            var html = '<button class="settingcss" name="main" id="configverifyphone" title="Config verify phone"><i class="fa fa-cog"></i></button>';
+            checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configverifyphone').bind('click', function () { eel.openFile("verifyphone.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+        }
+        if (id === "youtubeverify") {
+            var html = '<button class="settingcss" name="main" id="configyoutubeverify" title="Config verify youtube"><i class="fa fa-cog"></i></button>';
+            checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configyoutubeverify').bind('click', function () { eel.openFile("youtubeverify.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+        }
         if (id === "changedisplayname") {
             var html = '<button class="settingcss" name="main" id="listdisplayname" title="Add list name (first last)"><i class="fa fa-cog"></i></button>';
             checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#listdisplayname').bind('click', function () { eel.openFile("listdisplayname.txt") })) : checkbox.next("label").next("button.settingcss").remove();
@@ -995,7 +1020,7 @@
             // console.log(msg);
 
 
-            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th></tr></thead>`;
+            var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th><th name="youtubeverify">VerYoutube</th></tr></thead>`;
             var tr = "";
             var i = 0;
             for (const element of data) {
@@ -1020,6 +1045,7 @@
                     <td>${element.devicelogout != null && element.devicelogout != '' ? `<input type="text" value="${element.devicelogout}">` : ''}</td>
                     <td>${element.chplay != null && element.chplay != '' ? `<input type="text" value="${element.chplay}">` : ''}</td>
                     <td>${element.displayname != null && element.displayname != '' ? `<input type="text" value="${element.displayname}">` : ''}</td>
+                    <td>${element.youtubeverify != null && element.youtubeverify != '' ? `<input type="text" value="${element.youtubeverify}">` : ''}</td>
 
                 </tr>`;
                 // console.log(element);
