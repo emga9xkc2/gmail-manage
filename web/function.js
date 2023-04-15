@@ -1,22 +1,6 @@
 $(document).ready(function () {
-    loadDashboard();
     $.getScript("/codinglab.js", function () {});
 });
-
-function loadDashboard() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: "html/dashboard.html",
-            success: function (result) {
-                $("#load-dashboard").html(result);
-                resolve();
-            },
-            error: function (error) {
-                reject(error);
-            },
-        });
-    });
-}
 
 function openMenu(evt, cityName) {
     var i, x, tablinks;

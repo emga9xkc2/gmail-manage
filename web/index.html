@@ -52,15 +52,1198 @@
 <body>
 
     <section class="home-section" style="left: 5px; width: calc(100% - 10px);">
-        <div class="w3-container home-content pywebview-drag-region">
-            <!-- <i class='bx bx-menu'></i> -->
-            <span class="text lang" id="title">Dashboard</span>
+        <br>
+
+        <style>
+            .btn {
+                background-color: DodgerBlue;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                font-size: 12px;
+                cursor: pointer;
+                width: 41.16px;
+                margin-bottom: 5px;
+            }
+
+            .settingcss {
+                background-color: rgb(218, 18, 25);
+                border: none;
+                color: white;
+                padding: 1px 5px;
+                font-size: 10px;
+                cursor: pointer;
+                margin-left: 8px;
+                border-radius: 7px;
+            }
+
+            /* Darker background on mouse-over */
+            .settingcss:hover {
+                background-color: rgb(200, 22, 156);
+            }
+
+            .btn:hover {
+                background-color: RoyalBlue;
+            }
+
+            .newp {
+                line-height: 2.5;
+            }
+        </style>
+
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('id01').style.display='none'"
+                        class="w3-button w3-display-topright">&times;</span>
+                    <div id="load-hidedash"></div>
+                </div>
+            </div>
         </div>
 
-        <div id="load-dashboard"></div>
-        <!-- <div id="load-caidat"></div> -->
+        <div id="home" class="w3-container tabs">
+
+            <!-- <p id="numsuccess" class="w3-half w3-left">Success</p> -->
+            <div class="w3-bar">
+                <div class="khoangcach">
+                    <button class="btn" name="main" id="tab_home" title="Home"><i class="fa fa-home"></i></button>
+                    <button class="btn" name="main" id="tab_import" title="Import"><i
+                            class="fa fa-upload"></i></i></button>
+                    <button class="btn" name="main" id="tab_setting" title="Setting"><i class="fa fa-cog"></i></button>
+                    <button class="btn" name="main" id="tab_log" title="Logs"><i class="fa fa-paper-plane"></i></button>
+                    <button class="btn" id="tab_folder" title="Open data folder"><i class="fa fa-folder"></i></button>
+                </div>
+                <div class="khoangcach">
+                    <button class="btn" style="color: red;" id="stop" title="Stop"><i class="fa fa-stop"></i></button>
+                    <button class="btn" style="color: yellow;" id="reload" title="Reload"><i
+                            class="fa fa-refresh"></i></button>
+                    <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
+                            Pause</label></div>
+
+                </div>
 
 
+            </div>
+
+
+
+
+
+
+            <!-- <button onclick="updateMails()" class="w3-button w3-teal w3-right">Cập nhật danh sách mail</button> -->
+            <div id="main">
+                <div class="tab_home">
+                    <div style="overflow-y: scroll; height: 650px;">
+                        <table class="w3-table-all" id="tableMails">
+                        </table>
+                    </div>
+                    <!-- <div id="load_page"> -->
+                    <div id="app" class="container">
+                        <ul class="page">
+                            <li class="page__btn" id="back_page"><span class="material-icons">chevron_left</span></li>
+                            <li class="page__numbers">1</li>
+                            <li class="page__numbers">2</li>
+                            <li class="page__numbers">3</li>
+                            <li class="page__numbers">4</li>
+                            <li class="page__numbers">5</li>
+                            <li class="page__numbers">6</li>
+                            <li class="page__numbers">7</li>
+                            <li class="page__numbers">8</li>
+                            <li class="page__numbers">9</li>
+                            <li class="page__numbers">10</li>
+                            <li class="page__btn" id="next_page"><span class="material-icons">chevron_right</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab_log" style="display: none;">
+                    <div class="w3-row">
+                        <textarea id="nhatkyhoatdong" rows="15"
+                            style="width: 100%; resize: none;border: 1px solid #ccc;" placeholder="Logs"></textarea>
+                    </div>
+                </div>
+
+                <div class="tab_import" style="display:none">
+
+                    <div class="w3-row">
+                        <textarea class="lang" id="iaccount" rows="15"
+                            style="width: 100%; resize: none;border: 1px solid #ccc;" placeholder="Enter the list of accounts.
+                Format: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3..."></textarea>
+
+                    </div>
+
+                    <br>
+                    <!-- <input type=" file" id="ifile"> -->
+                    <button onclick="oimport()" class="w3-button w3-teal w3-right">Import</button>
+                    <br>
+                    <br>
+                    <br>
+
+                    <div id="saveSettingStatus"></div>
+                </div>
+                <div class="tab_setting" style="display:none">
+                    <br>
+                    <div id="load-chucnangjs"></div>
+                    <br>
+                    <div class="w3-row">
+                        <div class="w3-third">
+                            <select class="w3-select" name="textsetting" id="optionproxy" style="width: 70%;"
+                                placeholder="NO PROXY">
+                                <option value="noproxy" selected>NO PROXY</option>
+                                <option value="dcom">DCOM</option>
+                                <option value="hmanew">HMA NEW</option>
+                                <option value="tmproxy">TMPROXY</option>
+                                <option value="listtmproxy">LIST TMPROXY</option>
+                                <option value="listproxy">LIST PROXY</option>
+                                <option value="vypr">VYPR</option>
+                                <option value="ipvanish">IPVanish</option>
+                            </select>
+                        </div>
+                        <div class="w3-third">
+
+                            <input class="w3-input w3-border" name="textsetting" id="numthread" type="number"
+                                placeholder="Thread" min="1" style="width: 75%;">
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+
+
+                        <div class="w3-bar">
+
+                            <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="configcaptcha">Config
+                                captcha</button>
+
+
+
+                            <button class="w3-bar-item w3-button w3-red" style="width:25%"
+                                id="emailrecoveryrandom">Email
+                                recovery
+                                random</button>
+                            <button class="w3-bar-item w3-button w3-purple" style="width:25%"
+                                id="emailrecoverydomain">Email
+                                recovery
+                                domain</button>
+                            <button class="w3-bar-item w3-button w3-red" style="width:25%" id="passwordrandom">Password
+                                random
+                            </button>
+                            <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="openhconfig">Open
+                                hconfig
+                            </button>
+                            <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="hidecolumn">Hide
+                                column</button>
+                        </div>
+
+
+                        <div class="w3-border" id="progresss" style="visibility: hidden;">
+                            <div id="progress" class="w3-container w3-padding w3-blue"
+                                style="width: 0%; visibility: hidden;">
+                                <div class="w3-center" id="progressValue" style="visibility: hidden;">0%</div>
+                            </div>
+                        </div>
+                        <div id="hdsdStatus"></div>
+
+                        <div class="w3-bar">
+                            <div class="w3-bar-item w3-right">
+                                <input class="w3-radio" type="radio" name="radiongonngu" value="vietnamese">
+                                <label>Vietnamese</label>
+                            </div>
+                            <div class="w3-bar-item w3-right">
+                                <input class="w3-radio" type="radio" name="radiongonngu" value="english" checked="">
+                                <label>English</label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="float: left;">
+                <p class="lang" id="numsuccess" style="display:inline;">...</p>
+            </div>
+            <div style="float: right;">
+                <p class="lang" id="selected" style="display:inline;">...</p>
+            </div>
+
+
+            <br>
+            <!-- <div class="w3-bar-item w3-white lang" id="version" style="width:50%">...</div> -->
+
+            <div style="float: left;">
+                <p id="user" style="display:inline; line-height: 2.5;"></p><button class="settingcss"
+                    style="display:inline; background-color:DodgerBlue" id="activeaccount"
+                    title="Kích hoạt tài khoản"><i class="fa fa-user-circle"></i></button>
+
+            </div>
+
+
+
+
+            <div style="float: right;">
+                <p id="version" style="display:inline;">...</p>
+                <button class="settingcss" style="color: rgb(212, 255, 0); display:inline;" id="updateversion"
+                    title="Cập nhật phiên bản mới"><i class="fa fa-download"></i></button>
+            </div>
+
+            <!-- </div> -->
+
+
+        </div>
+
+
+        <script>
+            var apikeyactive = "apikeyactive"
+            function checkVersionInfo() {
+                // $("#updateversion").hide();
+                let condition = false; // biến kiểm tra điều kiện
+                var text = "Update new version"
+                var lang = localStorage.getItem("lang")
+                if (lang == "vi") {
+                    text = "Cập nhật phiên bản mới"
+                }
+
+                function checkForUpdates() {
+                    eel.getNewVersion()(function (callback) {
+                        console.log(callback)
+                        var newversion = callback
+                        if (newversion.indexOf(".") > 0) {
+                            setHtmlCssSelector("#updateversion", text + ": " + newversion)
+                            // $("#updateversion").show();
+                            condition = true
+                        }
+                    });
+
+                }
+                checkForUpdates(); // chạy lần đầu tiên
+                let xhrIntervalId = setInterval(function () {
+                    if (condition) {
+                        console.log("stop")
+                        clearInterval(xhrIntervalId); // dừng vòng lặp khi điều kiện đúng
+                    } else {
+                        console.log("nostop")
+                        checkForUpdates();
+                    }
+                }, 5000);
+            }
+            checkVersionInfo()
+            $('#stop').bind('click', function () {
+                if (confirm("Stop confirmation!") == false) {
+                    toastWarning("Cannel stop");
+                    return;
+                }
+                eel.setRunning(false)
+            })
+            $('#reload').bind('click', function () {
+                updateMails(1)
+            })
+            $('#openhconfig').bind('click', function () {
+                eel.openFile("hconfig.ini")
+
+            })
+
+            $('#configcaptcha').bind('click', function () {
+                eel.openFile("apikeycaptcha.txt")
+            })
+            $('#emailrecoveryrandom').bind('click', function () {
+                eel.openFile("emailrecoveryrandom.txt")
+            })
+            $('#passwordrandom').bind('click', function () {
+                eel.openFile("passwordrandom.txt")
+            })
+            $('#tab_folder').bind('click', function () {
+                eel.openFolder("data/")
+            })
+            $('#emailrecoverydomain').bind('click', function () {
+                eel.openFile("emailrecoverydomain.txt")
+            })
+            $('#restoreDisableContent').bind('click', function () {
+                eel.openFile("restoredisablecontent.txt")
+            })
+            $('#restoreDisableContact').bind('click', function () {
+                eel.openFile("restoredisablecontact.txt")
+            })
+            eel.expose(update_progress);
+            function update_progress(percent) {
+                percent = percent.toString()
+                var progressValue = ""
+                if (percent.includes("_")) {
+                    progressValue = " " + percent.split("_")[1]
+                    percent = percent.split("_")[0]
+                    if (progressValue.includes("/")) {
+                        progressValue = "(" + progressValue + ")"
+                    }
+                }
+                percent = parseInt(percent)
+                if (percent == 0) {
+                    $("#progresss").css("visibility", "visible")
+                    $("#progress").css("visibility", "visible")
+                    $("#progressValue").css("visibility", "visible")
+                    return
+                }
+                $("#progress").css("width", percent + "%")
+                if (percent > 0) {
+                    $("#progressValue").html(percent + "%" + progressValue);
+                }
+                // $("#progress").val(percent)
+            }
+
+            $("#updateversion").bind("click", function () {
+                // alert("1234")
+                var text1 = "Waiting..."
+                var text2 = "Update successful. Please open the software again"
+                var text3 = "Update failed"
+                var langselect = localStorage.getItem("lang")
+                if (langselect == "vi") {
+                    text1 = "Xin chờ..."
+                    text2 = "Cập nhật thành công, hãy mở lại ứng dụng."
+                    text3 = "Cập nhật thất bại"
+                }
+                setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                            <h3>${text1}</h3>
+                        </div>`)
+                update_progress(0)
+                eel.autoUpdate()(function (callback) {
+                    var mess = callback.mess
+                    if (mess == "success") {
+                        setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                            <h3>${text2}</h3>
+                        </div>`)
+                    } else {
+                        setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                            <h3>${text3}</h3>
+                        </div>`)
+                    }
+                    console.log(callback)
+                }
+                )
+            });
+            $("#activeaccount").bind("click", function () {
+                showDialog({
+                    title: "Nhập key để kích hoạt phần mềm",
+                    value: localStorage.getItem(apikeyactive),
+                }).then(function (value) {
+                    if (value === "") {
+                        return
+                    }
+
+                    eel.kichHoatTaiKhoan(value)(function (callback) {
+                        eel.updateSetting(apikeyactive, value)
+                        localStorage.setItem(apikeyactive, value)
+                        var mess = callback.mess
+                        toastWarning(mess)
+                    })
+                })
+            });
+            $("#optionproxy").change(function () {
+                addSetting(this.id, this.value)
+            });
+
+            $('*[name="textsetting"]').on('change', function () {
+                eel.updateSetting("text_" + this.id, this.value)()
+            });
+            $('*[name="radiongonngu"]').on('change', function () {
+
+                eel.updateSetting("radiongonngu", this.value)
+                if (this.value == "english") {
+                    toastSuccess("Please press F5 to update the language again");
+                } else {
+                    toastSuccess("Hãy bấm F5 để cập nhật lại ngôn ngữ");
+                }
+                // console.log(this.value, this.checked)
+                // eel.updateSetting("radio_" + this.id, this.value)()
+            });
+            // $('#numThread').on('change', function () {
+            //     eel.updateSetting(this.id, this.value)()
+            // });
+
+            function addSetting(id, value = "") {
+                if (id == "optionproxy") {
+                    $("#" + id).next("button.settingcss").remove()
+                    if (value != "noproxy") {
+                        var html = '<button class="settingcss" name="main" id="edit-item" title="Add list name"><i class="fa fa-cog"></i></button>';
+                        $("#" + id).after(html)
+                        $("#edit-item").bind("click", function () {
+                            eel.openFile(value + ".txt")()
+                        });
+                        return
+                    }
+                }
+                var checkbox = $("#" + id);
+                if (id === "verifyphone") {
+                    var html = '<button class="settingcss" name="main" id="configverifyphone" title="Config verify phone"><i class="fa fa-cog"></i></button>';
+                    checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configverifyphone').bind('click', function () { eel.openFile("verifyphone.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+                }
+                if (id === "youtubeverify") {
+                    var html = '<button class="settingcss" name="main" id="configyoutubeverify" title="Config verify youtube"><i class="fa fa-cog"></i></button>';
+                    checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configyoutubeverify').bind('click', function () { eel.openFile("youtubeverify.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+                }
+                if (id === "changedisplayname") {
+                    var html = '<button class="settingcss" name="main" id="listdisplayname" title="Add list name (first last)"><i class="fa fa-cog"></i></button>';
+                    checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#listdisplayname').bind('click', function () { eel.openFile("listdisplayname.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+                }
+
+                if (id === "restoredisable") {
+                    var html1 = '<button class="settingcss" name="main" id="settingrestoredisablecontent" title="Setting Content"><i class="fa fa-cog"></i></button>';
+                    var html2 = '<button class="settingcss" name="main" id="settingrestoredisablecontact" title="Setting Contact"><i class="fa fa-cog"></i></button>';
+                    checkbox.prop("checked") ? (checkbox.next("label").after(html1), checkbox.next("label").after(html2), $('#settingrestoredisablecontent').bind('click', function () { eel.openFile("restoredisablecontent.txt") }), $('#settingrestoredisablecontact').bind('click', function () { eel.openFile("restoredisablecontact.txt") })) : (checkbox.next("label").next("button.settingcss").remove(), checkbox.next("label").next("button.settingcss").remove());
+                }
+            }
+
+
+            eel.loadSetting()(function (callback) {
+                data = callback.data;
+                i = -1;
+                html = "";
+                j = 0;
+                adder = false;
+                for (const key in data) {
+                    adder = false;
+                    const value = data[key];
+                    i = i + 1;
+                    j = j + 1;
+                    if (i % 3 === 0) {
+                        html = html + `<div class="w3-row">`;
+                    }
+                    html =
+                        html +
+                        `<div class="w3-third"><input type="checkbox" name="checksetting" id="${key}"><label for="${key}"> ${value}</label></div>`;
+                    if (j % 3 === 0) {
+                        html = html + `</div>`;
+                        adder = true;
+                    }
+                }
+                if (adder == false) {
+                    html = html + `</div>`;
+                }
+                setHtmlCssSelector("#load-chucnangjs", html);
+                $("*[name='checksetting']").bind('click', function (ev) {
+                    addSetting(this.id)
+                    eel.updateSetting("check" + "_" + this.id, this.checked)()
+                });
+
+                eel.getSetting()(function (callback) {
+
+                    var setlang = "en"
+                    var hconfig = callback.hconfig
+                    var lang = callback.lang
+                    for (let key in hconfig) {
+                        var value = hconfig[key]
+                        if (key.startsWith("check_")) {
+                            var id = key.split("_")[1]
+                            var istrue = strToBool(value)
+                            $("#" + id).prop("checked", istrue);
+
+                        }
+                        if (key.startsWith("text_")) {
+                            var id = key.split("_")[1]
+                            $("#" + id).val(value);
+                            addSetting(id, value)
+                            // console.log(id);
+                        }
+                        if (key.startsWith("radio")) {
+                            if (key == "radiongonngu") {
+                                setlang = "en"
+                                if (value == "vietnamese") {
+                                    setlang = "vi"
+                                }
+                                localStorage.setItem('lang', setlang)
+                                localStorage.setItem('langdata', JSON.stringify(lang))
+                            }
+                            $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
+                            // console.log(id);
+                        }
+                        // console.log(key + ": " + hconfig[key]);
+                    }
+                    // console.log(hconfig)
+                    // $("#numThread").val(hconfig.numthread);
+
+                    // $("#changepass").prop("checked", strToBool(hconfig.changepass));
+                    // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
+                    // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
+                    // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
+                    // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
+
+
+                    localStorage.setItem(apikeyactive, hconfig.apikeyactive)
+                    if (setlang == "vi") {
+                        // console.log(typeof lang)
+                        function fixLabel(label) {
+                            label = label.trim()
+                            label = label.replace(/\s+/g, ' ');
+                            return label
+                        }
+                        $("label").each(function () {
+                            var labelText = fixLabel($(this).text());
+                            var newvalue = lang[labelText];
+                            if (newvalue) {
+                                $(this).html(" " + newvalue);
+                            }
+                            // console.log(labelText, newvalue)
+                        })
+                        $("button").each(function () {
+                            var labelText = fixLabel($(this).text());
+                            var newvalue = lang[labelText];
+                            // console.log(labelText, newvalue)
+                            if (newvalue) {
+                                $(this).html(newvalue);
+                            }
+                            // console.log(labelText, newvalue)
+                        })
+                        $(".lang").each(function () {
+                            var labelText = fixLabel($(this).text());
+                            var labelTextSplit = labelText.split(":")[0]
+                            var newvalue = lang[labelTextSplit];
+                            if (newvalue) {
+                                $(this).html(labelText.replace(labelTextSplit, newvalue));
+                            }
+                            // console.log(labelText, newvalue)
+                        })
+                        $("#iaccount").attr("placeholder", `Nhập danh sách tài khoản mật khẩu
+        Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
+                    }
+
+                    // console.log(hconfig)
+                });
+            });
+
+        </script>
+
+        <script>
+
+            function oimport() {
+                var iaccount = getValue("#iaccount");
+                eel.oimport(iaccount)(function (callback) {
+                    updateMails(1)
+                });
+            }
+        </script>
+        <script>
+            $("#apikeyactive").change(function () {
+                eel.updateSetting($(this).attr("id"), $(this).val())
+                // alert($(this).val());
+            });
+
+            function kichHoatTaiKhoan() {
+                var apikeyActive = getValue("#apikeyactive")
+                eel.kichHoatTaiKhoan(apikeyActive)(function (callback) {
+                    var mess = callback.mess
+                    toastWarning(mess)
+                    // if (mess != "success") {
+                    //     setHtmlCssSelector("#saveSettingStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                    //         <h3>Kích hoạt tài khoản thất bại</h3>
+                    //         <p>${mess}</p>
+                    //     </div>`  )
+                    //     return
+                    // }
+                    // var result = callback.result
+                    // setHtmlCssSelector("#saveSettingStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    //         <h3>Kích hoạt tài khoản thành công</h3>
+                    //         <p>${result}</p>
+                    //     </div>`)
+                    console.log(callback)
+                }
+                )
+            }
+            function getKeyInfo() {
+                eel.getKeyInfo()(function (callback) {
+                    data = callback.data
+                    date = data.date
+                    hoten = data.hoten
+                    hwid = data.hwid
+                    keyactive = data.serial
+                    if (hoten == undefined) {
+                        setHtmlCssSelector("#user", "Tài khoản chưa được kích hoạt")
+                        $("#user").css("color", "red")
+                        return
+                    }
+                    setHtmlCssSelector("#user", "Hi: " + hoten + ". " + "Expire: " + date)
+                    $("#user").css("color", "green")
+                    // $("#hwid").val("Hwid: " + hwid)
+                    // // $("#serial").val("Key: " + keyactive)
+                    // $("#user").val("Hi " + hoten)
+                    // $("#date").val("Expiration date: " + date)
+                    // console.log(date)
+                    // console.log(hoten)
+                    // console.log(data)
+                });
+            }
+            getKeyInfo()
+            setInterval(getKeyInfo, 5000);
+
+        </script>
+        <script>
+
+            function setDisplayMain(id) {
+                var thisselector = $("." + id);
+                var isShown = thisselector.css("display") == "block";
+                $("#main > div").hide();
+                $("." + id).css("display", "block");
+                // if (isShown) {
+                //     $(".tab_table").css("display", "block");
+                // } else {
+                //     $("." + id).css("display", "block");
+                // }
+            }
+            $("*[name='main']").on("click", function () {
+                var id = this.id
+                setDisplayMain(id);
+            });
+
+            eel.loadHideColumn()(function (callback) {
+                data = callback.data;
+                i = -1;
+                html = "";
+                j = 0;
+                adder = false;
+                for (const key in data) {
+                    adder = false;
+                    const value = data[key];
+                    i = i + 1;
+                    j = j + 1;
+                    if (i % 3 === 0) {
+                        html = html + `<div class="w3-row">`;
+                    }
+                    html =
+                        html +
+                        `<div class="w3-third"><input type="checkbox" name="checkhidedash" id="hide${key}"><label for="${key}"> ${value}</label></div>`;
+                    if (j % 3 === 0) {
+                        html = html + `</div>`;
+                        adder = true;
+                    }
+                }
+                if (adder == false) {
+                    html = html + `</div>`;
+                }
+                setHtmlCssSelector("#load-hidedash", html);
+                $("*[name='checkhidedash']").bind('click', function (ev) {
+                    eel.updateSetting("check" + "_" + this.id, this.checked)()
+                });
+                eel.getSetting()(function (callback) {
+                    var setlang = "en"
+                    var hconfig = callback.hconfig
+                    var lang = callback.lang
+                    for (let key in hconfig) {
+                        var value = hconfig[key]
+                        if (key.startsWith("check_")) {
+                            var id = key.split("_")[1]
+                            addSetting(id)
+                            $("#" + id).prop("checked", strToBool(value));
+                        }
+                    }
+                })
+            });
+            $("#hidecolumn").bind("click", function () {
+                $("#id01").css("display", "block")
+            });
+
+            $("#checkpause").bind("click", function () {
+                eel.setPause(this.checked)()
+            });
+            function pagination(c, m) {
+                var current = c,
+                    last = m,
+                    delta = 2,
+                    left = current - delta,
+                    right = current + delta + 1,
+                    range = [],
+                    rangeWithDots = [],
+                    l;
+
+                for (let i = 1; i <= last; i++) {
+                    if (i == 1 || i == last || (i >= left && i < right)) {
+                        range.push(i);
+                    }
+                }
+
+                for (let i of range) {
+                    if (l) {
+                        if (i - l === 2) {
+                            rangeWithDots.push(l + 1);
+                        } else if (i - l !== 1) {
+                            rangeWithDots.push("...");
+                        }
+                    }
+                    rangeWithDots.push(i);
+                    l = i;
+                }
+                return rangeWithDots;
+            }
+            function generateHTML(currentPage, totalPages) {
+                currentPage = parseInt(currentPage);
+                var html = '<ul class="page">';
+                html +=
+                    '<li class="page__btn" id="back_page"><span class="material-icons">chevron_left</span></li>';
+
+                var paginationArray = pagination(currentPage, totalPages);
+                for (var i = 0; i < paginationArray.length; i++) {
+                    var pageNumber = paginationArray[i];
+                    if (pageNumber === "...") {
+                        html += '<li class="page__dots">...</li>';
+                    } else {
+                        html += '<li class="page__numbers">' + pageNumber + "</li>";
+                    }
+                }
+
+                html +=
+                    '<li class="page__btn" id="next_page"><span class="material-icons">chevron_right</span></li>';
+                html += "</ul>";
+
+                return html;
+            }
+            var currentPageNum = 1;
+            function loadPage() {
+                return new Promise((resolve, reject) => {
+                    eel.get_count_mail()(function (callback) {
+                        currentPageNum = parseInt(currentPageNum);
+                        // console.log(callback);
+                        var count_item = callback.data;
+                        // alert(count_item);
+                        var html = generateHTML(currentPageNum, count_item);
+                        setHtmlCssSelector("#load_page", html);
+                        resolve();
+                    });
+                });
+            }
+
+            function loadTableMails() {
+                return new Promise((resolve, reject) => {
+                    const table = document.getElementById("tableMails");
+
+                    table.addEventListener("contextmenu", function (event) {
+                        event.preventDefault();
+                        let selectedData;
+
+                        if (event.target.nodeName === "TD") {
+                            const el = document.getElementsByName("menus");
+                            if (el.length > 0) {
+                                el[0].remove();
+                            }
+
+                            const innerHTML = event.target.innerHTML;
+                            const colIndex = event.target.cellIndex;
+                            const rowIndex = event.target.parentNode.rowIndex;
+                            row = table.rows[rowIndex];
+                            // console.log(row.innerHTML);
+                            selectedData = row.innerHTML;
+                            statusElm = row.querySelector('input[name="status"]')
+                            statusValue = ""
+                            if (statusElm) {
+                                statusValue = statusElm.value
+                            }
+                            // console.log(statusValue)
+                            // Tạo menu chuột phải
+                            const menu = document.createElement("div");
+                            menu.setAttribute("name", "menus");
+
+                            menu.style.position = "fixed";
+                            menu.style.backgroundColor = "white";
+                            menu.style.top = `${event.clientY}px`;
+                            menu.style.left = `${event.clientX}px`;
+                            menu.style.boxShadow = "0px 0px 10px gray";
+                            menu.style.padding = "10px";
+                            menu.innerHTML = `
+                        <div class="menu-item" id="select-item">Select</div>
+                        <div class="menu-item" id="deselect-item">Deselect</div>
+            <div class="menu-item" id="copy-item">Copy</div>
+            <div class="menu-item" id="selectall-item">Select all mails</div>
+            <div class="menu-item" id="selectall-item-no-running">Select mails that has not been run</div>
+            <div class="menu-item" id="selectall-item-running">Select mails has been running</div>
+            <div class="menu-item" id="selectall-item-status" value="${statusValue}">Select mails with status is '${statusValue}'</div>
+            <div class="menu-item" id="deselectall-item">Deselect all</div>
+            <div class="menu-item" id="deleteall-item">Delete selected mails</div>
+            <div class="menu-item" id="exportall-item">Export selected mails</div>
+            <div class="menu-item" id="runall-item">Run selected mails</div>
+            `;
+
+                            document.body.appendChild(menu);
+
+                            var langselect = localStorage.getItem("lang")
+                            var lang = JSON.parse(localStorage.getItem("langdata"))
+                            // console.log(lang)
+                            if (langselect == "vi") {
+                                $(".menu-item").each(function () {
+                                    var labelText = $(this).text().trim();
+
+                                    var newvalue = lang[labelText];
+                                    if (newvalue) {
+                                        $(this).html(newvalue);
+                                    } else {
+                                        if (labelText.startsWith("Select mails with status is")) {
+                                            newvalue = labelText.replace("Select mails with status is", "Chọn mail trạng thái là")
+                                            $(this).html(newvalue);
+                                        }
+                                    }
+                                    console.log(labelText, newvalue)
+                                })
+                            }
+
+
+                            if (statusValue == "") {
+                                $("#selectall-item-status").css("display", "none");
+                            }
+                            $("#copy-item").css("display", "none");
+                            const checkbox = row.querySelector("input[type='checkbox']");
+                            const checked = checkbox.checked;
+                            if (checked) {
+                                $("#select-item").css("display", "none");
+                            } else {
+                                $("#deselect-item").css("display", "none");
+                            }
+                            // Thêm sự kiện cho menu sao chép
+                            $("#copy-item").bind("click", function () {
+                                navigator.clipboard.writeText(selectedData);
+                                menu.remove();
+                            });
+                            $("#runall-item").bind("click", function () {
+                                if (selected.length == 0) {
+                                    toastError("Please select the mail to run first");
+                                    return;
+                                }
+                                eel.runAccountsThread(selected)();
+                            });
+                            $("#deleteall-item").bind("click", function () {
+                                if (confirm("Delete confirmation!") == false) {
+                                    toastWarning("Cannel delete");
+                                    return;
+                                }
+                                if (selected.length == 0) {
+                                    toastError("Please select the emails to delete first");
+                                    return;
+                                }
+
+                                eel.deleteAccounts(selected)(function (callback) {
+                                    updateMails(0)
+                                    selected = []
+                                    // var msg = callback.msg
+                                    // console.log(msg)
+                                    // if (msg == "Success") {
+                                    //     alert("Delete email successfully")
+                                    //     updateMails(0)
+                                    //     selected = []
+                                    // } else {
+                                    //     alert("Delete email failed")
+                                    // }
+                                });
+                            });
+                            $("#exportall-item").bind("click", function () {
+                                if (selected.length == 0) {
+                                    toastError("Please select the mail to export first");
+                                    return;
+                                }
+                                eel.exportAccounts(selected)(function (callback) {
+                                    // var msg = callback.msg
+                                    // console.log(msg)
+                                    // if (msg == "Success") {
+                                    //     alert("Export email successfully")
+                                    // } else {
+                                    //     alert("Export mail failed")
+                                    // }
+                                });
+                            });
+                            // Thêm sự kiện cho menu xóa
+                            // document
+                            //     .getElementById("delete-item")
+                            //     .addEventListener("click", function () {
+                            //         row.remove();
+                            //         menu.remove();
+                            //     });
+                            $("#select-item").bind("click", function () {
+                                const checkbox = row.querySelector(
+                                    "input[type='checkbox']"
+                                );
+                                checkbox.checked = true;
+                                selectedPush(checkbox.value);
+                                showSelected()
+
+                            });
+                            $("#deselect-item").bind("click", function () {
+                                const checkbox = row.querySelector(
+                                    "input[type='checkbox']"
+                                );
+                                checkbox.checked = false;
+                                selectedRemove(checkbox.value);
+                                showSelected()
+                            });
+                            $("#selectall-item-running").bind("click", function () {
+                                eel.selectMails("1")(function (callback) {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    // console.log(selected)
+                                    checkboxEvent()
+                                })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+                            $("#selectall-item-status").bind("click", function () {
+                                var value = $(this).attr("value");
+
+                                eel.selectMails(value)(function (callback) {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    console.log(selected)
+                                    checkboxEvent()
+                                })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+                            $("#selectall-item-no-running").bind("click", function () {
+                                eel.selectMails("")(function (callback) {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    // console.log(selected)
+                                    checkboxEvent()
+                                })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+                            $("#selectall-item").bind("click", function () {
+                                eel.selectMails("all")(function (callback) {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    // console.log(selected)
+                                    checkboxEvent()
+                                })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+
+                            $("#deselectall-item").bind("click", function () {
+                                selected = []
+                                checkboxEvent()
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = false;
+                                //     value = checkboxes[i].value;
+                                //     selectedRemove(value);
+                                // }
+                            });
+                            addEventListener("click", (event) => {
+                                menu.remove();
+                            });
+                            // Thêm hiệu ứng đổi màu khi di chuột vào menu
+                            const menuItems = document.querySelectorAll(".menu-item");
+                            menuItems.forEach(function (item) {
+                                item.addEventListener("mouseover", function () {
+                                    item.style.color = "white";
+                                    item.style.backgroundColor = "green";
+                                });
+                                item.addEventListener("mouseout", function () {
+                                    item.style.backgroundColor = "white";
+                                    item.style.color = "black";
+                                });
+                            });
+                        }
+                    });
+                    resolve();
+                });
+            }
+            function checkboxEvent() {
+                const checkboxes = document.querySelectorAll("input[name='mails']");
+                checkboxes.forEach(function (checkbox) {
+                    if (selected.includes(checkbox.value)) {
+                        checkbox.checked = true;
+                    } else if (selected.includes(parseInt(checkbox.value))) {
+                        checkbox.checked = true;
+                    } else {
+                        checkbox.checked = false;
+                    }
+                    // console.log(checkbox);
+                    checkbox.addEventListener("change", function () {
+                        if (this.checked) {
+                            selectedPush(this.value);
+                        } else {
+                            selectedRemove(this.value);
+                        }
+                        showSelected()
+                    });
+                });
+
+            }
+            function updateMails(numberPage) {
+                currentPage = numberPage;
+
+                const limit = 1500;
+                const skip = (numberPage - 1) * limit;
+                eel.get_mails(
+                    skip,
+                    limit
+                )(function (callback) {
+                    // console.log(callback);
+                    var success = callback.success;
+                    var data = callback.data;
+                    // console.log(msg);
+
+
+                    var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th><th name="youtubeverify">VerYoutube</th></tr></thead>`;
+                    var tr = "";
+                    var i = 0;
+                    for (const element of data) {
+                        i = i + 1;
+                        thead =
+                            thead +
+                            `<tr class="w3-hover-green" id="${element.id}">
+                            <td><input type="checkbox" name="mails" value="${element.id}"></input></td>
+                            <td>${i}</td>
+                            <td><input type="text"  value="${element.email} | ${element.password} | ${element.emailrecovery} | ${element.phonerecovery}"></td>
+
+
+                            <td>${element.datecreate != null && element.datecreate != '' ? `<input type="text" value="${element.datecreate}">` : ''}</td>
+                            <td>${element.youtube != null && element.youtube != '' ? `<input type="text" value="${element.youtube}">` : ''}</td>
+                            <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
+                            <td>${element.googlevoice != null && element.googlevoice != '' ? `<input type="text" value="${element.googlevoice}">` : ''}</td>
+                            <td><input type="text" name="status" value="${element.status != null && element.status != '' ? element.status : ''}"></td>
+                            <td>${element.statusdeletephone != null && element.statusdeletephone != '' ? `<input type="text" value="${element.statusdeletephone}">` : ''}</td>
+                            <td>${element.youtubepre != null && element.youtubepre != '' ? `<input type="text" value="${element.youtubepre}">` : ''}</td>
+                            <td>${element.paymentmethod != null && element.paymentmethod != '' ? `<input type="text" value="${element.paymentmethod}">` : ''}</td>
+                            <td>${element.statusconfirmsecurity != null && element.statusconfirmsecurity != '' ? `<input type="text" value="${element.statusconfirmsecurity}">` : ''}</td>
+                            <td>${element.devicelogout != null && element.devicelogout != '' ? `<input type="text" value="${element.devicelogout}">` : ''}</td>
+                            <td>${element.chplay != null && element.chplay != '' ? `<input type="text" value="${element.chplay}">` : ''}</td>
+                            <td>${element.displayname != null && element.displayname != '' ? `<input type="text" value="${element.displayname}">` : ''}</td>
+                            <td>${element.youtubeverify != null && element.youtubeverify != '' ? `<input type="text" value="${element.youtubeverify}">` : ''}</td>
+
+                        </tr>`;
+                        // console.log(element);
+                    }
+                    setHtmlCssSelector("#tableMails", thead);
+
+                    eel.getSetting()(function (callback) {
+                        var hconfig = callback.hconfig
+                        var lang = callback.lang
+                        for (let key in hconfig) {
+                            var value = hconfig[key]
+
+                            if (key.startsWith("check_") && strToBool(value)) {
+                                var id = key.split("_")[1]
+                                if (id.startsWith("hide")) {
+                                    id = id.substring(4)
+                                    var columnIndex = $('th[name="' + id + '"]').index();
+                                    $('table td:nth-child(' + (columnIndex + 1) + '), table th:nth-child(' + (columnIndex + 1) + ')').hide();
+                                    // $('*[name="' + id + '"]').hide()
+                                }
+                            }
+                        }
+                    })
+
+
+
+                    checkboxEvent()
+                    $("#select-table").bind("click", function () {
+                        var checkboxes1 = document.getElementsByName("mails");
+                        var item1checked = false
+                        for (var i = 0, n = checkboxes1.length; i < n; i++) {
+                            if (i == 0) {
+                                item1checked = checkboxes1[i].checked
+                            }
+                            checkboxes1[i].checked = !item1checked;
+                            value = checkboxes1[i].value;
+                            if (item1checked == false) {
+                                selectedPush(value);
+                            } else {
+                                selectedRemove(value)
+                            }
+                        }
+                        showSelected()
+                    });
+                });
+            }
+            function showSelected() {
+                var text = "Selected"
+                var langselect = localStorage.getItem("lang")
+                if (langselect == "vi") {
+                    text = "Đã chọn"
+                }
+
+                setHtmlCssSelector("#selected", text + ": " + selected.length)
+
+            }
+
+            eel.getVersion()(function (callback) {
+                var text = "Current version"
+                var lang = localStorage.getItem("lang")
+                if (lang == "vi") {
+                    text = "Phiên bản hiện tại"
+                }
+                setHtmlCssSelector("#version", text + ": " + callback)
+            });
+
+            function clickPage() {
+                return new Promise((resolve, reject) => {
+                    $("#back_page").click(function () {
+                        var currentPage = document.querySelector(".page__numbers.active");
+                        var nextPage = currentPage.previousElementSibling;
+                        if (nextPage && nextPage.classList.contains("page__numbers")) {
+                            nextPage.classList.add("active");
+                            currentPage.classList.remove("active");
+                            const numPage = nextPage.textContent;
+                            updateMails(numPage);
+                        }
+                    });
+
+                    $("#next_page").click(function () {
+                        var currentPage = document.querySelector(".page__numbers.active");
+                        var nextPage = currentPage.nextElementSibling;
+                        if (nextPage && nextPage.classList.contains("page__numbers")) {
+                            nextPage.classList.add("active");
+                            currentPage.classList.remove("active");
+                            const numPage = nextPage.textContent;
+
+                            updateMails(numPage);
+                        }
+                    });
+                    $(".page__numbers").click(function () {
+                        // alert("page__numbers");
+                        // Bỏ tất cả class "active"
+                        $(".page__numbers").removeClass("active");
+                        // Thêm class "active" cho phần tử đang được click
+                        $(this).addClass("active");
+                        const numPage = $(this).text();
+                        // generateHTML(numPage, 10);
+                        // alert(numPage);
+                        // var html = generateHTML(numPage, 10);
+                        // setHtmlCssSelector("#app", html);
+                        updateMails(numPage);
+                        // clickPage();
+                    });
+                    $(".page__numbers")[0].click();
+                    resolve();
+                });
+            }
+            var selected = [];
+            function selectedPush(value) {
+                if (selected.includes(value)) {
+                    return;
+                }
+                selected.push(value);
+            }
+
+            function selectedRemove(value) {
+                selected = selected.filter((val) => val !== value);
+            }
+            loadPage()
+            loadTableMails()
+            clickPage()
+
+        </script>
 
 
 
