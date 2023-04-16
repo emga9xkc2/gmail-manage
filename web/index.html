@@ -8,17 +8,18 @@
     <!-- <link href="/menu.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="style.css">
     <!-- Boxiocns CDN Link -->
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link href='/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="/css/w3.css">
     <script src="/static/jquery-1.12.4.min.js"></script>
 
     <link href="/static/toast/toastr.css" rel="stylesheet" />
     <link href="/codinglab.css" rel="stylesheet" />
     <link href="/page.css" rel="stylesheet" />
     <link href="/css/select.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"> -->
 
     <script src="/static/toast/toastr.min.js"></script>
@@ -267,7 +268,7 @@
 
 
             <br>
-            <!-- <div class="w3-bar-item w3-white lang" id="version" style="width:50%">...</div> -->
+
 
             <div style="float: left;">
                 <p id="user" style="display:inline; line-height: 2.5;"></p><button class="settingcss"
@@ -618,32 +619,7 @@
             }
         </script>
         <script>
-            $("#apikeyactive").change(function () {
-                eel.updateSetting($(this).attr("id"), $(this).val())
-                // alert($(this).val());
-            });
 
-            function kichHoatTaiKhoan() {
-                var apikeyActive = getValue("#apikeyactive")
-                eel.kichHoatTaiKhoan(apikeyActive)(function (callback) {
-                    var mess = callback.mess
-                    toastWarning(mess)
-                    // if (mess != "success") {
-                    //     setHtmlCssSelector("#saveSettingStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
-                    //         <h3>Kích hoạt tài khoản thất bại</h3>
-                    //         <p>${mess}</p>
-                    //     </div>`  )
-                    //     return
-                    // }
-                    // var result = callback.result
-                    // setHtmlCssSelector("#saveSettingStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
-                    //         <h3>Kích hoạt tài khoản thành công</h3>
-                    //         <p>${result}</p>
-                    //     </div>`)
-                    console.log(callback)
-                }
-                )
-            }
             function getKeyInfo() {
                 eel.getKeyInfo()(function (callback) {
                     data = callback.data
