@@ -235,12 +235,12 @@
                         </div>
 
 
-                        <div class="w3-border" id="progresss" style="visibility: hidden;">
+                        <!-- <div class="w3-border" id="progresss" style="visibility: hidden;">
                             <div id="progress" class="w3-container w3-padding w3-blue"
                                 style="width: 0%; visibility: hidden;">
                                 <div class="w3-center" id="progressValue" style="visibility: hidden;">0%</div>
                             </div>
-                        </div>
+                        </div> -->
                         <div id="hdsdStatus"></div>
 
                         <div class="w3-bar">
@@ -387,8 +387,27 @@
                 }
                 // $("#progress").val(percent)
             }
-
             $("#updateversion").bind("click", function () {
+                // alert("1234")
+                showUpdate({ title: "Đang cập nhật phiên bản mới. Xin chờ..." })
+
+
+                update_progress(0)
+
+
+                eel.autoUpdate()(function (callback) {
+                    var mess = callback.mess
+                    if (mess == "success") {
+                        setHtmlCssSelector("#updateStatus", `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`)
+                        $("#updateStatus").css("color", "green")
+                    } else {
+                        setHtmlCssSelector("#updateStatus", `Cập nhật thất bại. Hãy thử lại.`)
+                    }
+                    console.log(callback)
+                }
+                )
+            });
+            $("#updateversion2").bind("click", function () {
                 // alert("1234")
                 var text1 = "Waiting..."
                 var text2 = "Update successful. Please open the software again"
