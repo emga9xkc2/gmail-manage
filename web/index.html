@@ -295,7 +295,7 @@
         <script>
             var apikeyactive = "apikeyactive"
             function checkVersionInfo() {
-                // $("#updateversion").hide();
+
                 let condition = false; // biến kiểm tra điều kiện
                 var text = "Update new version"
                 var lang = localStorage.getItem("lang")
@@ -309,7 +309,7 @@
                         var newversion = callback
                         if (newversion.indexOf(".") > 0) {
                             setHtmlCssSelector("#updateversion", text + ": " + newversion)
-                            // $("#updateversion").show();
+
                             condition = true
                         }
                     });
@@ -332,6 +332,7 @@
                     toastWarning("Cannel stop");
                     return;
                 }
+
                 eel.setRunning(false)
             })
             $('#reload').bind('click', function () {
@@ -389,7 +390,17 @@
             }
             $("#updateversion").bind("click", function () {
                 // alert("1234")
-                showUpdate({ title: "Đang cập nhật phiên bản mới. Xin chờ..." })
+
+                var t1 = "Updating new version. Please wait..."
+                var t2 = "Done updating. Please turn off the tool and reopen it to use the new version"
+                var t3 = "Update failed. Try again."
+                var langselect = localStorage.getItem("lang")
+                if (langselect == "vi") {
+                    t1 = "Đang cập nhật phiên bản mới. Xin chờ..."
+                    t2 = `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`
+                    t3 = `Cập nhật thất bại. Hãy thử lại.`
+                }
+                showUpdate({ title: t1 })
 
 
                 update_progress(0)
@@ -398,10 +409,11 @@
                 eel.autoUpdate()(function (callback) {
                     var mess = callback.mess
                     if (mess == "success") {
-                        setHtmlCssSelector("#updateStatus", `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`)
+                        setHtmlCssSelector("#updateStatus", t2)
                         $("#updateStatus").css("color", "green")
                     } else {
-                        setHtmlCssSelector("#updateStatus", `Cập nhật thất bại. Hãy thử lại.`)
+                        setHtmlCssSelector("#updateStatus", t3)
+                        $("#updateStatus").css("color", "red")
                     }
                     console.log(callback)
                 }

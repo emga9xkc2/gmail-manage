@@ -124,15 +124,10 @@ if (-not(Test-Path -Path $pythonExePath -PathType Leaf) -and -not(Test-Path -Pat
     $Arguments += 'Include_pip="1"'
     $Arguments += 'Include_symbols="1"'
     $Arguments += 'Include_tcltk="1"'
-    $Arguments += 'Include_test="1"'
+    # $Arguments += 'Include_test="0"'
     $Arguments += 'Include_tools="1"'
-    $Arguments += 'Include_launcher="1"'
-    $Arguments += 'Include_launcher="1"'
-    $Arguments += 'Include_launcher="1"'
-    $Arguments += 'Include_launcher="1"'
-    $Arguments += 'Include_launcher="1"'
-    $Arguments += 'Include_launcher="1"'
-    $Arguments += "/quiet"
+    $Arguments += "/passive"
+    # $Arguments += "/quiet"
 
     Write-Output "Install Python"
 
