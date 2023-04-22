@@ -520,7 +520,7 @@
                 if (id === "restoredisable") {
                     var html1 = '<button class="settingcss" name="main" id="settingrestoredisablecontent" title="Setting Content"><i class="fa fa-cog"></i></button>';
                     var html2 = '<button class="settingcss" name="main" id="settingrestoredisablecontact" title="Setting Contact"><i class="fa fa-cog"></i></button>';
-                    checkbox.prop("checked") ? (checkbox.next("label").after(html1), checkbox.next("label").after(html2), $('#settingrestoredisablecontent').bind('click', function () { eel.openFile("restoredisablecontent.txt") }), $('#settingrestoredisablecontact').bind('click', function () { eel.openFile("restoredisablecontact.txt") })) : (checkbox.next("label").next("button.settingcss").remove(), checkbox.next("label").next("button.settingcss").remove());
+                    checkbox.prop("checked") ? (checkbox.next("label").after(html1), checkbox.next("label").after(html2), $('#settingrestoredisablecontent').bind('click', function () { eel.openFile("restoredisablecontent.txt", "setup/temp-data/restoredisablecontent.txt") }), $('#settingrestoredisablecontact').bind('click', function () { eel.openFile("restoredisablecontact.txt") })) : (checkbox.next("label").next("button.settingcss").remove(), checkbox.next("label").next("button.settingcss").remove());
                 }
             }
 
