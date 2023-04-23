@@ -506,7 +506,7 @@
                 var checkbox = $("#" + id);
                 if (id === "verifyphone") {
                     var html = '<button class="settingcss" name="main" id="configverifyphone" title="Config verify phone"><i class="fa fa-cog"></i></button>';
-                    checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configverifyphone').bind('click', function () { eel.openFile("verifyphone.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+                    checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configverifyphone').bind('click', function () { eel.openFile("verifyphone.txt", "setup/temp-data/verifyphone.txt") })) : checkbox.next("label").next("button.settingcss").remove();
                 }
                 if (id === "youtubeverify") {
                     var html = '<button class="settingcss" name="main" id="configyoutubeverify" title="Config verify youtube"><i class="fa fa-cog"></i></button>';
