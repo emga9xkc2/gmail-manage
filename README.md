@@ -12,4 +12,4 @@
 -   Nếu VPN không tự động đổi IP, hãy kiểm tra và cài đặt Scale màn hình về 100%
 -   Đổi mật khẩu, email khôi phục... => Vào cài đặt tích chọn các chức năng cần sử dụng
 -   Để chạy nhiều nick 1 lúc => Vào cài đặt sửa số tại ô Thread (1). Nên chạy càng ít nick 1 lúc càng tốt
--   Bật auto => Vào dashboard => Chuột phải vào vùng trống trong bảng Mail => Chọn các chức năng cần thiết
+-   Bật auto => Vào dashboard => Chuột phải vào vùng trống trong bảng Mail hoặc số 1,2,3,4...ở cột ID => Chọn các chức năng cần thiết
