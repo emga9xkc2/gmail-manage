@@ -29,7 +29,7 @@ pynput
 # ahk
 # ahk[binary]
 # python-telegram-bot
-
+pystray
 numpy
 # pywebview
 # cefpython3
