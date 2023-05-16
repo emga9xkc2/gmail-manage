@@ -16,7 +16,7 @@ SQLAlchemy
 # pymem
 #pyautogui
 eel
-
+comtypes
 #pytesseract
 Pillow
 
