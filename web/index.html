@@ -186,7 +186,7 @@
                     <div id="load-chucnangjs"></div>
                     <br>
                     <div class="w3-row">
-                        <div class="w3-third">
+                        <div class="w3-quarter">
                             <select class="w3-select" name="textsetting" id="optionproxy" style="width: 70%;"
                                 placeholder="NO PROXY">
                                 <option value="noproxy" selected>NO PROXY</option>
@@ -200,13 +200,22 @@
                                 <option value="ipvanish">IPVanish</option>
                             </select>
                         </div>
-                        <div class="w3-third">
+
+                        <div class="w3-quarter">
                             <input class="w3-input w3-border" name="textsetting" id="numthread" type="number"
                                 placeholder="Thread" min="1" style="width: 75%;">
                         </div>
-                        <div class="w3-third">
+                        <div class="w3-quarter">
                             <input class="w3-input w3-border" name="textsetting" id="timesleep" type="number"
                                 placeholder="Time sleep" min="0" style="width: 75%;">
+                        </div>
+                        <div class="w3-quarter">
+                            <select class="w3-select" name="textsetting" id="optionbrowser" style="width: 70%;"
+                                placeholder="Browser">
+                                <option value="chrome" selected>Chrome</option>
+                                <option value="hidemium">Hidemium.io</option>
+                                <option value="orbita">Orbita</option>
+                            </select>
                         </div>
                         <br>
                         <br>
@@ -471,6 +480,9 @@
                 })
             });
             $("#optionproxy").change(function () {
+                addSetting(this.id, this.value)
+            });
+            $("#optionbrowser").change(function () {
                 addSetting(this.id, this.value)
             });
 
