@@ -406,22 +406,41 @@
                 }
                 // $("#progress").val(percent)
             }
-            $("#updateversion").bind("click", function () {
-                // alert("1234")
+            eel.expose(download_progress);
+            function download_progress(file_download) {
+                show_updates("Downloading " + file_download + ". Please wait...")
+            }
+            eel.expose(close_show_update);
+            function close_show_update() {
+                document.querySelector('#progresss + button').click();
+            }
+            function show_updates(title) {
 
-                var t1 = "Updating new version. Please wait..."
                 var t2 = "Done updating. Please turn off the tool and reopen it to use the new version"
                 var t3 = "Update failed. Try again."
                 var langselect = localStorage.getItem("lang")
                 if (langselect == "vi") {
-                    t1 = "Đang cập nhật phiên bản mới. Xin chờ..."
+
+                    if (title == "Updating new version. Please wait...") {
+                        title = "Đang cập nhật phiên bản mới. Xin chờ..."
+                    } else if (title.substring("Downloading")) {
+                        title = title.replace("Downloading", "Đang tải")
+                        title = title.replace("Please wait", "Xin chờ")
+                    }
+
                     t2 = `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`
                     t3 = `Cập nhật thất bại. Hãy thử lại.`
                 }
-                showUpdate({ title: t1 })
-
-
+                showUpdate({ title: title })
                 update_progress(0)
+            }
+            $("#updateversion").bind("click", function () {
+                // alert("1234")
+
+
+                show_updates("Updating new version. Please wait...")
+
+
 
 
                 eel.autoUpdate()(function (callback) {
