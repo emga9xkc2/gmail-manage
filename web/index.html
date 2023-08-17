@@ -202,6 +202,7 @@
                                 <option value="ipvanish">IPVanish</option>
                                 <option value="list_shadowtech">LIST SHADOWTECH</option>
                                 <option value="tinsoftproxy">TINSOFTPROXY</option>
+                                <option value="proxyno1">PROXYNO1</option>
                             </select>
                         </div>
 
@@ -216,7 +217,8 @@
                         <div class="w3-quarter">
                             <select class="w3-select" name="textsetting" id="optionbrowser" style="width: 70%;"
                                 placeholder="Browser">
-                                <option value="chrome" selected>Chrome</option>
+                                <option value="dolphin" selected>Dolphin</option>
+                                <option value="chrome">Chrome</option>
                                 <option value="hidemium">Hidemium.io</option>
                                 <option value="orbita">Orbita</option>
                             </select>
@@ -523,6 +525,10 @@
                 if (id === "verifyphone") {
                     var html = '<button class="settingcss" name="main" id="configverifyphone" title="Config verify phone"><i class="fa fa-cog"></i></button>';
                     checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configverifyphone').bind('click', function () { eel.openFile("verifyphone.txt", "setup/temp-data/verifyphone.txt") })) : checkbox.next("label").next("button.settingcss").remove();
+                }
+                if (id === "saveprofile") {
+                    var html = '<button class="settingcss" name="main" id="configsaveprofile" title="Config save profile"><i class="fa fa-cog"></i></button>';
+                    checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configsaveprofile').bind('click', function () { eel.openFile("saveprofile.txt") })) : checkbox.next("label").next("button.settingcss").remove();
                 }
                 if (id === "youtubeverify") {
                     var html = '<button class="settingcss" name="main" id="configyoutubeverify" title="Config verify youtube"><i class="fa fa-cog"></i></button>';
@@ -1120,7 +1126,7 @@
                     // console.log(msg);
 
 
-                    var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th><th name="youtubeverify">VerYoutube</th><th name="checkhiddenphone">HiddenPhone</th><th name="checkreviewgooglemap">CheckGMap</th><th name="checkgoogleadw">CheckAdw</th><th name="create_brand_account_youtube">BrandYtb</th></tr></thead>`;
+                    var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th><th name="youtubeverify">VerYoutube</th><th name="checkhiddenphone">HiddenPhone</th><th name="checkreviewgooglemap">CheckGMap</th><th name="checkgoogleadw">CheckAdw</th><th name="createbrandaccountyoutube">BrandYtb</th></tr></thead>`;
                     var tr = "";
                     var i = 0;
                     for (const element of data) {
