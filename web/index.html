@@ -416,8 +416,7 @@
             }
             function show_updates(title) {
 
-                var t2 = "Done updating. Please turn off the tool and reopen it to use the new version"
-                var t3 = "Update failed. Try again."
+
                 var langselect = localStorage.getItem("lang")
                 if (langselect == "vi") {
 
@@ -428,8 +427,7 @@
                         title = title.replace("Please wait", "Xin chờ")
                     }
 
-                    t2 = `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`
-                    t3 = `Cập nhật thất bại. Hãy thử lại.`
+
                 }
                 showUpdate({ title: title })
                 update_progress(0)
@@ -444,6 +442,13 @@
 
 
                 eel.autoUpdate()(function (callback) {
+                    var t2 = "Done updating. Please turn off the tool and reopen it to use the new version"
+                    var t3 = "Update failed. Try again."
+                    var langselect = localStorage.getItem("lang")
+                    if (langselect == "vi") {
+                        t2 = `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`
+                        t3 = `Cập nhật thất bại. Hãy thử lại.`
+                    }
                     var mess = callback.mess
                     if (mess == "success") {
                         setHtmlCssSelector("#updateStatus", t2)
