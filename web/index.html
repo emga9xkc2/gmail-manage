@@ -27,6 +27,7 @@
 
     <script type="text/javascript" src="/eel.js"></script>
     <script src="/static/myscript.js"></script>
+    <script defer src="/static/app.js"></script>
     <title></title>
     <style>
         body td>input {
@@ -231,25 +232,19 @@
 
                         <div class="w3-bar">
 
-                            <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="configcaptcha">Config
-                                captcha</button>
+                            <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="apikeycaptcha"
+                                haction="open_file">Config captcha</button>
 
 
 
-                            <button class="w3-bar-item w3-button w3-red" style="width:25%"
-                                id="emailrecoveryrandom">Email
-                                recovery
-                                random</button>
-                            <button class="w3-bar-item w3-button w3-purple" style="width:25%"
-                                id="emailrecoverydomain">Email
-                                recovery
-                                domain</button>
-                            <button class="w3-bar-item w3-button w3-red" style="width:25%" id="passwordrandom">Password
-                                random
-                            </button>
-                            <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="openhconfig">Open
-                                hconfig
-                            </button>
+                            <button class="w3-bar-item w3-button w3-red" style="width:25%" id="emailrecoveryrandom"
+                                haction="open_file">Email recovery random</button>
+                            <button class="w3-bar-item w3-button w3-purple" style="width:25%" id="emailrecoverydomain"
+                                haction="open_file">Email recovery domain</button>
+                            <button class="w3-bar-item w3-button w3-red" style="width:25%" id="passwordrandom"
+                                haction="open_file">Password random </button>
+                            <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="hconfig"
+                                haction="open_file">Open hconfig </button>
                             <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="hidecolumn">Hide
                                 column</button>
                         </div>
@@ -358,25 +353,13 @@
             $('#reload').bind('click', function () {
                 updateMails(1)
             })
-            $('#openhconfig').bind('click', function () {
-                eel.openFile("hconfig.ini")
-            })
 
-            $('#configcaptcha').bind('click', function () {
-                eel.openFile("apikeycaptcha.txt")
-            })
-            $('#emailrecoveryrandom').bind('click', function () {
-                eel.openFile("emailrecoveryrandom.txt")
-            })
-            $('#passwordrandom').bind('click', function () {
-                eel.openFile("passwordrandom.txt")
-            })
+
+
             $('#tab_folder').bind('click', function () {
                 eel.openFolder("data/")
             })
-            $('#emailrecoverydomain').bind('click', function () {
-                eel.openFile("emailrecoverydomain.txt")
-            })
+
             $('#restoreDisableContent').bind('click', function () {
                 eel.openFile("restoredisablecontent.txt")
             })
@@ -497,16 +480,7 @@
                     title: "Nhập key để kích hoạt phần mềm",
                     value: localStorage.getItem(apikeyactive),
                 }).then(function (value) {
-                    if (value === "") {
-                        return
-                    }
-
-                    eel.kichHoatTaiKhoan(value)(function (callback) {
-                        eel.updateSetting(apikeyactive, value)
-                        localStorage.setItem(apikeyactive, value)
-                        var mess = callback.mess
-                        toastWarning(mess)
-                    })
+                    kich_hoat_tai_khoan(value)
                 })
             });
             $("#optionproxy").change(function () {
@@ -702,6 +676,7 @@
         <script>
 
             function getKeyInfo() {
+
                 eel.getKeyInfo()(function (callback) {
                     data = callback.data
                     date = data.date
@@ -723,6 +698,7 @@
                     // console.log(hoten)
                     // console.log(data)
                 });
+
             }
             getKeyInfo()
             setInterval(getKeyInfo, 5000);
@@ -956,7 +932,8 @@
                                     toastError("Please select the mail to run first");
                                     return;
                                 }
-                                eel.runAccountsThread(selected)();
+                                handle_account("run", selected)
+                                // eel.runAccountsThread(selected)();
                             });
                             $("#deleteall-item").bind("click", function () {
                                 if (confirm("Delete confirmation!") == false) {
@@ -967,35 +944,41 @@
                                     toastError("Please select the emails to delete first");
                                     return;
                                 }
-
-                                eel.deleteAccounts(selected)(function (callback) {
+                                handle_account("delete", selected).then((kq) => {
                                     updateMails(0)
                                     selected = []
-                                    // var msg = callback.msg
-                                    // console.log(msg)
-                                    // if (msg == "Success") {
-                                    //     alert("Delete email successfully")
-                                    //     updateMails(0)
-                                    //     selected = []
-                                    // } else {
-                                    //     alert("Delete email failed")
-                                    // }
-                                });
+                                })
+
+                                // delete_account()
+                                // // eel.deleteAccounts(selected)(function (callback) {
+                                // //     updateMails(0)
+                                // //     selected = []
+                                //     // var msg = callback.msg
+                                //     // console.log(msg)
+                                //     // if (msg == "Success") {
+                                //     //     alert("Delete email successfully")
+                                //     //     updateMails(0)
+                                //     //     selected = []
+                                //     // } else {
+                                //     //     alert("Delete email failed")
+                                //     // }
+                                // });
                             });
                             $("#exportall-item").bind("click", function () {
                                 if (selected.length == 0) {
                                     toastError("Please select the mail to export first");
                                     return;
                                 }
-                                eel.exportAccounts(selected)(function (callback) {
-                                    // var msg = callback.msg
-                                    // console.log(msg)
-                                    // if (msg == "Success") {
-                                    //     alert("Export email successfully")
-                                    // } else {
-                                    //     alert("Export mail failed")
-                                    // }
-                                });
+                                handle_account("export", selected)
+                                // eel.exportAccounts(selected)(function (callback) {
+                                //     // var msg = callback.msg
+                                //     // console.log(msg)
+                                //     // if (msg == "Success") {
+                                //     //     alert("Export email successfully")
+                                //     // } else {
+                                //     //     alert("Export mail failed")
+                                //     // }
+                                // });
                             });
                             // Thêm sự kiện cho menu xóa
                             // document
