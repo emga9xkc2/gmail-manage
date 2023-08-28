@@ -2,8 +2,17 @@ function injectEvent() {
     var btns = document.getElementsByTagName("button");
     for (var btn of btns) {
         if (!btn.id || btn.getAttribute("onclick")) continue;
+
         btn.onclick = (evt) => {
-            clicked(evt.target.id, evt.target.getAttribute("haction"));
+            // alert(evt.target.id);
+            haction = [];
+            haction_get = evt.target.getAttribute("haction");
+            if (haction_get != null) {
+                if (haction_get.includes(":") > 0) {
+                    haction = haction_get.split(":");
+                }
+            }
+            clicked(evt.target.id, haction);
         };
     }
 }
@@ -92,6 +101,10 @@ function onMessage(data) {
     } else if (action == "set_style") {
         gid(data.id).style[data.style_name] = data.style_value;
         return;
+    } else if (action == "get_value") {
+        return gid(data.id).value;
+    } else if (action == "load_mail") {
+        load_mail(data.action);
     }
 }
 eel.expose(onMessage);

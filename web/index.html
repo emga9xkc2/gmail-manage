@@ -29,7 +29,7 @@
 
     <script type="text/javascript" src="/eel.js"></script>
     <script src="/static/myscript.js"></script>
-    <script src="/static/app.js"></script>
+    <script defer src="/static/app.js"></script>
     <title></title>
     <style>
         body td>input {
@@ -115,7 +115,8 @@
                             class="fa fa-upload"></i></i></button>
                     <button class="btn" name="main" id="tab_setting" title="Setting"><i class="fa fa-cog"></i></button>
                     <button class="btn" name="main" id="tab_log" title="Logs"><i class="fa fa-paper-plane"></i></button>
-                    <button class="btn" id="tab_folder" title="Open data folder"><i class="fa fa-folder"></i></button>
+                    <button class="btn" id="tab_folder" haction="open_folder:data" title="Open data folder"><i
+                            class="fa fa-folder"></i></button>
                 </div>
                 <div class="khoangcach">
                     <button class="btn" style="color: red;" id="stop" title="Stop"><i class="fa fa-stop"></i></button>
@@ -134,7 +135,7 @@
 
 
 
-            <!-- <button onclick="updateMails()" class="w3-button w3-teal w3-right">Cập nhật danh sách mail</button> -->
+            <!-- <button onclick="load_mail()" class="w3-button w3-teal w3-right">Cập nhật danh sách mail</button> -->
             <div id="main">
                 <div class="tab_home">
                     <div style="overflow-y: scroll; height: 500px;">
@@ -169,7 +170,7 @@
                 <div class="tab_import" style="display:none">
 
                     <div class="w3-row">
-                        <textarea class="lang" id="iaccount" rows="15"
+                        <textarea class="lang" id="txt_account" rows="15"
                             style="width: 100%; resize: none;border: 1px solid #ccc;" placeholder="Enter the list of accounts.
                 Format: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3..."></textarea>
 
@@ -177,7 +178,7 @@
 
                     <br>
                     <!-- <input type=" file" id="ifile"> -->
-                    <button onclick="oimport()" class="w3-button w3-teal w3-right">Import</button>
+                    <button id="btn_import" class="w3-button w3-teal w3-right">Import</button>
                     <br>
                     <br>
                     <br>
@@ -235,18 +236,18 @@
                         <div class="w3-bar">
 
                             <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="apikeycaptcha"
-                                haction="open_file">Config captcha</button>
+                                haction="open_file:data/apikeycaptcha.txt">Config captcha</button>
 
 
 
                             <button class="w3-bar-item w3-button w3-red" style="width:25%" id="emailrecoveryrandom"
-                                haction="open_file">Email recovery random</button>
+                                haction="open_file:data/emailrecoveryrandom.txt">Email recovery random</button>
                             <button class="w3-bar-item w3-button w3-purple" style="width:25%" id="emailrecoverydomain"
-                                haction="open_file">Email recovery domain</button>
+                                haction="open_file:data/emailrecoverydomain.txt">Email recovery domain</button>
                             <button class="w3-bar-item w3-button w3-red" style="width:25%" id="passwordrandom"
-                                haction="open_file">Password random </button>
+                                haction="open_file:data/passwordrandom.txt">Password random </button>
                             <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="hconfig"
-                                haction="open_file">Open hconfig </button>
+                                haction="open_file:data/hconfig.ini">Open hconfig </button>
                             <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="hidecolumn">Hide
                                 column</button>
                         </div>
@@ -310,20 +311,143 @@
 
 
         <script>
+            var selected = [];
+            function load_mail(numberPage) {
+                currentPage = numberPage;
 
-            function oimport() {
-                var iaccount = getValue("#iaccount");
+                const limit = 1500;
+                const skip = (numberPage - 1) * limit;
+                get_mails(
+                    skip,
+                    limit
+                ).then((callback) => {
+                    // console.log(callback);
+                    var success = callback.success;
+                    var data = callback.data;
+                    // console.log(msg);
 
 
-                send_message({
-                    action: "import",
-                    sender: "",
-                    args: iaccount,
-                    form: "",
-                }).then((callback) => {
-                    updateMails(1)
+                    var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th><th name="youtubeverify">VerYoutube</th><th name="checkhiddenphone">HiddenPhone</th><th name="checkreviewgooglemap">CheckGMap</th><th name="checkgoogleadw">CheckAdw</th><th name="createbrandaccountyoutube">BrandYtb</th></tr></thead>`;
+                    var tr = "";
+                    var i = 0;
+                    for (const element of data) {
+                        i = i + 1;
+                        thead =
+                            thead +
+                            `<tr class="w3-hover-green" id="${element.id}">
+                            <td><input type="checkbox" name="mails" value="${element.id}"></input></td>
+                            <td>${i}</td>
+                            <td><input type="text"  value="${element.email} | ${element.password} | ${element.emailrecovery} | ${element.phonerecovery}"></td>
+
+
+                            <td>${element.datecreate != null && element.datecreate != '' ? `<input type="text" value="${element.datecreate}">` : ''}</td>
+                            <td>${element.youtube != null && element.youtube != '' ? `<input type="text" value="${element.youtube}">` : ''}</td>
+                            <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
+                            <td>${element.googlevoice != null && element.googlevoice != '' ? `<input type="text" value="${element.googlevoice}">` : ''}</td>
+                            <td><input type="text" name="status" value="${element.status != null && element.status != '' ? element.status : ''}"></td>
+                            <td>${element.statusdeletephone != null && element.statusdeletephone != '' ? `<input type="text" value="${element.statusdeletephone}">` : ''}</td>
+                            <td>${element.youtubepre != null && element.youtubepre != '' ? `<input type="text" value="${element.youtubepre}">` : ''}</td>
+                            <td>${element.paymentmethod != null && element.paymentmethod != '' ? `<input type="text" value="${element.paymentmethod}">` : ''}</td>
+                            <td>${element.statusconfirmsecurity != null && element.statusconfirmsecurity != '' ? `<input type="text" value="${element.statusconfirmsecurity}">` : ''}</td>
+                            <td>${element.devicelogout != null && element.devicelogout != '' ? `<input type="text" value="${element.devicelogout}">` : ''}</td>
+                            <td>${element.chplay != null && element.chplay != '' ? `<input type="text" value="${element.chplay}">` : ''}</td>
+                            <td>${element.displayname != null && element.displayname != '' ? `<input type="text" value="${element.displayname}">` : ''}</td>
+                            <td>${element.youtubeverify != null && element.youtubeverify != '' ? `<input type="text" value="${element.youtubeverify}">` : ''}</td>
+                            <td>${element.checkhiddenphone != null && element.checkhiddenphone != '' ? `<input type="text" value="${element.checkhiddenphone}">` : ''}</td>
+                            <td>${element.checkreviewgooglemap != null && element.checkreviewgooglemap != '' ? `<input type="text" value="${element.checkreviewgooglemap}">` : ''}</td>
+                            <td>${element.checkgoogleadw != null && element.checkgoogleadw != '' ? `<input type="text" value="${element.checkgoogleadw}">` : ''}</td>
+                            <td>${element.create_brand_account_youtube != null && element.create_brand_account_youtube != '' ? `<input type="text" value="${element.create_brand_account_youtube}">` : ''}</td>
+
+                        </tr>`;
+                        // console.log(element);
+                    }
+                    setHtmlCssSelector("#tableMails", thead);
+                    send_message({
+                        action: "get_settings",
+                        sender: "",
+                        args: [],
+                        form: "",
+                    }).then((callback) => {
+                        var hconfig = callback.hconfig
+                        var lang = callback.lang
+                        for (let key in hconfig) {
+                            var value = hconfig[key]
+
+                            if (key.startsWith("check_") && strToBool(value)) {
+                                var id = key.split("_")[1]
+                                if (id.startsWith("hide")) {
+                                    id = id.substring(4)
+                                    var columnIndex = $('th[name="' + id + '"]').index();
+                                    $('table td:nth-child(' + (columnIndex + 1) + '), table th:nth-child(' + (columnIndex + 1) + ')').hide();
+                                    // $('*[name="' + id + '"]').hide()
+                                }
+                            }
+                        }
+                    })
+
+
+                    // eel.getSetting()(function (callback) {
+                    //     var hconfig = callback.hconfig
+                    //     var lang = callback.lang
+                    //     for (let key in hconfig) {
+                    //         var value = hconfig[key]
+
+                    //         if (key.startsWith("check_") && strToBool(value)) {
+                    //             var id = key.split("_")[1]
+                    //             if (id.startsWith("hide")) {
+                    //                 id = id.substring(4)
+                    //                 var columnIndex = $('th[name="' + id + '"]').index();
+                    //                 $('table td:nth-child(' + (columnIndex + 1) + '), table th:nth-child(' + (columnIndex + 1) + ')').hide();
+                    //                 // $('*[name="' + id + '"]').hide()
+                    //             }
+                    //         }
+                    //     }
+                    // })
+
+
+
+                    checkboxEvent()
+                    $("#select-table").bind("click", function () {
+                        var checkboxes1 = document.getElementsByName("mails");
+                        var item1checked = false
+                        for (var i = 0, n = checkboxes1.length; i < n; i++) {
+                            if (i == 0) {
+                                item1checked = checkboxes1[i].checked
+                            }
+                            checkboxes1[i].checked = !item1checked;
+                            value = checkboxes1[i].value;
+                            if (item1checked == false) {
+                                selectedPush(value);
+                            } else {
+                                selectedRemove(value)
+                            }
+                        }
+                        showSelected()
+                    });
                 })
 
+
+            }
+            function checkboxEvent() {
+                const checkboxes = document.querySelectorAll("input[name='mails']");
+                checkboxes.forEach(function (checkbox) {
+                    if (selected.includes(checkbox.value)) {
+                        checkbox.checked = true;
+                    } else if (selected.includes(parseInt(checkbox.value))) {
+                        checkbox.checked = true;
+                    } else {
+                        checkbox.checked = false;
+                    }
+                    // console.log(checkbox);
+                    checkbox.addEventListener("change", function () {
+                        if (this.checked) {
+                            selectedPush(this.value);
+                        } else {
+                            selectedRemove(this.value);
+                        }
+                        showSelected()
+                    });
+                });
 
             }
             // document.addEventListener('DOMContentLoaded', function () {
@@ -372,21 +496,11 @@
                     eel.setRunning(false)
                 })
                 $('#reload').bind('click', function () {
-                    updateMails(1)
+                    load_mail(1)
                 })
 
 
 
-                $('#tab_folder').bind('click', function () {
-                    eel.openFolder("data/")
-                })
-
-                $('#restoreDisableContent').bind('click', function () {
-                    eel.openFile("restoredisablecontent.txt")
-                })
-                $('#restoreDisableContact').bind('click', function () {
-                    eel.openFile("restoredisablecontact.txt")
-                })
                 eel.expose(update_progress);
                 function update_progress(percent) {
                     percent = percent.toString()
@@ -1053,19 +1167,19 @@
                                         return;
                                     }
                                     handle_account("delete", selected).then(callback => {
-                                        updateMails(0)
+                                        load_mail(0)
                                         selected = []
                                     })
 
                                     // delete_account()
                                     // // eel.deleteAccounts(selected)(function (callback) {
-                                    // //     updateMails(0)
+                                    // //     load_mail(0)
                                     // //     selected = []
                                     //     // var msg = callback.msg
                                     //     // console.log(msg)
                                     //     // if (msg == "Success") {
                                     //     //     alert("Delete email successfully")
-                                    //     //     updateMails(0)
+                                    //     //     load_mail(0)
                                     //     //     selected = []
                                     //     // } else {
                                     //     //     alert("Delete email failed")
@@ -1240,144 +1354,8 @@
                         resolve();
                     });
                 }
-                function checkboxEvent() {
-                    const checkboxes = document.querySelectorAll("input[name='mails']");
-                    checkboxes.forEach(function (checkbox) {
-                        if (selected.includes(checkbox.value)) {
-                            checkbox.checked = true;
-                        } else if (selected.includes(parseInt(checkbox.value))) {
-                            checkbox.checked = true;
-                        } else {
-                            checkbox.checked = false;
-                        }
-                        // console.log(checkbox);
-                        checkbox.addEventListener("change", function () {
-                            if (this.checked) {
-                                selectedPush(this.value);
-                            } else {
-                                selectedRemove(this.value);
-                            }
-                            showSelected()
-                        });
-                    });
-
-                }
-                function updateMails(numberPage) {
-                    currentPage = numberPage;
-
-                    const limit = 1500;
-                    const skip = (numberPage - 1) * limit;
-                    get_mails(
-                        skip,
-                        limit
-                    ).then((callback) => {
-                        // console.log(callback);
-                        var success = callback.success;
-                        var data = callback.data;
-                        // console.log(msg);
 
 
-                        var thead = `<thead><tr class="w3-light-grey w3-hover-red"><th id="select-table">Select</th><th name="id">ID</th><th>Account</th><th name="datecreate">Date</th><th name="youtube">Youtube</th><th name="country">Country</th><th name="googlevoice">GVoice</th><th name="status">Status</th><th name="statusdeletephone">DelPhone</th><th name="youtubepre">YouPre</th><th name="paymentmethod">Payment</th><th name="statusconfirmsecurity">ConfirmSecurity</th><th name="devicelogout">Logout</th><th name="chplay">PlayStore</th><th name="displayname">DisplayName</th><th name="youtubeverify">VerYoutube</th><th name="checkhiddenphone">HiddenPhone</th><th name="checkreviewgooglemap">CheckGMap</th><th name="checkgoogleadw">CheckAdw</th><th name="createbrandaccountyoutube">BrandYtb</th></tr></thead>`;
-                        var tr = "";
-                        var i = 0;
-                        for (const element of data) {
-                            i = i + 1;
-                            thead =
-                                thead +
-                                `<tr class="w3-hover-green" id="${element.id}">
-                            <td><input type="checkbox" name="mails" value="${element.id}"></input></td>
-                            <td>${i}</td>
-                            <td><input type="text"  value="${element.email} | ${element.password} | ${element.emailrecovery} | ${element.phonerecovery}"></td>
-
-
-                            <td>${element.datecreate != null && element.datecreate != '' ? `<input type="text" value="${element.datecreate}">` : ''}</td>
-                            <td>${element.youtube != null && element.youtube != '' ? `<input type="text" value="${element.youtube}">` : ''}</td>
-                            <td>${element.country != null && element.country != '' ? `<input type="text" value="${element.country}">` : ''}</td>
-                            <td>${element.googlevoice != null && element.googlevoice != '' ? `<input type="text" value="${element.googlevoice}">` : ''}</td>
-                            <td><input type="text" name="status" value="${element.status != null && element.status != '' ? element.status : ''}"></td>
-                            <td>${element.statusdeletephone != null && element.statusdeletephone != '' ? `<input type="text" value="${element.statusdeletephone}">` : ''}</td>
-                            <td>${element.youtubepre != null && element.youtubepre != '' ? `<input type="text" value="${element.youtubepre}">` : ''}</td>
-                            <td>${element.paymentmethod != null && element.paymentmethod != '' ? `<input type="text" value="${element.paymentmethod}">` : ''}</td>
-                            <td>${element.statusconfirmsecurity != null && element.statusconfirmsecurity != '' ? `<input type="text" value="${element.statusconfirmsecurity}">` : ''}</td>
-                            <td>${element.devicelogout != null && element.devicelogout != '' ? `<input type="text" value="${element.devicelogout}">` : ''}</td>
-                            <td>${element.chplay != null && element.chplay != '' ? `<input type="text" value="${element.chplay}">` : ''}</td>
-                            <td>${element.displayname != null && element.displayname != '' ? `<input type="text" value="${element.displayname}">` : ''}</td>
-                            <td>${element.youtubeverify != null && element.youtubeverify != '' ? `<input type="text" value="${element.youtubeverify}">` : ''}</td>
-                            <td>${element.checkhiddenphone != null && element.checkhiddenphone != '' ? `<input type="text" value="${element.checkhiddenphone}">` : ''}</td>
-                            <td>${element.checkreviewgooglemap != null && element.checkreviewgooglemap != '' ? `<input type="text" value="${element.checkreviewgooglemap}">` : ''}</td>
-                            <td>${element.checkgoogleadw != null && element.checkgoogleadw != '' ? `<input type="text" value="${element.checkgoogleadw}">` : ''}</td>
-                            <td>${element.create_brand_account_youtube != null && element.create_brand_account_youtube != '' ? `<input type="text" value="${element.create_brand_account_youtube}">` : ''}</td>
-
-                        </tr>`;
-                            // console.log(element);
-                        }
-                        setHtmlCssSelector("#tableMails", thead);
-                        send_message({
-                            action: "get_settings",
-                            sender: "",
-                            args: [],
-                            form: "",
-                        }).then((callback) => {
-                            var hconfig = callback.hconfig
-                            var lang = callback.lang
-                            for (let key in hconfig) {
-                                var value = hconfig[key]
-
-                                if (key.startsWith("check_") && strToBool(value)) {
-                                    var id = key.split("_")[1]
-                                    if (id.startsWith("hide")) {
-                                        id = id.substring(4)
-                                        var columnIndex = $('th[name="' + id + '"]').index();
-                                        $('table td:nth-child(' + (columnIndex + 1) + '), table th:nth-child(' + (columnIndex + 1) + ')').hide();
-                                        // $('*[name="' + id + '"]').hide()
-                                    }
-                                }
-                            }
-                        })
-
-
-                        // eel.getSetting()(function (callback) {
-                        //     var hconfig = callback.hconfig
-                        //     var lang = callback.lang
-                        //     for (let key in hconfig) {
-                        //         var value = hconfig[key]
-
-                        //         if (key.startsWith("check_") && strToBool(value)) {
-                        //             var id = key.split("_")[1]
-                        //             if (id.startsWith("hide")) {
-                        //                 id = id.substring(4)
-                        //                 var columnIndex = $('th[name="' + id + '"]').index();
-                        //                 $('table td:nth-child(' + (columnIndex + 1) + '), table th:nth-child(' + (columnIndex + 1) + ')').hide();
-                        //                 // $('*[name="' + id + '"]').hide()
-                        //             }
-                        //         }
-                        //     }
-                        // })
-
-
-
-                        checkboxEvent()
-                        $("#select-table").bind("click", function () {
-                            var checkboxes1 = document.getElementsByName("mails");
-                            var item1checked = false
-                            for (var i = 0, n = checkboxes1.length; i < n; i++) {
-                                if (i == 0) {
-                                    item1checked = checkboxes1[i].checked
-                                }
-                                checkboxes1[i].checked = !item1checked;
-                                value = checkboxes1[i].value;
-                                if (item1checked == false) {
-                                    selectedPush(value);
-                                } else {
-                                    selectedRemove(value)
-                                }
-                            }
-                            showSelected()
-                        });
-                    })
-
-
-                }
                 function showSelected() {
                     var text = "Selected"
                     var langselect = localStorage.getItem("lang")
@@ -1407,7 +1385,7 @@
                                 nextPage.classList.add("active");
                                 currentPage.classList.remove("active");
                                 const numPage = nextPage.textContent;
-                                updateMails(numPage);
+                                load_mail(numPage);
                             }
                         });
 
@@ -1419,7 +1397,7 @@
                                 currentPage.classList.remove("active");
                                 const numPage = nextPage.textContent;
 
-                                updateMails(numPage);
+                                load_mail(numPage);
                             }
                         });
                         $(".page__numbers").click(function () {
@@ -1433,14 +1411,14 @@
                             // alert(numPage);
                             // var html = generateHTML(numPage, 10);
                             // setHtmlCssSelector("#app", html);
-                            updateMails(numPage);
+                            load_mail(numPage);
                             // clickPage();
                         });
                         $(".page__numbers")[0].click();
                         resolve();
                     });
                 }
-                var selected = [];
+
                 function selectedPush(value) {
                     if (selected.includes(value)) {
                         return;
