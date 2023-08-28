@@ -1,6 +1,3 @@
-async function startApp() {
-    injectEvent();
-}
 function injectEvent() {
     var btns = document.getElementsByTagName("button");
     for (var btn of btns) {
@@ -68,5 +65,7 @@ async function sendMessage(data) {
     // alert(a);
     return a;
 }
-
+async function startApp() {
+    injectEvent();
+}
 startApp();

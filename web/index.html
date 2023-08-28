@@ -2,7 +2,9 @@
 <!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
 <html lang="en" dir="ltr" style="overflow-y: auto;">
 
+
 <head>
+    <script defer src="/static/app.js"></script>
     <meta charset="UTF-8">
     <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
     <!-- <link href="/menu.css" rel="stylesheet" /> -->
@@ -27,7 +29,7 @@
 
     <script type="text/javascript" src="/eel.js"></script>
     <script src="/static/myscript.js"></script>
-    <script defer src="/static/app.js"></script>
+
     <title></title>
     <style>
         body td>input {
@@ -567,62 +569,9 @@
                     checkbox.prop("checked") ? (checkbox.next("label").after(html1), checkbox.next("label").after(html2), $('#settingrestoredisablecontent').bind('click', function () { eel.openFile("restoredisablecontent.txt", "setup/temp-data/restoredisablecontent.txt") }), $('#settingrestoredisablecontact').bind('click', function () { eel.openFile("restoredisablecontact.txt") })) : (checkbox.next("label").next("button.settingcss").remove(), checkbox.next("label").next("button.settingcss").remove());
                 }
             }
-            $(document).ready(function () {
-                send_message({
-                    action: "load_hide_column",
-                    sender: "",
-                    args: [],
-                    form: "",
-                }).then((callback) => {
-                    data = callback.data;
-                    i = -1;
-                    html = "";
-                    j = 0;
-                    adder = false;
-                    for (const key in data) {
-                        adder = false;
-                        const value = data[key];
-                        i = i + 1;
-                        j = j + 1;
-                        if (i % 3 === 0) {
-                            html = html + `<div class="w3-row">`;
-                        }
-                        html =
-                            html +
-                            `<div class="w3-third"><input type="checkbox" name="checkhidedash" id="hide${key}"><label for="${key}"> ${value}</label></div>`;
-                        if (j % 3 === 0) {
-                            html = html + `</div>`;
-                            adder = true;
-                        }
-                    }
-                    if (adder == false) {
-                        html = html + `</div>`;
-                    }
-                    setHtmlCssSelector("#load-hidedash", html);
-                    $("*[name='checkhidedash']").bind('click', function (ev) {
-                        eel.updateSetting("check" + "_" + this.id, this.checked)()
-                    });
 
 
-                    send_message({
-                        action: "get_settings",
-                        sender: "",
-                        args: [],
-                        form: "",
-                    }).then((callback) => {
-                        var setlang = "en"
-                        var hconfig = callback.hconfig
-                        var lang = callback.lang
-                        for (let key in hconfig) {
-                            var value = hconfig[key]
-                            if (key.startsWith("check_")) {
-                                var id = key.split("_")[1]
-                                addSetting(id)
-                                $("#" + id).prop("checked", strToBool(value));
-                            }
-                        }
-                    })
-                })
+            window.document.onload = function (e) {
                 send_message({
                     action: "load_settings",
                     sender: "",
@@ -875,10 +824,62 @@
                 }
                 getKeyInfo()
                 setInterval(getKeyInfo, 5000);
-                loadPage()
-                loadTableMails()
-                clickPage()
-            });
+                send_message({
+                    action: "load_hide_column",
+                    sender: "",
+                    args: [],
+                    form: "",
+                }).then((callback) => {
+                    data = callback.data;
+                    i = -1;
+                    html = "";
+                    j = 0;
+                    adder = false;
+                    for (const key in data) {
+                        adder = false;
+                        const value = data[key];
+                        i = i + 1;
+                        j = j + 1;
+                        if (i % 3 === 0) {
+                            html = html + `<div class="w3-row">`;
+                        }
+                        html =
+                            html +
+                            `<div class="w3-third"><input type="checkbox" name="checkhidedash" id="hide${key}"><label for="${key}"> ${value}</label></div>`;
+                        if (j % 3 === 0) {
+                            html = html + `</div>`;
+                            adder = true;
+                        }
+                    }
+                    if (adder == false) {
+                        html = html + `</div>`;
+                    }
+                    setHtmlCssSelector("#load-hidedash", html);
+                    $("*[name='checkhidedash']").bind('click', function (ev) {
+                        eel.updateSetting("check" + "_" + this.id, this.checked)()
+                    });
+
+
+                    send_message({
+                        action: "get_settings",
+                        sender: "",
+                        args: [],
+                        form: "",
+                    }).then((callback) => {
+                        var setlang = "en"
+                        var hconfig = callback.hconfig
+                        var lang = callback.lang
+                        for (let key in hconfig) {
+                            var value = hconfig[key]
+                            if (key.startsWith("check_")) {
+                                var id = key.split("_")[1]
+                                addSetting(id)
+                                $("#" + id).prop("checked", strToBool(value));
+                            }
+                        }
+                    })
+                })
+            }
 
 
         //     eel.loadSetting()(function (callback) {
@@ -1754,7 +1755,9 @@
             function selectedRemove(value) {
                 selected = selected.filter((val) => val !== value);
             }
-
+            loadPage()
+            loadTableMails()
+            clickPage()
 
         </script>
 
