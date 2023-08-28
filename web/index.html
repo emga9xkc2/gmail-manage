@@ -311,9 +311,24 @@
 
         <script>
 
+            function oimport() {
+                var iaccount = getValue("#iaccount");
 
+
+                send_message({
+                    action: "import",
+                    sender: "",
+                    args: iaccount,
+                    form: "",
+                }).then((callback) => {
+                    updateMails(1)
+                })
+
+
+            }
             // document.addEventListener('DOMContentLoaded', function () {
             window.addEventListener('load', function () {
+
                 var apikeyactive = "apikeyactive"
                 function checkVersionInfo() {
 
@@ -803,28 +818,6 @@
                         $("#user").css("color", "green")
                     })
 
-                    // eel.getKeyInfo()(function (callback) {
-                    //     data = callback.data
-                    //     date = data.date
-                    //     hoten = data.hoten
-                    //     hwid = data.hwid
-                    //     keyactive = data.serial
-                    //     if (hoten == undefined) {
-                    //         setHtmlCssSelector("#user", "Tài khoản chưa được kích hoạt")
-                    //         $("#user").css("color", "red")
-                    //         return
-                    //     }
-                    //     setHtmlCssSelector("#user", "Hi: " + hoten + ". " + "Expire: " + date)
-                    //     $("#user").css("color", "green")
-                    //     // $("#hwid").val("Hwid: " + hwid)
-                    //     // // $("#serial").val("Key: " + keyactive)
-                    //     // $("#user").val("Hi " + hoten)
-                    //     // $("#date").val("Expiration date: " + date)
-                    //     // console.log(date)
-                    //     // console.log(hoten)
-                    //     // console.log(data)
-                    // });
-
                 }
                 getKeyInfo()
                 setInterval(getKeyInfo, 5000);
@@ -885,214 +878,8 @@
                 })
 
 
-                //     eel.loadSetting()(function (callback) {
-                //         data = callback.data;
-                //         i = -1;
-                //         html = "";
-                //         j = 0;
-                //         adder = false;
-                //         for (const key in data) {
-                //             adder = false;
-                //             const value = data[key];
-                //             i = i + 1;
-                //             j = j + 1;
-                //             if (i % 3 === 0) {
-                //                 html = html + `<div class="w3-row">`;
-                //             }
-                //             html =
-                //                 html +
-                //                 `<div class="w3-third"><input type="checkbox" name="checksetting" id="${key}"><label for="${key}"> ${value}</label></div>`;
-                //             if (j % 3 === 0) {
-                //                 html = html + `</div>`;
-                //                 adder = true;
-                //             }
-                //         }
-                //         if (adder == false) {
-                //             html = html + `</div>`;
-                //         }
-                //         setHtmlCssSelector("#load-chucnangjs", html);
-                //         $("*[name='checksetting']").bind('click', function (ev) {
-                //             addSetting(this.id)
-                //             eel.updateSetting("check" + "_" + this.id, this.checked)()
-                //         });
-                //         send_message({
-                //             action: "get_settings",
-                //             sender: "",
-                //             args: [],
-                //             form: "",
-                //         }).then((callback) => {
-                //             var setlang = "en"
-                //             var hconfig = callback.hconfig
-                //             var lang = callback.lang
-                //             for (let key in hconfig) {
-                //                 var value = hconfig[key]
-                //                 if (key.startsWith("check_")) {
-                //                     var id = key.split("_")[1]
-                //                     var istrue = strToBool(value)
-                //                     $("#" + id).prop("checked", istrue);
-
-                //                 }
-                //                 if (key.startsWith("text_")) {
-                //                     var id = key.split("_")[1]
-                //                     $("#" + id).val(value);
-                //                     addSetting(id, value)
-                //                     // console.log(id);
-                //                 }
-                //                 if (key.startsWith("radio")) {
-                //                     if (key == "radiongonngu") {
-                //                         setlang = "en"
-                //                         if (value == "vietnamese") {
-                //                             setlang = "vi"
-                //                         }
-                //                         localStorage.setItem('lang', setlang)
-                //                         localStorage.setItem('langdata', JSON.stringify(lang))
-                //                     }
-                //                     $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
-                //                     // console.log(id);
-                //                 }
-                //                 // console.log(key + ": " + hconfig[key]);
-                //             }
-                //             // console.log(hconfig)
-                //             // $("#numThread").val(hconfig.numthread);
-
-                //             // $("#changepass").prop("checked", strToBool(hconfig.changepass));
-                //             // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
-                //             // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
-                //             // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
-                //             // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
 
 
-                //             localStorage.setItem(apikeyactive, hconfig.apikeyactive)
-                //             if (setlang == "vi") {
-                //                 // console.log(typeof lang)
-                //                 function fixLabel(label) {
-                //                     label = label.trim()
-                //                     label = label.replace(/\s+/g, ' ');
-                //                     return label
-                //                 }
-                //                 $("label").each(function () {
-                //                     var labelText = fixLabel($(this).text());
-                //                     var newvalue = lang[labelText];
-                //                     if (newvalue) {
-                //                         $(this).html(" " + newvalue);
-                //                     }
-                //                     // console.log(labelText, newvalue)
-                //                 })
-                //                 $("button").each(function () {
-                //                     var labelText = fixLabel($(this).text());
-                //                     var newvalue = lang[labelText];
-                //                     // console.log(labelText, newvalue)
-                //                     if (newvalue) {
-                //                         $(this).html(newvalue);
-                //                     }
-                //                     // console.log(labelText, newvalue)
-                //                 })
-                //                 $(".lang").each(function () {
-                //                     var labelText = fixLabel($(this).text());
-                //                     var labelTextSplit = labelText.split(":")[0]
-                //                     var newvalue = lang[labelTextSplit];
-                //                     if (newvalue) {
-                //                         $(this).html(labelText.replace(labelTextSplit, newvalue));
-                //                     }
-                //                     // console.log(labelText, newvalue)
-                //                 })
-                //                 $("#iaccount").attr("placeholder", `Nhập danh sách tài khoản mật khẩu
-                // Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
-                //             }
-                //         })
-                //         //         eel.getSetting()(function (callback) {
-
-                //         //             var setlang = "en"
-                //         //             var hconfig = callback.hconfig
-                //         //             var lang = callback.lang
-                //         //             for (let key in hconfig) {
-                //         //                 var value = hconfig[key]
-                //         //                 if (key.startsWith("check_")) {
-                //         //                     var id = key.split("_")[1]
-                //         //                     var istrue = strToBool(value)
-                //         //                     $("#" + id).prop("checked", istrue);
-
-                //         //                 }
-                //         //                 if (key.startsWith("text_")) {
-                //         //                     var id = key.split("_")[1]
-                //         //                     $("#" + id).val(value);
-                //         //                     addSetting(id, value)
-                //         //                     // console.log(id);
-                //         //                 }
-                //         //                 if (key.startsWith("radio")) {
-                //         //                     if (key == "radiongonngu") {
-                //         //                         setlang = "en"
-                //         //                         if (value == "vietnamese") {
-                //         //                             setlang = "vi"
-                //         //                         }
-                //         //                         localStorage.setItem('lang', setlang)
-                //         //                         localStorage.setItem('langdata', JSON.stringify(lang))
-                //         //                     }
-                //         //                     $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
-                //         //                     // console.log(id);
-                //         //                 }
-                //         //                 // console.log(key + ": " + hconfig[key]);
-                //         //             }
-                //         //             // console.log(hconfig)
-                //         //             // $("#numThread").val(hconfig.numthread);
-
-                //         //             // $("#changepass").prop("checked", strToBool(hconfig.changepass));
-                //         //             // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
-                //         //             // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
-                //         //             // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
-                //         //             // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
-
-
-                //         //             localStorage.setItem(apikeyactive, hconfig.apikeyactive)
-                //         //             if (setlang == "vi") {
-                //         //                 // console.log(typeof lang)
-                //         //                 function fixLabel(label) {
-                //         //                     label = label.trim()
-                //         //                     label = label.replace(/\s+/g, ' ');
-                //         //                     return label
-                //         //                 }
-                //         //                 $("label").each(function () {
-                //         //                     var labelText = fixLabel($(this).text());
-                //         //                     var newvalue = lang[labelText];
-                //         //                     if (newvalue) {
-                //         //                         $(this).html(" " + newvalue);
-                //         //                     }
-                //         //                     // console.log(labelText, newvalue)
-                //         //                 })
-                //         //                 $("button").each(function () {
-                //         //                     var labelText = fixLabel($(this).text());
-                //         //                     var newvalue = lang[labelText];
-                //         //                     // console.log(labelText, newvalue)
-                //         //                     if (newvalue) {
-                //         //                         $(this).html(newvalue);
-                //         //                     }
-                //         //                     // console.log(labelText, newvalue)
-                //         //                 })
-                //         //                 $(".lang").each(function () {
-                //         //                     var labelText = fixLabel($(this).text());
-                //         //                     var labelTextSplit = labelText.split(":")[0]
-                //         //                     var newvalue = lang[labelTextSplit];
-                //         //                     if (newvalue) {
-                //         //                         $(this).html(labelText.replace(labelTextSplit, newvalue));
-                //         //                     }
-                //         //                     // console.log(labelText, newvalue)
-                //         //                 })
-                //         //                 $("#iaccount").attr("placeholder", `Nhập danh sách tài khoản mật khẩu
-                //         // Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
-                //         //             }
-
-                //         //             // console.log(hconfig)
-                //         //         });
-                //     });
-
-
-
-                function oimport() {
-                    var iaccount = getValue("#iaccount");
-                    eel.oimport(iaccount)(function (callback) {
-                        updateMails(1)
-                    });
-                }
 
 
                 function setDisplayMain(id) {
@@ -1113,71 +900,6 @@
 
 
 
-                // eel.loadHideColumn()(function (callback) {
-                //     data = callback.data;
-                //     i = -1;
-                //     html = "";
-                //     j = 0;
-                //     adder = false;
-                //     for (const key in data) {
-                //         adder = false;
-                //         const value = data[key];
-                //         i = i + 1;
-                //         j = j + 1;
-                //         if (i % 3 === 0) {
-                //             html = html + `<div class="w3-row">`;
-                //         }
-                //         html =
-                //             html +
-                //             `<div class="w3-third"><input type="checkbox" name="checkhidedash" id="hide${key}"><label for="${key}"> ${value}</label></div>`;
-                //         if (j % 3 === 0) {
-                //             html = html + `</div>`;
-                //             adder = true;
-                //         }
-                //     }
-                //     if (adder == false) {
-                //         html = html + `</div>`;
-                //     }
-                //     setHtmlCssSelector("#load-hidedash", html);
-                //     $("*[name='checkhidedash']").bind('click', function (ev) {
-                //         eel.updateSetting("check" + "_" + this.id, this.checked)()
-                //     });
-
-
-                //     send_message({
-                //         action: "get_settings",
-                //         sender: "",
-                //         args: [],
-                //         form: "",
-                //     }).then((callback) => {
-                //         var setlang = "en"
-                //         var hconfig = callback.hconfig
-                //         var lang = callback.lang
-                //         for (let key in hconfig) {
-                //             var value = hconfig[key]
-                //             if (key.startsWith("check_")) {
-                //                 var id = key.split("_")[1]
-                //                 addSetting(id)
-                //                 $("#" + id).prop("checked", strToBool(value));
-                //             }
-                //         }
-                //     })
-
-
-                //     // eel.getSetting()(function (callback) {
-                //     //     var setlang = "en"
-                //     //     var hconfig = callback.hconfig
-                //     //     var lang = callback.lang
-                //     //     for (let key in hconfig) {
-                //     //         var value = hconfig[key]
-                //     //         if (key.startsWith("check_")) {
-                //     //             var id = key.split("_")[1]
-                //     //             addSetting(id)
-                //     //             $("#" + id).prop("checked", strToBool(value));
-                //     //         }
-                //     //     }
-                //     // })
-                // });
                 $("#hidecolumn").bind("click", function () {
                     $("#id01").css("display", "block")
                 });
