@@ -26,7 +26,7 @@ function msgBox(text) {
     alert(text);
 }
 
-eel.getTitle()(function (callback) {
-    // console.log(callback);
-    document.title = callback;
-});
+// eel.getTitle()(function (callback) {
+//     // console.log(callback);
+//     document.title = callback;
+// });
