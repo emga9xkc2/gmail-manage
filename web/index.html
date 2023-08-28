@@ -428,6 +428,16 @@
 
 
             }
+            function selectedPush(value) {
+                if (selected.includes(value)) {
+                    return;
+                }
+                selected.push(value);
+            }
+
+            function selectedRemove(value) {
+                selected = selected.filter((val) => val !== value);
+            }
             function checkboxEvent() {
                 const checkboxes = document.querySelectorAll("input[name='mails']");
                 checkboxes.forEach(function (checkbox) {
@@ -448,6 +458,16 @@
                         showSelected()
                     });
                 });
+
+            }
+            function showSelected() {
+                var text = "Selected"
+                var langselect = localStorage.getItem("lang")
+                if (langselect == "vi") {
+                    text = "Đã chọn"
+                }
+
+                setHtmlCssSelector("#selected", text + ": " + selected.length)
 
             }
             // document.addEventListener('DOMContentLoaded', function () {
@@ -1340,16 +1360,7 @@
                 }
 
 
-                function showSelected() {
-                    var text = "Selected"
-                    var langselect = localStorage.getItem("lang")
-                    if (langselect == "vi") {
-                        text = "Đã chọn"
-                    }
 
-                    setHtmlCssSelector("#selected", text + ": " + selected.length)
-
-                }
 
                 eel.getVersion()(function (callback) {
                     var text = "Current version"
@@ -1403,16 +1414,7 @@
                     });
                 }
 
-                function selectedPush(value) {
-                    if (selected.includes(value)) {
-                        return;
-                    }
-                    selected.push(value);
-                }
 
-                function selectedRemove(value) {
-                    selected = selected.filter((val) => val !== value);
-                }
                 loadPage()
                 loadTableMails()
                 clickPage()
