@@ -478,7 +478,7 @@ function addRowTable(selectorTable, listColumnValues, id) {
     table.append(newRow);
 }
 
-eel.getTitle()(function (callback) {
-    // console.log(callback);
-    document.title = callback;
-});
+// eel.getTitle()(function (callback) {
+//     // console.log(callback);
+//     document.title = callback;
+// });
