@@ -73,7 +73,7 @@ async function sendMessage(data) {
     // alert(a);
     return a;
 }
-async function startApp() {
+function startApp() {
     injectEvent();
 }
 startApp();
