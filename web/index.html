@@ -423,9 +423,12 @@
                 show_updates("Updating new version. Please wait...")
 
 
-
-
-                eel.autoUpdate()(function (callback) {
+                sendMessage({
+                    action: "auto_update",
+                    sender: "",
+                    args: [],
+                    form: "",
+                }).then((callback) => {
                     var t2 = "Done updating. Please turn off the tool and reopen it to use the new version"
                     var t3 = "Update failed. Try again."
                     var langselect = localStorage.getItem("lang")
@@ -442,8 +445,27 @@
                         $("#updateStatus").css("color", "red")
                     }
                     console.log(callback)
-                }
-                )
+                })
+
+                // eel.autoUpdate()(function (callback) {
+                //     var t2 = "Done updating. Please turn off the tool and reopen it to use the new version"
+                //     var t3 = "Update failed. Try again."
+                //     var langselect = localStorage.getItem("lang")
+                //     if (langselect == "vi") {
+                //         t2 = `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`
+                //         t3 = `Cập nhật thất bại. Hãy thử lại.`
+                //     }
+                //     var mess = callback.mess
+                //     if (mess == "success") {
+                //         setHtmlCssSelector("#updateStatus", t2)
+                //         $("#updateStatus").css("color", "green")
+                //     } else {
+                //         setHtmlCssSelector("#updateStatus", t3)
+                //         $("#updateStatus").css("color", "red")
+                //     }
+                //     console.log(callback)
+                // }
+                // )
             });
             $("#updateversion2").bind("click", function () {
                 // alert("1234")
@@ -855,6 +877,7 @@
                         }
                     }
                 })
+
 
                 // eel.getSetting()(function (callback) {
                 //     var setlang = "en"
