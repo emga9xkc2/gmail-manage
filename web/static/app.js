@@ -7,6 +7,14 @@ function injectEvent() {
         };
     }
 }
+function get_mails(skip, limit) {
+    return sendMessage({
+        action: "get_mails",
+        sender: "",
+        args: [skip, limit],
+        form: formName(),
+    });
+}
 function kich_hoat_tai_khoan(keyactive) {
     return sendMessage({
         action: "kich_hoat_tai_khoan",

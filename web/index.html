@@ -1358,7 +1358,7 @@
                                     toastError("Please select the emails to delete first");
                                     return;
                                 }
-                                handle_account("delete", selected).then((kq) => {
+                                handle_account("delete", selected).then(callback => {
                                     updateMails(0)
                                     selected = []
                                 })
@@ -1573,10 +1573,10 @@
 
                 const limit = 1500;
                 const skip = (numberPage - 1) * limit;
-                eel.get_mails(
+                get_mails(
                     skip,
                     limit
-                )(function (callback) {
+                ).then((callback) => {
                     // console.log(callback);
                     var success = callback.success;
                     var data = callback.data;
@@ -1680,7 +1680,9 @@
                         }
                         showSelected()
                     });
-                });
+                })
+
+
             }
             function showSelected() {
                 var text = "Selected"
