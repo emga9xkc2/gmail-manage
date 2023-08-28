@@ -76,4 +76,23 @@ async function sendMessage(data) {
 function startApp() {
     injectEvent();
 }
+
+function gid(x) {
+    return document.getElementById(x);
+}
+function onMessage(data) {
+    if (typeof data == "string") {
+        data = JSON.parse(data);
+    }
+    let action = data.action;
+
+    if (action == "set_html") {
+        gid(data.id).innerHTML = data.html;
+        return;
+    } else if (action == "set_style") {
+        gid(data.id).style[data.style_name] = data.style_value;
+        return;
+    }
+}
+eel.expose(onMessage);
 startApp();

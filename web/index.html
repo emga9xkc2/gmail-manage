@@ -469,25 +469,6 @@
                     })
 
 
-                    // eel.autoUpdate()(function (callback) {
-                    //     var t2 = "Done updating. Please turn off the tool and reopen it to use the new version"
-                    //     var t3 = "Update failed. Try again."
-                    //     var langselect = localStorage.getItem("lang")
-                    //     if (langselect == "vi") {
-                    //         t2 = `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`
-                    //         t3 = `Cập nhật thất bại. Hãy thử lại.`
-                    //     }
-                    //     var mess = callback.mess
-                    //     if (mess == "success") {
-                    //         setHtmlCssSelector("#updateStatus", t2)
-                    //         $("#updateStatus").css("color", "green")
-                    //     } else {
-                    //         setHtmlCssSelector("#updateStatus", t3)
-                    //         $("#updateStatus").css("color", "red")
-                    //     }
-                    //     console.log(callback)
-                    // }
-                    // )
                 });
                 $("#updateversion2").bind("click", function () {
                     // alert("1234")
@@ -795,32 +776,7 @@
                     //             // console.log(hconfig)
                     //         });
                 })
-                function getKeyInfo() {
 
-
-                    send_message({
-                        action: "get_key_info",
-                        sender: "",
-                        args: [],
-                        form: "",
-                    }).then((callback) => {
-                        data = callback.data
-                        date = data.date
-                        hoten = data.hoten
-                        hwid = data.hwid
-                        keyactive = data.serial
-                        if (hoten == undefined) {
-                            setHtmlCssSelector("#user", "Tài khoản chưa được kích hoạt")
-                            $("#user").css("color", "red")
-                            return
-                        }
-                        setHtmlCssSelector("#user", "Hi: " + hoten + ". " + "Expire: " + date)
-                        $("#user").css("color", "green")
-                    })
-
-                }
-                getKeyInfo()
-                setInterval(getKeyInfo, 5000);
                 send_message({
                     action: "load_hide_column",
                     sender: "",
