@@ -52,6 +52,9 @@ function formName() {
     //   alert(location.pathname);
     return location.pathname.substring(1).split(".")[0];
 }
+function send_message(data) {
+    return sendMessage(data);
+}
 async function sendMessage(data) {
     if (typeof data == "string") {
         data = {
