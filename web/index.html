@@ -875,6 +875,9 @@
                 }
                 getKeyInfo()
                 setInterval(getKeyInfo, 5000);
+                loadPage()
+                loadTableMails()
+                clickPage()
             });
 
 
@@ -1751,9 +1754,7 @@
             function selectedRemove(value) {
                 selected = selected.filter((val) => val !== value);
             }
-            loadPage()
-            loadTableMails()
-            clickPage()
+
 
         </script>
 
