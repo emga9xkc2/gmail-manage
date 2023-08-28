@@ -120,7 +120,7 @@
                 </div>
                 <div class="khoangcach">
                     <button class="btn" style="color: red;" id="stop" title="Stop"><i class="fa fa-stop"></i></button>
-                    <button class="btn" style="color: yellow;" id="reload" title="Reload"><i
+                    <button class="btn" style="color: yellow;" id="btn_reload" title="Reload"><i
                             class="fa fa-refresh"></i></button>
                     <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
                             Pause</label></div>
@@ -139,7 +139,7 @@
             <div id="main">
                 <div class="tab_home">
                     <div style="overflow-y: scroll; height: 500px;">
-                        <table class="w3-table-all" id="tableMails">
+                        <table class="w3-table-all" id="table_mail">
                         </table>
                     </div>
                     <!-- <div id="load_page"> -->
@@ -361,7 +361,7 @@
                         </tr>`;
                         // console.log(element);
                     }
-                    setHtmlCssSelector("#tableMails", thead);
+                    setHtmlCssSelector("#table_mail", thead);
                     send_message({
                         action: "get_settings",
                         sender: "",
@@ -495,9 +495,7 @@
 
                     eel.setRunning(false)
                 })
-                $('#reload').bind('click', function () {
-                    load_mail(1)
-                })
+
 
 
 
@@ -1062,7 +1060,7 @@
 
                 function loadTableMails() {
                     return new Promise((resolve, reject) => {
-                        const table = document.getElementById("tableMails");
+                        const table = document.getElementById("table_mail");
 
                         table.addEventListener("contextmenu", function (event) {
                             event.preventDefault();
@@ -1171,20 +1169,6 @@
                                         selected = []
                                     })
 
-                                    // delete_account()
-                                    // // eel.deleteAccounts(selected)(function (callback) {
-                                    // //     load_mail(0)
-                                    // //     selected = []
-                                    //     // var msg = callback.msg
-                                    //     // console.log(msg)
-                                    //     // if (msg == "Success") {
-                                    //     //     alert("Delete email successfully")
-                                    //     //     load_mail(0)
-                                    //     //     selected = []
-                                    //     // } else {
-                                    //     //     alert("Delete email failed")
-                                    //     // }
-                                    // });
                                 });
                                 $("#exportall-item").bind("click", function () {
                                     if (selected.length == 0) {
