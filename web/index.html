@@ -1133,13 +1133,22 @@
                                 showSelected()
                             });
                             $("#selectall-item-running").bind("click", function () {
-                                eel.selectMails("1")(function (callback) {
+
+                                handle_account("select", "1").then((callback) => {
                                     var data = callback.data
                                     selected = selected.concat(data);
                                     selected = selected.map(number => number.toString());
                                     // console.log(selected)
                                     checkboxEvent()
                                 })
+
+                                // eel.selectMails("1")(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     // console.log(selected)
+                                //     checkboxEvent()
+                                // })
                                 // checkboxes = document.getElementsByName("mails");
                                 // for (var i = 0, n = checkboxes.length; i < n; i++) {
                                 //     checkboxes[i].checked = true;
@@ -1149,14 +1158,21 @@
                             });
                             $("#selectall-item-status").bind("click", function () {
                                 var value = $(this).attr("value");
-
-                                eel.selectMails(value)(function (callback) {
+                                handle_account("select", value).then((callback) => {
                                     var data = callback.data
                                     selected = selected.concat(data);
                                     selected = selected.map(number => number.toString());
                                     console.log(selected)
                                     checkboxEvent()
                                 })
+
+                                // eel.selectMails(value)(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     console.log(selected)
+                                //     checkboxEvent()
+                                // })
                                 // checkboxes = document.getElementsByName("mails");
                                 // for (var i = 0, n = checkboxes.length; i < n; i++) {
                                 //     checkboxes[i].checked = true;
@@ -1165,13 +1181,23 @@
                                 // }
                             });
                             $("#selectall-item-no-running").bind("click", function () {
-                                eel.selectMails("")(function (callback) {
+
+
+                                handle_account("select", "").then((callback) => {
                                     var data = callback.data
                                     selected = selected.concat(data);
                                     selected = selected.map(number => number.toString());
                                     // console.log(selected)
                                     checkboxEvent()
                                 })
+
+                                // eel.selectMails("")(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     // console.log(selected)
+                                //     checkboxEvent()
+                                // })
                                 // checkboxes = document.getElementsByName("mails");
                                 // for (var i = 0, n = checkboxes.length; i < n; i++) {
                                 //     checkboxes[i].checked = true;
@@ -1180,13 +1206,22 @@
                                 // }
                             });
                             $("#selectall-item").bind("click", function () {
-                                eel.selectMails("all")(function (callback) {
+
+                                handle_account("select", "all").then((callback) => {
                                     var data = callback.data
                                     selected = selected.concat(data);
                                     selected = selected.map(number => number.toString());
                                     // console.log(selected)
                                     checkboxEvent()
                                 })
+
+                                // eel.selectMails("all")(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     // console.log(selected)
+                                //     checkboxEvent()
+                                // })
                                 // checkboxes = document.getElementsByName("mails");
                                 // for (var i = 0, n = checkboxes.length; i < n; i++) {
                                 //     checkboxes[i].checked = true;
