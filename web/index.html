@@ -88,6 +88,22 @@
                 background-color: rgb(200, 22, 156);
             }
 
+            .btn_icon {
+                background-color: rgb(75, 18, 218);
+                border: none;
+                color: white;
+                padding: 1px 6px;
+                font-size: 14px;
+                cursor: pointer;
+                margin-left: 5px;
+                border-radius: 7px;
+            }
+
+            /* Darker background on mouse-over */
+            .btn_icon:hover {
+                background-color: rgb(200, 22, 156);
+            }
+
             .btn:hover {
                 background-color: RoyalBlue;
             }
@@ -141,11 +157,9 @@
                                 <option value="mailrun">SELECT MAIL RUN</option>
                                 <option value="mailnotrun">SELECT MAIL NOT RUN</option>
                             </select>
-                            <button class="settingcss" id="btn_load" title="Load"><i class="fa fa-refresh"></i></button>
-                            <button class="settingcss" id="btn_select" title="Select"><i
-                                    class="fa fa-check"></i></button>
-                            <button class="settingcss" id="btn_run" title="Run"><i
-                                    class="fa fa-play-circle"></i></button>
+                            <button class="btn_icon" id="btn_load" title="Load"><i class="fa fa-refresh"></i></button>
+                            <button class="btn_icon" id="btn_select" title="Select"><i class="fa fa-check"></i></button>
+                            <button class="btn_icon" id="btn_run" title="Run"><i class="fa fa-play-circle"></i></button>
 
                         </div>
                     </div>
