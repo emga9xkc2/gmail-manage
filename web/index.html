@@ -266,9 +266,11 @@
                                     map</label></div>
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="restoredisable"><label
                                     for="restoredisable"> Kháng mail disable</label><button class="settingcss"
-                                    name="main" id="settingrestoredisablecontact" title="Setting Contact"><i
-                                        class="fa fa-cog"></i></button><button class="settingcss" name="main"
-                                    id="settingrestoredisablecontent" title="Setting Content"><i
+                                    id="settingrestoredisablecontact" title="Setting Contact" style="display: none;"
+                                    haction="open_file:data/restoredisablecontact.txt"><i
+                                        class="fa fa-cog"></i></button><button class="settingcss"
+                                    id="settingrestoredisablecontent" title="Setting Content" style="display: none;"
+                                    haction="open_file:data/restoredisablecontent.txt"><i
                                         class="fa fa-cog"></i></button></div>
                         </div>
                         <div class="w3-row">
@@ -303,9 +305,11 @@
                                     id="stopwhenpasswordsuccess"><label for="stopwhenpasswordsuccess"> Dừng lại khi đúng
                                     mật khẩu</label></div>
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="verifyphone"><label
-                                    for="verifyphone"> Verify phone</label><button class="settingcss" name="main"
-                                    id="configverifyphone" title="Config verify phone"><i
-                                        class="fa fa-cog"></i></button></div>
+                                    for="verifyphone"> Verify phone</label>
+                                <button class="settingcss" id="configverifyphone" title="Config verify phone"
+                                    style="display: none;" haction="open_file:data/verifyphone.txt"><i
+                                        class="fa fa-cog"></i></button>
+                            </div>
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="youtubeverify"><label
                                     for="youtubeverify"> Verify youtube</label></div>
                         </div>
@@ -782,129 +786,129 @@
 
 
 
-                send_message({
-                    action: "load_settings",
-                    sender: "",
-                    args: [],
-                    form: "",
-                }).then((callback) => {
-                    data = callback.data;
-                    i = -1;
-                    html = "";
-                    j = 0;
-                    adder = false;
-                    for (const key in data) {
-                        adder = false;
-                        const value = data[key];
-                        i = i + 1;
-                        j = j + 1;
-                        if (i % 3 === 0) {
-                            html = html + `<div class="w3-row">`;
-                        }
-                        html =
-                            html +
-                            `<div class="w3-third"><input type="checkbox" name="checksetting" id="${key}"><label for="${key}"> ${value}</label></div>`;
-                        if (j % 3 === 0) {
-                            html = html + `</div>`;
-                            adder = true;
-                        }
-                    }
-                    if (adder == false) {
-                        html = html + `</div>`;
-                    }
-                    // setHtmlCssSelector("#load-chucnangjs", html);
-                    $("*[name='checksetting']").bind('click', function (ev) {
-                        addSetting(this.id)
-                        // eel.updateSetting("check" + "_" + this.id, this.checked)()
-                    });
-                    send_message({
-                        action: "get_settings",
-                        sender: "",
-                        args: [],
-                        form: "",
-                    }).then((callback) => {
-                        var setlang = "en"
-                        var hconfig = callback.hconfig
-                        var lang = callback.lang
-                        for (let key in hconfig) {
-                            var value = hconfig[key]
-                            if (key.startsWith("check_")) {
-                                var id = key.split("_")[1]
-                                var istrue = strToBool(value)
-                                $("#" + id).prop("checked", istrue);
-                            }
+                //         send_message({
+                //             action: "load_settings",
+                //             sender: "",
+                //             args: [],
+                //             form: "",
+                //         }).then((callback) => {
+                //             data = callback.data;
+                //             i = -1;
+                //             html = "";
+                //             j = 0;
+                //             adder = false;
+                //             for (const key in data) {
+                //                 adder = false;
+                //                 const value = data[key];
+                //                 i = i + 1;
+                //                 j = j + 1;
+                //                 if (i % 3 === 0) {
+                //                     html = html + `<div class="w3-row">`;
+                //                 }
+                //                 html =
+                //                     html +
+                //                     `<div class="w3-third"><input type="checkbox" name="checksetting" id="${key}"><label for="${key}"> ${value}</label></div>`;
+                //                 if (j % 3 === 0) {
+                //                     html = html + `</div>`;
+                //                     adder = true;
+                //                 }
+                //             }
+                //             if (adder == false) {
+                //                 html = html + `</div>`;
+                //             }
+                //             // setHtmlCssSelector("#load-chucnangjs", html);
+                //             $("*[name='checksetting']").bind('click', function (ev) {
+                //                 addSetting(this.id)
+                //                 // eel.updateSetting("check" + "_" + this.id, this.checked)()
+                //             });
+                //             send_message({
+                //                 action: "get_settings",
+                //                 sender: "",
+                //                 args: [],
+                //                 form: "",
+                //             }).then((callback) => {
+                //                 var setlang = "en"
+                //                 var hconfig = callback.hconfig
+                //                 var lang = callback.lang
+                //                 for (let key in hconfig) {
+                //                     var value = hconfig[key]
+                //                     if (key.startsWith("check_")) {
+                //                         var id = key.split("_")[1]
+                //                         var istrue = strToBool(value)
+                //                         $("#" + id).prop("checked", istrue);
+                //                     }
 
-                            if (key.startsWith("text_")) {
-                                var id = key.split("_")[1]
-                                $("#" + id).val(value);
-                                addSetting(id, value)
-                                // console.log(id);
-                            }
-                            if (key.startsWith("radio_")) {
-                                key = key.split("_")[1]
-                                if (key.endsWith("radiongonngu")) {
-                                    setlang = "en"
-                                    if (value == "vietnamese") {
-                                        setlang = "vi"
-                                    }
-                                    localStorage.setItem('lang', setlang)
-                                    localStorage.setItem('langdata', JSON.stringify(lang))
-                                }
-                                $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
-                                // console.log(id);
-                            }
-                            // console.log(key + ": " + hconfig[key]);
-                        }
-                        // console.log(hconfig)
-                        // $("#numThread").val(hconfig.numthread);
+                //                     if (key.startsWith("text_")) {
+                //                         var id = key.split("_")[1]
+                //                         $("#" + id).val(value);
+                //                         addSetting(id, value)
+                //                         // console.log(id);
+                //                     }
+                //                     if (key.startsWith("radio_")) {
+                //                         key = key.split("_")[1]
+                //                         if (key.endsWith("radiongonngu")) {
+                //                             setlang = "en"
+                //                             if (value == "vietnamese") {
+                //                                 setlang = "vi"
+                //                             }
+                //                             localStorage.setItem('lang', setlang)
+                //                             localStorage.setItem('langdata', JSON.stringify(lang))
+                //                         }
+                //                         $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
+                //                         // console.log(id);
+                //                     }
+                //                     // console.log(key + ": " + hconfig[key]);
+                //                 }
+                //                 // console.log(hconfig)
+                //                 // $("#numThread").val(hconfig.numthread);
 
-                        // $("#changepass").prop("checked", strToBool(hconfig.changepass));
-                        // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
-                        // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
-                        // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
-                        // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
+                //                 // $("#changepass").prop("checked", strToBool(hconfig.changepass));
+                //                 // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
+                //                 // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
+                //                 // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
+                //                 // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
 
 
-                        localStorage.setItem(apikeyactive, hconfig.apikeyactive)
-                        if (setlang == "vi") {
-                            // console.log(typeof lang)
-                            function fixLabel(label) {
-                                label = label.trim()
-                                label = label.replace(/\s+/g, ' ');
-                                return label
-                            }
-                            $("label").each(function () {
-                                var labelText = fixLabel($(this).text());
-                                var newvalue = lang[labelText];
-                                if (newvalue) {
-                                    $(this).html(" " + newvalue);
-                                }
-                                // console.log(labelText, newvalue)
-                            })
-                            $("button").each(function () {
-                                var labelText = fixLabel($(this).text());
-                                var newvalue = lang[labelText];
-                                // console.log(labelText, newvalue)
-                                if (newvalue) {
-                                    $(this).html(newvalue);
-                                }
-                                // console.log(labelText, newvalue)
-                            })
-                            $(".lang").each(function () {
-                                var labelText = fixLabel($(this).text());
-                                var labelTextSplit = labelText.split(":")[0]
-                                var newvalue = lang[labelTextSplit];
-                                if (newvalue) {
-                                    $(this).html(labelText.replace(labelTextSplit, newvalue));
-                                }
-                                // console.log(labelText, newvalue)
-                            })
-                            $("#iaccount").attr("placeholder", `Nhập danh sách tài khoản mật khẩu
-        Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
-                        }
-                    })
+                //                 localStorage.setItem(apikeyactive, hconfig.apikeyactive)
+                //                 if (setlang == "vi") {
+                //                     // console.log(typeof lang)
+                //                     function fixLabel(label) {
+                //                         label = label.trim()
+                //                         label = label.replace(/\s+/g, ' ');
+                //                         return label
+                //                     }
+                //                     $("label").each(function () {
+                //                         var labelText = fixLabel($(this).text());
+                //                         var newvalue = lang[labelText];
+                //                         if (newvalue) {
+                //                             $(this).html(" " + newvalue);
+                //                         }
+                //                         // console.log(labelText, newvalue)
+                //                     })
+                //                     $("button").each(function () {
+                //                         var labelText = fixLabel($(this).text());
+                //                         var newvalue = lang[labelText];
+                //                         // console.log(labelText, newvalue)
+                //                         if (newvalue) {
+                //                             $(this).html(newvalue);
+                //                         }
+                //                         // console.log(labelText, newvalue)
+                //                     })
+                //                     $(".lang").each(function () {
+                //                         var labelText = fixLabel($(this).text());
+                //                         var labelTextSplit = labelText.split(":")[0]
+                //                         var newvalue = lang[labelTextSplit];
+                //                         if (newvalue) {
+                //                             $(this).html(labelText.replace(labelTextSplit, newvalue));
+                //                         }
+                //                         // console.log(labelText, newvalue)
+                //                     })
+                //                     $("#iaccount").attr("placeholder", `Nhập danh sách tài khoản mật khẩu
+                // Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
+                //                 }
+                //             })
 
-                })
+                //         })
 
                 send_message({
                     action: "load_hide_column",
@@ -942,24 +946,24 @@
                     });
 
 
-                    send_message({
-                        action: "get_settings",
-                        sender: "",
-                        args: [],
-                        form: "",
-                    }).then((callback) => {
-                        var setlang = "en"
-                        var hconfig = callback.hconfig
-                        var lang = callback.lang
-                        for (let key in hconfig) {
-                            var value = hconfig[key]
-                            if (key.startsWith("check_")) {
-                                var id = key.split("_")[1]
-                                addSetting(id)
-                                $("#" + id).prop("checked", strToBool(value));
-                            }
-                        }
-                    })
+                    // send_message({
+                    //     action: "get_settings",
+                    //     sender: "",
+                    //     args: [],
+                    //     form: "",
+                    // }).then((callback) => {
+                    //     var setlang = "en"
+                    //     var hconfig = callback.hconfig
+                    //     var lang = callback.lang
+                    //     for (let key in hconfig) {
+                    //         var value = hconfig[key]
+                    //         if (key.startsWith("check_")) {
+                    //             var id = key.split("_")[1]
+                    //             addSetting(id)
+                    //             $("#" + id).prop("checked", strToBool(value));
+                    //         }
+                    //     }
+                    // })
                 })
 
 

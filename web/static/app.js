@@ -136,34 +136,46 @@ function startApp() {
 function gid(x) {
     return document.getElementById(x);
 }
+function gselector(x) {
+    return document.querySelector(x);
+}
 function onMessage(data) {
-    if (typeof data == "string") {
-        data = JSON.parse(data);
-    }
-    let action = data.action;
+    try {
+        if (typeof data == "string") {
+            data = JSON.parse(data);
+        }
+        let action = data.action;
 
-    if (action == "set_html") {
-        gid(data.id).innerHTML = data.html;
-        return;
-    } else if (action == "set_style") {
-        gid(data.id).style[data.style_name] = data.style_value;
-        return;
-    } else if (action == "toast_success") {
-        toastr.success(data.msg);
-    } else if (action == "toast_warning") {
-        toastr.warning(data.msg);
-    } else if (action == "toast_info") {
-        toastr.info(data.msg);
-    } else if (action == "toast_error") {
-        toastr.error(data.msg);
-    } else if (action == "get_value") {
-        return gid(data.id).value;
-    } else if (action == "load_setting") {
-        return gid(data.id).value;
-    } else if (action == "load_url") {
-        window.location.href = data.url;
-    } else if (action == "load_mail") {
-        load_mail(data.action);
+        if (action == "set_html") {
+            gid(data.id).innerHTML = data.html;
+            return;
+        } else if (action == "set_checked") {
+            gid(data.id).checked = JSON.parse(data.checked);
+        } else if (action == "set_style") {
+            gid(data.id).style[data.style_name] = data.style_value;
+        } else if (action == "set_style_selector") {
+            gselector(data.selector).style[data.style_name] = data.style_value;
+        } else if (action == "set_display_selector") {
+            gselector(data.selector).style["display"] = data.display;
+        } else if (action == "toast_success") {
+            toastr.success(data.msg);
+        } else if (action == "toast_warning") {
+            toastr.warning(data.msg);
+        } else if (action == "toast_info") {
+            toastr.info(data.msg);
+        } else if (action == "toast_error") {
+            toastr.error(data.msg);
+        } else if (action == "get_value") {
+            return gid(data.id).value;
+        } else if (action == "load_setting") {
+            return gid(data.id).value;
+        } else if (action == "load_url") {
+            window.location.href = data.url;
+        } else if (action == "load_mail") {
+            load_mail(data.action);
+        }
+    } catch (ex) {
+        console.log(ex);
     }
 }
 eel.expose(onMessage);
