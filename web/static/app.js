@@ -149,6 +149,8 @@ function onMessage(data) {
         if (action == "set_html") {
             gid(data.id).innerHTML = data.html;
             return;
+        } else if (action == "set_value") {
+            gid(data.id).value = data.value;
         } else if (action == "set_checked") {
             gid(data.id).checked = JSON.parse(data.checked);
         } else if (action == "set_style") {
