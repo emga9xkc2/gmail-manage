@@ -93,7 +93,7 @@
                 border: none;
                 color: white;
                 padding: 1px 6px;
-                font-size: 14px;
+                font-size: 13px;
                 cursor: pointer;
                 margin-left: 5px;
                 border-radius: 7px;
@@ -152,7 +152,7 @@
                     </div>
                     <div class="w3-third">
                         <div class="khoangcach">
-                            <select class="w3-select" name="textsetting" id="statusmailselect" style="width: 70%;">
+                            <select class="w3-select" name="textsetting" id="statusmailselect" style="width: 60%;">
                                 <option value="mailall" selected>SELECT ALL MAIL</option>
                                 <option value="mailrun">SELECT MAIL RUN</option>
                                 <option value="mailnotrun">SELECT MAIL NOT RUN</option>
@@ -311,7 +311,10 @@
                                         class="fa fa-cog"></i></button>
                             </div>
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="youtubeverify"><label
-                                    for="youtubeverify"> Verify youtube</label></div>
+                                    for="youtubeverify"> Verify youtube</label><button class="settingcss" title="config"
+                                    style="display: none;" haction="open_file:data/youtubeverify.txt"><i
+                                        class="fa fa-cog"></i></button>
+                            </div>
                         </div>
                         <div class="w3-row">
                             <div class="w3-third"><input type="checkbox" name="checksetting"
@@ -319,6 +322,9 @@
                                     premium</label></div>
                             <div class="w3-third"><input type="checkbox" name="checksetting"
                                     id="changedisplayname"><label for="changedisplayname"> Đổi tên hiển thị</label>
+                                <button class="settingcss" id="configchangedisplayname" title="Config verify phone"
+                                    style="display: none;" haction="open_file:data/listdisplayname.txt"><i
+                                        class="fa fa-cog"></i></button>
                             </div>
                             <div class="w3-third"><input type="checkbox" name="checksetting"
                                     id="checkhiddenphone"><label for="checkhiddenphone"> Kiểm tra số điện thoại
@@ -326,7 +332,12 @@
                         </div>
                         <div class="w3-row">
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="saveprofile"><label
-                                    for="saveprofile"> Lưu profile</label></div>
+                                    for="saveprofile"> Lưu profile</label>
+                                <button class="settingcss" id="configsaveprofile" title="Config save profile"
+                                    style="display: none;" haction="open_file:data/saveprofile.txt"><i
+                                        class="fa fa-cog"></i></button>
+                            </div>
+
                             <div class="w3-third"><input type="checkbox" name="checksetting"
                                     id="disableforwarding"><label for="disableforwarding"> Disable forwarding
                                     mail</label></div>
@@ -353,6 +364,8 @@
                                 <option value="proxyno1">PROXYNO1</option>
                                 <option value="list_proxyno1">LIST PROXYNO1</option>
                             </select>
+                            <button class="settingcss" id="config_optionproxy" title="config" style="display: none;"><i
+                                    class="fa fa-cog"></i></button>
                         </div>
 
                         <div class="w3-quarter">
@@ -723,192 +736,10 @@
                         kich_hoat_tai_khoan(value)
                     })
                 });
-                $("#optionproxy").change(function () {
-                    addSetting(this.id, this.value)
-                });
-                $("#optionbrowser").change(function () {
-                    addSetting(this.id, this.value)
-                });
-
-
-                $('*[name="radiongonngu"]').on('change', function () {
-
-
-                    // eel.updateSetting("radiongonngu", this.value)
-                    if (this.value == "english") {
-                        toastSuccess("Please press F5 to update the language again");
-                    } else {
-                        toastSuccess("Hãy bấm F5 để cập nhật lại ngôn ngữ");
-                    }
-                    // console.log(this.value, this.checked)
-                    // eel.updateSetting("radio_" + this.id, this.value)()
-                });
-                // $('#numThread').on('change', function () {
-                //     eel.updateSetting(this.id, this.value)()
-                // });
-
-                function addSetting(id, value = "") {
-                    if (id == "optionproxy") {
-                        $("#" + id).next("button.settingcss").remove()
-                        if (value != "noproxy") {
-                            var html = '<button class="settingcss" name="main" id="edit-item" title="Add list name"><i class="fa fa-cog"></i></button>';
-                            $("#" + id).after(html)
-                            $("#edit-item").bind("click", function () {
-                                eel.openFile(value + ".txt")()
-                            });
-                            return
-                        }
-                    }
-                    var checkbox = $("#" + id);
-                    if (id === "verifyphone") {
-                        var html = '<button class="settingcss" name="main" id="configverifyphone" title="Config verify phone"><i class="fa fa-cog"></i></button>';
-                        checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configverifyphone').bind('click', function () { eel.openFile("verifyphone.txt", "setup/temp-data/verifyphone.txt") })) : checkbox.next("label").next("button.settingcss").remove();
-                    }
-                    if (id === "saveprofile") {
-                        var html = '<button class="settingcss" name="main" id="configsaveprofile" title="Config save profile"><i class="fa fa-cog"></i></button>';
-                        checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configsaveprofile').bind('click', function () { eel.openFile("saveprofile.txt") })) : checkbox.next("label").next("button.settingcss").remove();
-                    }
-                    if (id === "youtubeverify") {
-                        var html = '<button class="settingcss" name="main" id="configyoutubeverify" title="Config verify youtube"><i class="fa fa-cog"></i></button>';
-                        checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#configyoutubeverify').bind('click', function () { eel.openFile("youtubeverify.txt") })) : checkbox.next("label").next("button.settingcss").remove();
-                    }
-                    if (id === "changedisplayname") {
-                        var html = '<button class="settingcss" name="main" id="listdisplayname" title="Add list name (first last)"><i class="fa fa-cog"></i></button>';
-                        checkbox.prop("checked") ? (checkbox.next("label").after(html), $('#listdisplayname').bind('click', function () { eel.openFile("listdisplayname.txt") })) : checkbox.next("label").next("button.settingcss").remove();
-                    }
-
-                    if (id === "restoredisable") {
-                        var html1 = '<button class="settingcss" name="main" id="settingrestoredisablecontent" title="Setting Content"><i class="fa fa-cog"></i></button>';
-                        var html2 = '<button class="settingcss" name="main" id="settingrestoredisablecontact" title="Setting Contact"><i class="fa fa-cog"></i></button>';
-                        checkbox.prop("checked") ? (checkbox.next("label").after(html1), checkbox.next("label").after(html2), $('#settingrestoredisablecontent').bind('click', function () { eel.openFile("restoredisablecontent.txt", "setup/temp-data/restoredisablecontent.txt") }), $('#settingrestoredisablecontact').bind('click', function () { eel.openFile("restoredisablecontact.txt") })) : (checkbox.next("label").next("button.settingcss").remove(), checkbox.next("label").next("button.settingcss").remove());
-                    }
-                }
 
 
 
-                //         send_message({
-                //             action: "load_settings",
-                //             sender: "",
-                //             args: [],
-                //             form: "",
-                //         }).then((callback) => {
-                //             data = callback.data;
-                //             i = -1;
-                //             html = "";
-                //             j = 0;
-                //             adder = false;
-                //             for (const key in data) {
-                //                 adder = false;
-                //                 const value = data[key];
-                //                 i = i + 1;
-                //                 j = j + 1;
-                //                 if (i % 3 === 0) {
-                //                     html = html + `<div class="w3-row">`;
-                //                 }
-                //                 html =
-                //                     html +
-                //                     `<div class="w3-third"><input type="checkbox" name="checksetting" id="${key}"><label for="${key}"> ${value}</label></div>`;
-                //                 if (j % 3 === 0) {
-                //                     html = html + `</div>`;
-                //                     adder = true;
-                //                 }
-                //             }
-                //             if (adder == false) {
-                //                 html = html + `</div>`;
-                //             }
-                //             // setHtmlCssSelector("#load-chucnangjs", html);
-                //             $("*[name='checksetting']").bind('click', function (ev) {
-                //                 addSetting(this.id)
-                //                 // eel.updateSetting("check" + "_" + this.id, this.checked)()
-                //             });
-                //             send_message({
-                //                 action: "get_settings",
-                //                 sender: "",
-                //                 args: [],
-                //                 form: "",
-                //             }).then((callback) => {
-                //                 var setlang = "en"
-                //                 var hconfig = callback.hconfig
-                //                 var lang = callback.lang
-                //                 for (let key in hconfig) {
-                //                     var value = hconfig[key]
-                //                     if (key.startsWith("check_")) {
-                //                         var id = key.split("_")[1]
-                //                         var istrue = strToBool(value)
-                //                         $("#" + id).prop("checked", istrue);
-                //                     }
 
-                //                     if (key.startsWith("text_")) {
-                //                         var id = key.split("_")[1]
-                //                         $("#" + id).val(value);
-                //                         addSetting(id, value)
-                //                         // console.log(id);
-                //                     }
-                //                     if (key.startsWith("radio_")) {
-                //                         key = key.split("_")[1]
-                //                         if (key.endsWith("radiongonngu")) {
-                //                             setlang = "en"
-                //                             if (value == "vietnamese") {
-                //                                 setlang = "vi"
-                //                             }
-                //                             localStorage.setItem('lang', setlang)
-                //                             localStorage.setItem('langdata', JSON.stringify(lang))
-                //                         }
-                //                         $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
-                //                         // console.log(id);
-                //                     }
-                //                     // console.log(key + ": " + hconfig[key]);
-                //                 }
-                //                 // console.log(hconfig)
-                //                 // $("#numThread").val(hconfig.numthread);
-
-                //                 // $("#changepass").prop("checked", strToBool(hconfig.changepass));
-                //                 // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
-                //                 // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
-                //                 // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
-                //                 // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
-
-
-                //                 localStorage.setItem(apikeyactive, hconfig.apikeyactive)
-                //                 if (setlang == "vi") {
-                //                     // console.log(typeof lang)
-                //                     function fixLabel(label) {
-                //                         label = label.trim()
-                //                         label = label.replace(/\s+/g, ' ');
-                //                         return label
-                //                     }
-                //                     $("label").each(function () {
-                //                         var labelText = fixLabel($(this).text());
-                //                         var newvalue = lang[labelText];
-                //                         if (newvalue) {
-                //                             $(this).html(" " + newvalue);
-                //                         }
-                //                         // console.log(labelText, newvalue)
-                //                     })
-                //                     $("button").each(function () {
-                //                         var labelText = fixLabel($(this).text());
-                //                         var newvalue = lang[labelText];
-                //                         // console.log(labelText, newvalue)
-                //                         if (newvalue) {
-                //                             $(this).html(newvalue);
-                //                         }
-                //                         // console.log(labelText, newvalue)
-                //                     })
-                //                     $(".lang").each(function () {
-                //                         var labelText = fixLabel($(this).text());
-                //                         var labelTextSplit = labelText.split(":")[0]
-                //                         var newvalue = lang[labelTextSplit];
-                //                         if (newvalue) {
-                //                             $(this).html(labelText.replace(labelTextSplit, newvalue));
-                //                         }
-                //                         // console.log(labelText, newvalue)
-                //                     })
-                //                     $("#iaccount").attr("placeholder", `Nhập danh sách tài khoản mật khẩu
-                // Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
-                //                 }
-                //             })
-
-                //         })
 
                 send_message({
                     action: "load_hide_column",
@@ -946,24 +777,6 @@
                     });
 
 
-                    // send_message({
-                    //     action: "get_settings",
-                    //     sender: "",
-                    //     args: [],
-                    //     form: "",
-                    // }).then((callback) => {
-                    //     var setlang = "en"
-                    //     var hconfig = callback.hconfig
-                    //     var lang = callback.lang
-                    //     for (let key in hconfig) {
-                    //         var value = hconfig[key]
-                    //         if (key.startsWith("check_")) {
-                    //             var id = key.split("_")[1]
-                    //             addSetting(id)
-                    //             $("#" + id).prop("checked", strToBool(value));
-                    //         }
-                    //     }
-                    // })
                 })
 
 
