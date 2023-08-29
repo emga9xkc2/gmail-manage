@@ -12,6 +12,25 @@ function injectEvent() {
             clicked(button.id, haction);
         };
     });
+    var selects = document.querySelectorAll("select");
+    selects.forEach(function (select) {
+        select.onchange = function () {
+            change(select.id, [select.value, "text"]);
+        };
+    });
+    var inputs = document.querySelectorAll("input");
+    inputs.forEach(function (input) {
+        input.onchange = function () {
+            type = input.type;
+            if (type == "radio") {
+                change(input.name, [input.value, type]);
+            } else if (type == "checkbox") {
+                change(input.id, [input.checked, "check"]);
+            } else {
+                change(input.id, [input.value, type]);
+            }
+        };
+    });
     // for (var btn of btns) {
     //     if (!btn.id || btn.getAttribute("onclick")) continue;
 
@@ -56,6 +75,21 @@ function handle_account(action, list_account) {
     return sendMessage({
         action: action,
         sender: "",
+        args: _args,
+        form: formName(),
+    });
+}
+function change(id, args = []) {
+    var _args = [];
+    if (!Array.isArray(args)) {
+        _args = [args];
+    } else {
+        _args = args;
+    }
+
+    sendMessage({
+        action: "change",
+        sender: id,
         args: _args,
         form: formName(),
     });
