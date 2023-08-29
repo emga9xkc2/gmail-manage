@@ -158,6 +158,8 @@ function onMessage(data) {
         toastr.error(data.msg);
     } else if (action == "get_value") {
         return gid(data.id).value;
+    } else if (action == "load_setting") {
+        return gid(data.id).value;
     } else if (action == "load_url") {
         window.location.href = data.url;
     } else if (action == "load_mail") {

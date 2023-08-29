@@ -614,39 +614,7 @@
             window.addEventListener('load', function () {
 
                 var apikeyactive = "apikeyactive"
-                function checkVersionInfo() {
 
-                    let condition = false; // biến kiểm tra điều kiện
-                    var text = "Update new version"
-                    var lang = localStorage.getItem("lang")
-                    if (lang == "vi") {
-                        text = "Cập nhật phiên bản mới"
-                    }
-
-                    function checkForUpdates() {
-                        eel.getNewVersion()(function (callback) {
-                            console.log(callback)
-                            var newversion = callback
-                            if (newversion.indexOf(".") > 0) {
-                                setHtmlCssSelector("#updateversion", text + ": " + newversion)
-
-                                condition = true
-                            }
-                        });
-
-                    }
-                    checkForUpdates(); // chạy lần đầu tiên
-                    let xhrIntervalId = setInterval(function () {
-                        if (condition) {
-                            console.log("stop")
-                            clearInterval(xhrIntervalId); // dừng vòng lặp khi điều kiện đúng
-                        } else {
-                            console.log("nostop")
-                            checkForUpdates();
-                        }
-                    }, 5000);
-                }
-                checkVersionInfo()
                 $('#stop').bind('click', function () {
                     if (confirm("Stop confirmation!") == false) {
                         toastWarning("Cannel stop");
@@ -742,36 +710,7 @@
 
 
                 });
-                $("#updateversion2").bind("click", function () {
-                    // alert("1234")
-                    var text1 = "Waiting..."
-                    var text2 = "Update successful. Please open the software again"
-                    var text3 = "Update failed"
-                    var langselect = localStorage.getItem("lang")
-                    if (langselect == "vi") {
-                        text1 = "Xin chờ..."
-                        text2 = "Cập nhật thành công, hãy mở lại ứng dụng."
-                        text3 = "Cập nhật thất bại"
-                    }
-                    setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
-                            <h3>${text1}</h3>
-                        </div>`)
-                    update_progress(0)
-                    eel.autoUpdate()(function (callback) {
-                        var mess = callback.mess
-                        if (mess == "success") {
-                            setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
-                            <h3>${text2}</h3>
-                        </div>`)
-                        } else {
-                            setHtmlCssSelector("#hdsdStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
-                            <h3>${text3}</h3>
-                        </div>`)
-                        }
-                        console.log(callback)
-                    }
-                    )
-                });
+
                 $("#activeaccount").bind("click", function () {
                     showDialog({
                         title: "Nhập key để kích hoạt phần mềm",
@@ -964,89 +903,7 @@
         Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
                         }
                     })
-                    //         eel.getSetting()(function (callback) {
 
-                    //             var setlang = "en"
-                    //             var hconfig = callback.hconfig
-                    //             var lang = callback.lang
-                    //             for (let key in hconfig) {
-                    //                 var value = hconfig[key]
-                    //                 if (key.startsWith("check_")) {
-                    //                     var id = key.split("_")[1]
-                    //                     var istrue = strToBool(value)
-                    //                     $("#" + id).prop("checked", istrue);
-
-                    //                 }
-                    //                 if (key.startsWith("text_")) {
-                    //                     var id = key.split("_")[1]
-                    //                     $("#" + id).val(value);
-                    //                     addSetting(id, value)
-                    //                     // console.log(id);
-                    //                 }
-                    //                 if (key.startsWith("radio")) {
-                    //                     if (key == "radiongonngu") {
-                    //                         setlang = "en"
-                    //                         if (value == "vietnamese") {
-                    //                             setlang = "vi"
-                    //                         }
-                    //                         localStorage.setItem('lang', setlang)
-                    //                         localStorage.setItem('langdata', JSON.stringify(lang))
-                    //                     }
-                    //                     $("input[type='radio'][name='" + key + "'][value='" + value + "']").prop("checked", true);
-                    //                     // console.log(id);
-                    //                 }
-                    //                 // console.log(key + ": " + hconfig[key]);
-                    //             }
-                    //             // console.log(hconfig)
-                    //             // $("#numThread").val(hconfig.numthread);
-
-                    //             // $("#changepass").prop("checked", strToBool(hconfig.changepass));
-                    //             // $("#changeemailrecovery").prop("checked", strToBool(hconfig.changeemailrecovery));
-                    //             // $("#changelanguage").prop("checked", strToBool(hconfig.changelanguage));
-                    //             // $("#verifyphone").prop("checked", strToBool(hconfig.verifyphone));
-                    //             // $("#restoredisable").prop("checked", strToBool(hconfig.restoredisable));
-
-
-                    //             localStorage.setItem(apikeyactive, hconfig.apikeyactive)
-                    //             if (setlang == "vi") {
-                    //                 // console.log(typeof lang)
-                    //                 function fixLabel(label) {
-                    //                     label = label.trim()
-                    //                     label = label.replace(/\s+/g, ' ');
-                    //                     return label
-                    //                 }
-                    //                 $("label").each(function () {
-                    //                     var labelText = fixLabel($(this).text());
-                    //                     var newvalue = lang[labelText];
-                    //                     if (newvalue) {
-                    //                         $(this).html(" " + newvalue);
-                    //                     }
-                    //                     // console.log(labelText, newvalue)
-                    //                 })
-                    //                 $("button").each(function () {
-                    //                     var labelText = fixLabel($(this).text());
-                    //                     var newvalue = lang[labelText];
-                    //                     // console.log(labelText, newvalue)
-                    //                     if (newvalue) {
-                    //                         $(this).html(newvalue);
-                    //                     }
-                    //                     // console.log(labelText, newvalue)
-                    //                 })
-                    //                 $(".lang").each(function () {
-                    //                     var labelText = fixLabel($(this).text());
-                    //                     var labelTextSplit = labelText.split(":")[0]
-                    //                     var newvalue = lang[labelTextSplit];
-                    //                     if (newvalue) {
-                    //                         $(this).html(labelText.replace(labelTextSplit, newvalue));
-                    //                     }
-                    //                     // console.log(labelText, newvalue)
-                    //                 })
-                    //                 $("#iaccount").attr("placeholder", `Nhập danh sách tài khoản mật khẩu
-                    // Định dạng: Email | Password | Email Recovery | Phone Recovery | Code1,Code2,Code3...`)
-                    //             }
-
-                    //             // console.log(hconfig)
-                    //         });
                 })
 
                 send_message({
