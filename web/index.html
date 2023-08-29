@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
     <!-- <link href="/menu.css" rel="stylesheet" /> -->
+    <script type="text/javascript" src="/eel.js"></script>
+    <script defer src="/static/app.js"></script>
     <link rel="stylesheet" href="style.css">
     <!-- Boxiocns CDN Link -->
     <link href='/css/boxicons.min.css' rel='stylesheet'>
@@ -27,9 +29,9 @@
     <script src="/static/toast/toastr.min.js"></script>
 
 
-    <script type="text/javascript" src="/eel.js"></script>
-    <script src="/static/myscript.js"></script>
-    <script defer src="/static/app.js"></script>
+
+    <script src="/static/myscript.js" defer></script>
+
     <title></title>
     <style>
         body td>input {
@@ -109,24 +111,49 @@
 
             <!-- <p id="numsuccess" class="w3-half w3-left">Success</p> -->
             <div class="w3-bar">
-                <div class="khoangcach">
-                    <button class="btn" name="main" id="tab_home" title="Home"><i class="fa fa-home"></i></button>
-                    <button class="btn" name="main" id="tab_import" title="Import"><i
-                            class="fa fa-upload"></i></i></button>
-                    <button class="btn" name="main" id="tab_setting" title="Setting"><i class="fa fa-cog"></i></button>
-                    <button class="btn" name="main" id="tab_log" title="Logs"><i class="fa fa-paper-plane"></i></button>
-                    <button class="btn" id="tab_folder" haction="open_folder:data" title="Open data folder"><i
-                            class="fa fa-folder"></i></button>
-                </div>
-                <div class="khoangcach">
-                    <button class="btn" style="color: red;" id="stop" title="Stop"><i class="fa fa-stop"></i></button>
-                    <button class="btn" style="color: yellow;" id="btn_reload" title="Reload"><i
-                            class="fa fa-refresh"></i></button>
-                    <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
-                            Pause</label></div>
+                <div class="w3-row">
+                    <div class="w3-third">
+                        <div class="khoangcach">
+                            <button class="btn" name="main" id="tab_home" title="Home"><i
+                                    class="fa fa-home"></i></button>
+                            <button class="btn" name="main" id="tab_import" title="Import"><i
+                                    class="fa fa-upload"></i></i></button>
+                            <button class="btn" name="main" id="tab_setting" title="Setting"><i
+                                    class="fa fa-cog"></i></button>
+                            <button class="btn" name="main" id="tab_log" title="Logs"><i
+                                    class="fa fa-paper-plane"></i></button>
+                            <button class="btn" id="tab_folder" haction="open_folder:data" title="Open data folder"><i
+                                    class="fa fa-folder"></i></button>
+                        </div>
+                        <div class="khoangcach">
+                            <button class="btn" style="color: red;" id="stop" title="Stop"><i
+                                    class="fa fa-stop"></i></button>
+                            <!-- <button class="btn" style="color: yellow;" id="btn_reload" title="Reload"><i
+                                    class="fa fa-refresh"></i></button> -->
 
-                </div>
 
+                        </div>
+                    </div>
+                    <div class="w3-third">
+                        <div class="khoangcach">
+                            <select class="w3-select" name="textsetting" id="statusmailselect" style="width: 70%;">
+                                <option value="mailall" selected>SELECT ALL MAIL</option>
+                                <option value="mailrun">SELECT MAIL RUN</option>
+                                <option value="mailnotrun">SELECT MAIL NOT RUN</option>
+                            </select>
+                            <button class="settingcss" id="btn_load" title="Load"><i class="fa fa-refresh"></i></button>
+                            <button class="settingcss" id="btn_select" title="Select"><i
+                                    class="fa fa-check"></i></button>
+                            <button class="settingcss" id="btn_run" title="Run"><i
+                                    class="fa fa-play-circle"></i></button>
+
+                        </div>
+                    </div>
+                    <div class="w3-third">
+                        <div class="w3-right lang"><input type="checkbox" id="checkpause"><label for="checkpause">
+                                Pause</label></div>
+                    </div>
+                </div>
 
             </div>
 

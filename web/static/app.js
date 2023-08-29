@@ -1,20 +1,33 @@
 function injectEvent() {
-    var btns = document.getElementsByTagName("button");
-    for (var btn of btns) {
-        if (!btn.id || btn.getAttribute("onclick")) continue;
-
-        btn.onclick = (evt) => {
-            // alert(evt.target.id);
+    var btns = document.querySelectorAll("button");
+    btns.forEach(function (button) {
+        button.onclick = function () {
             haction = [];
-            haction_get = evt.target.getAttribute("haction");
+            haction_get = button.getAttribute("haction");
             if (haction_get != null) {
                 if (haction_get.includes(":") > 0) {
                     haction = haction_get.split(":");
                 }
             }
-            clicked(evt.target.id, haction);
+            clicked(button.id, haction);
         };
-    }
+    });
+    // for (var btn of btns) {
+    //     if (!btn.id || btn.getAttribute("onclick")) continue;
+
+    //     btn.onclick = (evt) => {
+    //         // alert(evt.target.id);
+    //         console.log(evt.target.id);
+    //         haction = [];
+    //         haction_get = evt.target.getAttribute("haction");
+    //         if (haction_get != null) {
+    //             if (haction_get.includes(":") > 0) {
+    //                 haction = haction_get.split(":");
+    //             }
+    //         }
+    //         clicked(evt.target.id, haction);
+    //     };
+    // }
 }
 function get_mails(skip, limit) {
     return sendMessage({
