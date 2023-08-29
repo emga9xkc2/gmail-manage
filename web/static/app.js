@@ -114,6 +114,14 @@ function onMessage(data) {
     } else if (action == "set_style") {
         gid(data.id).style[data.style_name] = data.style_value;
         return;
+    } else if (action == "toast_success") {
+        toastr.success(data.msg);
+    } else if (action == "toast_warning") {
+        toastr.warning(data.msg);
+    } else if (action == "toast_info") {
+        toastr.info(data.msg);
+    } else if (action == "toast_error") {
+        toastr.error(data.msg);
     } else if (action == "get_value") {
         return gid(data.id).value;
     } else if (action == "load_mail") {
