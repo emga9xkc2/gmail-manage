@@ -22,6 +22,9 @@ function injectEvent() {
     inputs.forEach(function (input) {
         input.onchange = function () {
             type = input.type;
+            if (type == "number") {
+                type = "text";
+            }
             if (type == "radio") {
                 change(input.name, [input.value, type]);
             } else if (type == "checkbox") {
