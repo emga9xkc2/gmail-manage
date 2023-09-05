@@ -138,6 +138,19 @@ Mở file hconfig | Open hconfig`;
             console.log(text);
         }
     });
+    var elements = document.querySelectorAll("input");
+    elements.forEach(function (element) {
+        var text = element.textContent.trim();
+        text = text.replace(/[\n\t]/g, "");
+        text = text.replace(/\s+/g, " ");
+
+        if (text in translations) {
+            var newtext = translations[text];
+            element.textContent = " " + newtext;
+        } else {
+            console.log(text);
+        }
+    });
 }
 function get_mails(skip, limit) {
     return sendMessage({
