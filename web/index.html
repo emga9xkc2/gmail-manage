@@ -55,10 +55,166 @@
         .w3-table-all tr:nth-child(odd) input {
             background-color: inherit;
         }
+
+        .dialog_wrapper {
+            background-color: #03030365;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            display: none;
+        }
+
+        .dialog-content {
+            width: 500px;
+            margin: 300px auto 0 auto;
+            background-color: rgb(0, 174, 174);
+            padding: 20px;
+            box-shadow: 12px 12px 25px -14px rgba(0, 0, 0, 0.75);
+            position: relative;
+        }
+
+        .dialog-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: red;
+            font-size: 32px;
+        }
+
+        .dialog-content h2 {
+            text-align: center;
+            color: rgb(75, 18, 218);
+            margin-top: -5px
+        }
+
+        .dialog-input {
+
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .dialog-input input {
+            width: 75%;
+        }
+
+        .dialog-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dialog-buttons-left {
+            display: flex;
+            gap: 5px;
+        }
+
+        .group-form {
+            border: 2px solid #000;
+            position: relative;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .group-form-label {
+            background-color: rgb(0, 174, 174);
+            padding: 0 10px;
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            z-index: 999;
+        }
     </style>
 </head>
 
 <body>
+
+    <div class="dialog_wrapper" id="dialog_otp">
+        <div class="dialog-content">
+            <!-- <div class="dialog-close" onclick="dialogClose_()"><i class="fa fa-window-close" aria-hidden="true"></i> -->
+            <!-- </div> -->
+            <div class="dialog-form">
+                <h2>CONFIG OTP</h2>
+
+                <!-- Các trường nhập liệu ở đây -->
+                <div class="dialog-input">
+                    <label for="dialog_otp_site">WEBSITE: </label>
+                    <input type="text" id="dialog_otp_site" placeholder="abcxyz.com">
+                </div>
+                <div class="dialog-input">
+                    <label for="dialog_otp_apikey">APIKEY: </label>
+                    <input type="text" id="dialog_otp_apikey" placeholder="8hwqndjwhqjdnqwm">
+                </div>
+                <div class="dialog-input">
+                    <label for="dialog_otp_serviceid">SERVICE ID: </label>
+                    <input type="text" id="dialog_otp_serviceid" placeholder="-1">
+                </div>
+
+                <div class="dialog-buttons">
+                    <button class="btn" id="dialog_otp_help" title="HELP"><i class="fa fa-book"></i></button>
+                    <div class="dialog-buttons-left">
+                        <button class="btn" id="dialog_otp_close" title="CLOSE"><i
+                                class="fa fa-window-close"></i></button>
+                        <button class="btn" id="dialog_otp_save" title="SAVE"><i class="fa fa-floppy-o"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="dialog_wrapper" id="dialog_captcha">
+        <div class="dialog-content">
+            <!-- <div class="dialog-close" onclick="dialogClose_()"><i class="fa fa-window-close" aria-hidden="true"></i> -->
+            <!-- </div> -->
+            <div class="dialog-form">
+                <h2>CONFIG CAPTCHA</h2>
+
+                <!-- Các trường nhập liệu ở đây. a  -->
+                <div class="group-form">
+                    <label class="group-form-label">RECAPTCHA</label>
+
+                    <div class="dialog-input">
+                        <label for="dialog_captcha_site">WEBSITE: </label>
+                        <input type="text" id="dialog_recaptcha_site" placeholder="2captcha.com">
+                    </div>
+                    <div class="dialog-input">
+                        <label for="dialog_captcha_apikey">APIKEY: </label>
+                        <input type="text" id="dialog_recaptcha_apikey" placeholder="8hwqndjwhqjdnqwm">
+                    </div>
+                </div>
+                <div class="group-form">
+                    <label class="group-form-label">NORMAL CAPTCHA</label>
+
+                    <div class="dialog-input">
+                        <label for="dialog_captcha_site">WEBSITE: </label>
+                        <input type="text" id="dialog_normalcaptcha_site" placeholder="2captcha.com">
+                    </div>
+                    <div class="dialog-input">
+                        <label for="dialog_captcha_apikey">APIKEY: </label>
+                        <input type="text" id="dialog_normalcaptcha_apikey" placeholder="8hwqndjwhqjdnqwm">
+                    </div>
+                </div>
+
+
+                <div class="dialog-buttons">
+                    <button class="btn" id="dialog_captcha_help" title="HELP"><i class="fa fa-book"></i></button>
+                    <div class="dialog-buttons-left">
+                        <button class="btn" id="dialog_captcha_close" title="CLOSE"><i
+                                class="fa fa-window-close"></i></button>
+                        <button class="btn" id="dialog_captcha_save" title="SAVE"><i
+                                class="fa fa-floppy-o"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        // document.getElementById("dialog_captcha").style.display = "block";
+    </script>
 
     <section class="home-section" style="left: 5px; width: calc(100% - 10px);">
         <br>
@@ -312,8 +468,10 @@
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="verifyphone"><label
                                     for="verifyphone"> Verify phone</label>
                                 <button class="settingcss" id="configverifyphone" title="Config verify phone"
+                                    style="display: none;"><i class="fa fa-cog"></i></button>
+                                <!-- <button class="settingcss" id="configverifyphone" title="Config verify phone"
                                     style="display: none;" haction="open_file:data/verifyphone.txt"><i
-                                        class="fa fa-cog"></i></button>
+                                        class="fa fa-cog"></i></button> -->
                             </div>
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="youtubeverify"><label
                                     for="youtubeverify"> Verify youtube</label><button class="settingcss" title="config"
@@ -346,6 +504,11 @@
                             <div class="w3-third"><input type="checkbox" name="checksetting"
                                     id="disableforwarding"><label for="disableforwarding"> Disable forwarding
                                     mail</label></div>
+                            <div class="w3-third"><input type="checkbox" name="checksetting" id="solvecaptcha"><label
+                                    for="solvecaptcha"> Giải captcha</label>
+                                <button class="settingcss" id="configcaptcha" title="Config captcha"
+                                    style="display: none;"><i class="fa fa-cog"></i></button>
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -474,6 +637,7 @@
 
 
         <script>
+
             var selected = [];
             function load_mail(numberPage) {
                 currentPage = numberPage;

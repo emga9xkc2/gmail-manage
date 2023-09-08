@@ -84,6 +84,7 @@ Email khôi phục ngẫu nhiên | Email recovery random
 Đuôi email khôi phục | Email recovery domain
 Mật khẩu ngẫu nhiên | Password random
 Kích hoạt tài khoản | Active account
+Giải captcha | Solve captcha
 Nhập khẩu | Import
 Bảng điều khiển | Dashboard
 Cài đặt | Setting
