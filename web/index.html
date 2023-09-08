@@ -165,6 +165,39 @@
             </div>
         </div>
     </div>
+    <div class="dialog_wrapper" id="dialog_ytbotp">
+        <div class="dialog-content">
+            <!-- <div class="dialog-close" onclick="dialogClose_()"><i class="fa fa-window-close" aria-hidden="true"></i> -->
+            <!-- </div> -->
+            <div class="dialog-form">
+                <h2>CONFIG YOUTUBE OTP</h2>
+
+                <!-- Các trường nhập liệu ở đây -->
+                <div class="dialog-input">
+                    <label for="dialog_ytbotp_site">WEBSITE: </label>
+                    <input type="text" id="dialog_ytbotp_site" placeholder="abcxyz.com">
+                </div>
+                <div class="dialog-input">
+                    <label for="dialog_ytbotp_apikey">APIKEY: </label>
+                    <input type="text" id="dialog_ytbotp_apikey" placeholder="8hwqndjwhqjdnqwm">
+                </div>
+                <div class="dialog-input">
+                    <label for="dialog_ytbotp_serviceid">SERVICE ID: </label>
+                    <input type="text" id="dialog_ytbotp_serviceid" placeholder="-1">
+                </div>
+
+                <div class="dialog-buttons">
+                    <button class="btn" id="dialog_ytbotp_help" title="HELP"><i class="fa fa-book"></i></button>
+                    <div class="dialog-buttons-left">
+                        <button class="btn" id="dialog_ytbotp_close" title="CLOSE"><i
+                                class="fa fa-window-close"></i></button>
+                        <button class="btn" id="dialog_ytbotp_save" title="SAVE"><i class="fa fa-floppy-o"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="dialog_wrapper" id="dialog_captcha">
         <div class="dialog-content">
             <!-- <div class="dialog-close" onclick="dialogClose_()"><i class="fa fa-window-close" aria-hidden="true"></i> -->
@@ -474,8 +507,8 @@
                                         class="fa fa-cog"></i></button> -->
                             </div>
                             <div class="w3-third"><input type="checkbox" name="checksetting" id="youtubeverify"><label
-                                    for="youtubeverify"> Verify youtube</label><button class="settingcss" title="config"
-                                    style="display: none;" haction="open_file:data/youtubeverify.txt"><i
+                                    for="youtubeverify"> Verify youtube</label><button id="configyoutubeverify"
+                                    class="settingcss" title="config" style="display: none;"><i
                                         class="fa fa-cog"></i></button>
                             </div>
                         </div>
@@ -561,20 +594,20 @@
 
                         <div class="w3-bar">
 
-                            <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="apikeycaptcha"
-                                haction="open_file:data/apikeycaptcha.txt">Config captcha</button>
+                            <!-- <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="apikeycaptcha"
+                                haction="open_file:data/apikeycaptcha.txt">Config captcha</button> -->
 
 
 
-                            <button class="w3-bar-item w3-button w3-red" style="width:25%" id="emailrecoveryrandom"
+                            <button class="w3-bar-item w3-button w3-red" style="width:20%" id="emailrecoveryrandom"
                                 haction="open_file:data/emailrecoveryrandom.txt">Email recovery random</button>
-                            <button class="w3-bar-item w3-button w3-purple" style="width:25%" id="emailrecoverydomain"
+                            <button class="w3-bar-item w3-button w3-purple" style="width:20%" id="emailrecoverydomain"
                                 haction="open_file:data/emailrecoverydomain.txt">Email recovery domain</button>
-                            <button class="w3-bar-item w3-button w3-red" style="width:25%" id="passwordrandom"
+                            <button class="w3-bar-item w3-button w3-red" style="width:20%" id="passwordrandom"
                                 haction="open_file:data/passwordrandom.txt">Password random </button>
-                            <button class="w3-bar-item w3-button w3-yellow" style="width:25%" id="hconfig"
+                            <button class="w3-bar-item w3-button w3-yellow" style="width:20%" id="hconfig"
                                 haction="open_file:data/hconfig.ini">Open hconfig </button>
-                            <button class="w3-bar-item w3-button w3-orange" style="width:25%" id="hidecolumn">Hide
+                            <button class="w3-bar-item w3-button w3-orange" style="width:20%" id="hidecolumn">Hide
                                 column</button>
                         </div>
 
