@@ -199,6 +199,9 @@ function change(id, args = []) {
         form: formName(),
     });
 }
+function print(obj) {
+    console.log(obj);
+}
 function clicked(id, args = []) {
     var _args = [];
     if (!Array.isArray(args)) {

@@ -1080,6 +1080,7 @@
                             var count_item = callback.data;
                             // alert(count_item);
                             var html = generateHTML(currentPageNum, count_item);
+                            print(callback.data)
                             setHtmlCssSelector("#load_page", html);
                             resolve();
                         })
