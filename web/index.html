@@ -112,6 +112,11 @@
             gap: 5px;
         }
 
+        .dialog-buttons-right {
+            display: flex;
+            margin-right: 20px;
+        }
+
         .group-form {
             border: 2px solid #000;
             position: relative;
@@ -166,6 +171,25 @@
             </div>
         </div>
     </div>
+    <div class="dialog_wrapper" id="dialog_help">
+        <div class="dialog-content">
+            <!-- <div class="dialog-close" onclick="dialogClose_()"><i class="fa fa-window-close" aria-hidden="true"></i> -->
+            <!-- </div> -->
+            <div class="dialog-form">
+                <h2>HELP</h2>
+
+                <p id="content_help" style="color: white;"></p>
+                <br>
+                <br>
+                <div class="dialog-buttons-right">
+
+                    <button class="btn" id="dialog_help_close" title="CLOSE"><i class="fa fa-window-close"></i></button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="dialog_wrapper" id="dialog_ytbotp">
         <div class="dialog-content">
             <!-- <div class="dialog-close" onclick="dialogClose_()"><i class="fa fa-window-close" aria-hidden="true"></i> -->
@@ -212,7 +236,14 @@
 
                     <div class="dialog-input">
                         <label for="dialog_captcha_site">WEBSITE: </label>
-                        <input type="text" id="dialog_recaptcha_site" placeholder="2captcha.com">
+
+                        <select id="dialog_recaptcha_site" style="width: 75%;">
+                            <option value="2captcha.com" selected>2captcha.com</option>
+                            <option value="1stcaptcha.com">1stcaptcha.com</option>
+                            <option value="nopecha.com">nopecha.com</option>
+                        </select>
+
+                        <!-- <input type="text" id="dialog_recaptcha_site" placeholder="2captcha.com"> -->
                     </div>
                     <div class="dialog-input">
                         <label for="dialog_captcha_apikey">APIKEY: </label>
