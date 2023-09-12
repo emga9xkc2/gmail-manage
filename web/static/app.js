@@ -60,6 +60,7 @@ Xóa số điện thoại | Delete phone recovery
 Kiểm tra số điện thoại | Check phone recovery
 Kiểm tra tên gốc | Check google email
 Tắt 2FA | Disable 2FA
+Kiểm tra email khôi phục | Check email recovery
 Kiểm tra google voice | Check google voice
 Kiểm tra thanh toán | Check payment method
 Kháng mail disable | Restore disable
