@@ -1,16 +1,18 @@
 function injectEvent() {
     var btns = document.querySelectorAll("button");
     btns.forEach(function (button) {
-        button.onclick = function () {
-            haction = [];
-            haction_get = button.getAttribute("haction");
-            if (haction_get != null) {
-                if (haction_get.includes(":") > 0) {
-                    haction = haction_get.split(":");
+        if (!button.getAttribute("onclick")) {
+            button.onclick = function () {
+                haction = [];
+                haction_get = button.getAttribute("haction");
+                if (haction_get != null) {
+                    if (haction_get.includes(":") > 0) {
+                        haction = haction_get.split(":");
+                    }
                 }
-            }
-            clicked(button.id, haction);
-        };
+                clicked(button.id, haction);
+            };
+        }
     });
     var selects = document.querySelectorAll("select");
     selects.forEach(function (select) {

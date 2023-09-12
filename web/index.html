@@ -381,7 +381,8 @@
                                 <option value="mailrun">SELECT MAIL RUN</option>
                                 <option value="mailnotrun">SELECT MAIL NOT RUN</option>
                             </select>
-                            <button class="btn_icon" id="btn_load" title="Load"><i class="fa fa-refresh"></i></button>
+                            <button class="btn_icon" id="btn_load" title="Load" onclick="load_all()"><i
+                                    class="fa fa-refresh"></i></button>
                             <button class="btn_icon" id="btn_select" title="Select"><i class="fa fa-check"></i></button>
                             <button class="btn_icon" id="btn_run" title="Run"><i class="fa fa-play-circle"></i></button>
                         </div>
@@ -1081,341 +1082,6 @@
                     }
                     return rangeWithDots;
                 }
-                function generateHTML(currentPage, totalPages) {
-                    currentPage = parseInt(currentPage);
-                    var html = '<ul class="page">';
-                    html +=
-                        '<li class="page__btn" id="back_page"><span class="material-icons">chevron_left</span></li>';
-
-                    var paginationArray = pagination(currentPage, totalPages);
-                    for (var i = 0; i < paginationArray.length; i++) {
-                        var pageNumber = paginationArray[i];
-                        if (pageNumber === "...") {
-                            html += '<li class="page__dots">...</li>';
-                        } else {
-                            html += '<li class="page__numbers">' + pageNumber + "</li>";
-                        }
-                    }
-
-                    html +=
-                        '<li class="page__btn" id="next_page"><span class="material-icons">chevron_right</span></li>';
-                    html += "</ul>";
-
-                    return html;
-                }
-                var currentPageNum = 1;
-                function loadPage() {
-                    return new Promise((resolve, reject) => {
-
-
-                        send_message({
-                            action: "get_count_mail",
-                            sender: "",
-                            args: [],
-                            form: "",
-                        }).then((callback) => {
-                            currentPageNum = parseInt(currentPageNum);
-                            // console.log(callback);
-                            var count_item = callback.data;
-                            // alert(count_item);
-                            var html = generateHTML(currentPageNum, count_item);
-                            print(callback.data)
-                            setHtmlCssSelector("#load_page", html);
-                            resolve();
-                        })
-
-                        // eel.get_count_mail()(function (callback) {
-                        //     currentPageNum = parseInt(currentPageNum);
-                        //     // console.log(callback);
-                        //     var count_item = callback.data;
-                        //     // alert(count_item);
-                        //     var html = generateHTML(currentPageNum, count_item);
-                        //     setHtmlCssSelector("#load_page", html);
-                        //     resolve();
-                        // });
-                    });
-                }
-
-                function loadTableMails() {
-                    return new Promise((resolve, reject) => {
-                        const table = document.getElementById("table_mail");
-
-                        table.addEventListener("contextmenu", function (event) {
-                            event.preventDefault();
-                            let selectedData;
-
-                            if (event.target.nodeName === "TD") {
-                                const el = document.getElementsByName("menus");
-                                if (el.length > 0) {
-                                    el[0].remove();
-                                }
-
-                                const innerHTML = event.target.innerHTML;
-                                const colIndex = event.target.cellIndex;
-                                const rowIndex = event.target.parentNode.rowIndex;
-                                row = table.rows[rowIndex];
-                                // console.log(row.innerHTML);
-                                selectedData = row.innerHTML;
-                                statusElm = row.querySelector('input[name="status"]')
-                                statusValue = ""
-                                if (statusElm) {
-                                    statusValue = statusElm.value
-                                }
-                                // console.log(statusValue)
-                                // Tạo menu chuột phải
-                                const menu = document.createElement("div");
-                                menu.setAttribute("name", "menus");
-
-                                menu.style.position = "fixed";
-                                menu.style.backgroundColor = "white";
-                                menu.style.top = `${event.clientY}px`;
-                                menu.style.left = `${event.clientX}px`;
-                                menu.style.boxShadow = "0px 0px 10px gray";
-                                menu.style.padding = "10px";
-                                menu.innerHTML = `
-                        <div class="menu-item" id="select-item">Select</div>
-                        <div class="menu-item" id="deselect-item">Deselect</div>
-            <div class="menu-item" id="copy-item">Copy</div>
-            <div class="menu-item" id="selectall-item">Select all mails</div>
-            <div class="menu-item" id="selectall-item-no-running">Select mails that has not been run</div>
-            <div class="menu-item" id="selectall-item-running">Select mails has been running</div>
-            <div class="menu-item" id="selectall-item-status" value="${statusValue}">Select mails with status is '${statusValue}'</div>
-            <div class="menu-item" id="deselectall-item">Deselect all</div>
-            <div class="menu-item" id="deleteall-item">Delete selected mails</div>
-            <div class="menu-item" id="exportall-item">Export selected mails</div>
-            <div class="menu-item" id="runall-item">Run selected mails</div>
-            `;
-
-                                document.body.appendChild(menu);
-
-                                var langselect = localStorage.getItem("lang")
-                                var lang = JSON.parse(localStorage.getItem("langdata"))
-                                // console.log(lang)
-                                if (langselect == "vi") {
-                                    $(".menu-item").each(function () {
-                                        var labelText = $(this).text().trim();
-
-                                        var newvalue = lang[labelText];
-                                        if (newvalue) {
-                                            $(this).html(newvalue);
-                                        } else {
-                                            if (labelText.startsWith("Select mails with status is")) {
-                                                newvalue = labelText.replace("Select mails with status is", "Chọn mail trạng thái là")
-                                                $(this).html(newvalue);
-                                            }
-                                        }
-                                        console.log(labelText, newvalue)
-                                    })
-                                }
-
-
-                                if (statusValue == "") {
-                                    $("#selectall-item-status").css("display", "none");
-                                }
-                                $("#copy-item").css("display", "none");
-                                const checkbox = row.querySelector("input[type='checkbox']");
-                                const checked = checkbox.checked;
-                                if (checked) {
-                                    $("#select-item").css("display", "none");
-                                } else {
-                                    $("#deselect-item").css("display", "none");
-                                }
-                                // Thêm sự kiện cho menu sao chép
-                                $("#copy-item").bind("click", function () {
-                                    navigator.clipboard.writeText(selectedData);
-                                    menu.remove();
-                                });
-                                $("#runall-item").bind("click", function () {
-                                    if (selected.length == 0) {
-                                        toastError("Please select the mail to run first");
-                                        return;
-                                    }
-                                    handle_account("run", selected)
-                                    // eel.runAccountsThread(selected)();
-                                });
-                                $("#deleteall-item").bind("click", function () {
-                                    if (confirm("Delete confirmation!") == false) {
-                                        toastWarning("Cannel delete");
-                                        return;
-                                    }
-                                    if (selected.length == 0) {
-                                        toastError("Please select the emails to delete first");
-                                        return;
-                                    }
-                                    handle_account("delete", selected).then(callback => {
-                                        load_mail(0)
-                                        selected = []
-                                    })
-
-                                });
-                                $("#exportall-item").bind("click", function () {
-                                    if (selected.length == 0) {
-                                        toastError("Please select the mail to export first");
-                                        return;
-                                    }
-                                    handle_account("export", selected)
-                                    // eel.exportAccounts(selected)(function (callback) {
-                                    //     // var msg = callback.msg
-                                    //     // console.log(msg)
-                                    //     // if (msg == "Success") {
-                                    //     //     alert("Export email successfully")
-                                    //     // } else {
-                                    //     //     alert("Export mail failed")
-                                    //     // }
-                                    // });
-                                });
-                                // Thêm sự kiện cho menu xóa
-                                // document
-                                //     .getElementById("delete-item")
-                                //     .addEventListener("click", function () {
-                                //         row.remove();
-                                //         menu.remove();
-                                //     });
-                                $("#select-item").bind("click", function () {
-                                    const checkbox = row.querySelector(
-                                        "input[type='checkbox']"
-                                    );
-                                    checkbox.checked = true;
-                                    selectedPush(checkbox.value);
-                                    showSelected()
-
-                                });
-                                $("#deselect-item").bind("click", function () {
-                                    const checkbox = row.querySelector(
-                                        "input[type='checkbox']"
-                                    );
-                                    checkbox.checked = false;
-                                    selectedRemove(checkbox.value);
-                                    showSelected()
-                                });
-                                $("#selectall-item-running").bind("click", function () {
-
-                                    handle_account("select", "1").then((callback) => {
-                                        var data = callback.data
-                                        selected = selected.concat(data);
-                                        selected = selected.map(number => number.toString());
-                                        // console.log(selected)
-                                        checkboxEvent()
-                                    })
-
-                                    // eel.selectMails("1")(function (callback) {
-                                    //     var data = callback.data
-                                    //     selected = selected.concat(data);
-                                    //     selected = selected.map(number => number.toString());
-                                    //     // console.log(selected)
-                                    //     checkboxEvent()
-                                    // })
-                                    // checkboxes = document.getElementsByName("mails");
-                                    // for (var i = 0, n = checkboxes.length; i < n; i++) {
-                                    //     checkboxes[i].checked = true;
-                                    //     value = checkboxes[i].value;
-                                    //     selectedPush(value);
-                                    // }
-                                });
-                                $("#selectall-item-status").bind("click", function () {
-                                    var value = $(this).attr("value");
-                                    handle_account("select", value).then((callback) => {
-                                        var data = callback.data
-                                        selected = selected.concat(data);
-                                        selected = selected.map(number => number.toString());
-                                        console.log(selected)
-                                        checkboxEvent()
-                                    })
-
-                                    // eel.selectMails(value)(function (callback) {
-                                    //     var data = callback.data
-                                    //     selected = selected.concat(data);
-                                    //     selected = selected.map(number => number.toString());
-                                    //     console.log(selected)
-                                    //     checkboxEvent()
-                                    // })
-                                    // checkboxes = document.getElementsByName("mails");
-                                    // for (var i = 0, n = checkboxes.length; i < n; i++) {
-                                    //     checkboxes[i].checked = true;
-                                    //     value = checkboxes[i].value;
-                                    //     selectedPush(value);
-                                    // }
-                                });
-                                $("#selectall-item-no-running").bind("click", function () {
-
-
-                                    handle_account("select", "").then((callback) => {
-                                        var data = callback.data
-                                        selected = selected.concat(data);
-                                        selected = selected.map(number => number.toString());
-                                        // console.log(selected)
-                                        checkboxEvent()
-                                    })
-
-                                    // eel.selectMails("")(function (callback) {
-                                    //     var data = callback.data
-                                    //     selected = selected.concat(data);
-                                    //     selected = selected.map(number => number.toString());
-                                    //     // console.log(selected)
-                                    //     checkboxEvent()
-                                    // })
-                                    // checkboxes = document.getElementsByName("mails");
-                                    // for (var i = 0, n = checkboxes.length; i < n; i++) {
-                                    //     checkboxes[i].checked = true;
-                                    //     value = checkboxes[i].value;
-                                    //     selectedPush(value);
-                                    // }
-                                });
-                                $("#selectall-item").bind("click", function () {
-
-                                    handle_account("select", "all").then((callback) => {
-                                        var data = callback.data
-                                        selected = selected.concat(data);
-                                        selected = selected.map(number => number.toString());
-                                        // console.log(selected)
-                                        checkboxEvent()
-                                    })
-
-                                    // eel.selectMails("all")(function (callback) {
-                                    //     var data = callback.data
-                                    //     selected = selected.concat(data);
-                                    //     selected = selected.map(number => number.toString());
-                                    //     // console.log(selected)
-                                    //     checkboxEvent()
-                                    // })
-                                    // checkboxes = document.getElementsByName("mails");
-                                    // for (var i = 0, n = checkboxes.length; i < n; i++) {
-                                    //     checkboxes[i].checked = true;
-                                    //     value = checkboxes[i].value;
-                                    //     selectedPush(value);
-                                    // }
-                                });
-
-                                $("#deselectall-item").bind("click", function () {
-                                    selected = []
-                                    checkboxEvent()
-                                    // checkboxes = document.getElementsByName("mails");
-                                    // for (var i = 0, n = checkboxes.length; i < n; i++) {
-                                    //     checkboxes[i].checked = false;
-                                    //     value = checkboxes[i].value;
-                                    //     selectedRemove(value);
-                                    // }
-                                });
-                                addEventListener("click", (event) => {
-                                    menu.remove();
-                                });
-                                // Thêm hiệu ứng đổi màu khi di chuột vào menu
-                                const menuItems = document.querySelectorAll(".menu-item");
-                                menuItems.forEach(function (item) {
-                                    item.addEventListener("mouseover", function () {
-                                        item.style.color = "white";
-                                        item.style.backgroundColor = "green";
-                                    });
-                                    item.addEventListener("mouseout", function () {
-                                        item.style.backgroundColor = "white";
-                                        item.style.color = "black";
-                                    });
-                                });
-                            }
-                        });
-                        resolve();
-                    });
-                }
 
 
 
@@ -1429,57 +1095,387 @@
                     setHtmlCssSelector("#version", text + ": " + callback)
                 });
 
-                function clickPage() {
-                    return new Promise((resolve, reject) => {
-                        $("#back_page").click(function () {
-                            var currentPage = document.querySelector(".page__numbers.active");
-                            var nextPage = currentPage.previousElementSibling;
-                            if (nextPage && nextPage.classList.contains("page__numbers")) {
-                                nextPage.classList.add("active");
-                                currentPage.classList.remove("active");
-                                const numPage = nextPage.textContent;
-                                load_mail(numPage);
-                            }
-                        });
 
-                        $("#next_page").click(function () {
-                            var currentPage = document.querySelector(".page__numbers.active");
-                            var nextPage = currentPage.nextElementSibling;
-                            if (nextPage && nextPage.classList.contains("page__numbers")) {
-                                nextPage.classList.add("active");
-                                currentPage.classList.remove("active");
-                                const numPage = nextPage.textContent;
 
-                                load_mail(numPage);
-                            }
-                        });
-                        $(".page__numbers").click(function () {
-                            // alert("page__numbers");
-                            // Bỏ tất cả class "active"
-                            $(".page__numbers").removeClass("active");
-                            // Thêm class "active" cho phần tử đang được click
-                            $(this).addClass("active");
-                            const numPage = $(this).text();
-                            // generateHTML(numPage, 10);
-                            // alert(numPage);
-                            // var html = generateHTML(numPage, 10);
-                            // setHtmlCssSelector("#app", html);
+
+                // }, false);
+            });
+            function clickPage() {
+                return new Promise((resolve, reject) => {
+                    $("#back_page").click(function () {
+                        var currentPage = document.querySelector(".page__numbers.active");
+                        var nextPage = currentPage.previousElementSibling;
+                        if (nextPage && nextPage.classList.contains("page__numbers")) {
+                            nextPage.classList.add("active");
+                            currentPage.classList.remove("active");
+                            const numPage = nextPage.textContent;
                             load_mail(numPage);
-                            // clickPage();
-                        });
-                        $(".page__numbers")[0].click();
-                        resolve();
+                        }
                     });
+
+                    $("#next_page").click(function () {
+                        var currentPage = document.querySelector(".page__numbers.active");
+                        var nextPage = currentPage.nextElementSibling;
+                        if (nextPage && nextPage.classList.contains("page__numbers")) {
+                            nextPage.classList.add("active");
+                            currentPage.classList.remove("active");
+                            const numPage = nextPage.textContent;
+
+                            load_mail(numPage);
+                        }
+                    });
+                    $(".page__numbers").click(function () {
+                        // alert("page__numbers");
+                        // Bỏ tất cả class "active"
+                        $(".page__numbers").removeClass("active");
+                        // Thêm class "active" cho phần tử đang được click
+                        $(this).addClass("active");
+                        const numPage = $(this).text();
+                        // generateHTML(numPage, 10);
+                        // alert(numPage);
+                        // var html = generateHTML(numPage, 10);
+                        // setHtmlCssSelector("#app", html);
+                        load_mail(numPage);
+                        // clickPage();
+                    });
+                    $(".page__numbers")[0].click();
+                    resolve();
+                });
+            }
+            function generateHTML(currentPage, totalPages) {
+                currentPage = parseInt(currentPage);
+                var html = '<ul class="page">';
+                html +=
+                    '<li class="page__btn" id="back_page"><span class="material-icons">chevron_left</span></li>';
+
+                var paginationArray = pagination(currentPage, totalPages);
+                for (var i = 0; i < paginationArray.length; i++) {
+                    var pageNumber = paginationArray[i];
+                    if (pageNumber === "...") {
+                        html += '<li class="page__dots">...</li>';
+                    } else {
+                        html += '<li class="page__numbers">' + pageNumber + "</li>";
+                    }
                 }
 
+                html +=
+                    '<li class="page__btn" id="next_page"><span class="material-icons">chevron_right</span></li>';
+                html += "</ul>";
+
+                return html;
+            }
+
+
+            function loadTableMails() {
+                return new Promise((resolve, reject) => {
+                    const table = document.getElementById("table_mail");
+
+                    table.addEventListener("contextmenu", function (event) {
+                        event.preventDefault();
+                        let selectedData;
+
+                        if (event.target.nodeName === "TD") {
+                            const el = document.getElementsByName("menus");
+                            if (el.length > 0) {
+                                el[0].remove();
+                            }
+
+                            const innerHTML = event.target.innerHTML;
+                            const colIndex = event.target.cellIndex;
+                            const rowIndex = event.target.parentNode.rowIndex;
+                            row = table.rows[rowIndex];
+                            // console.log(row.innerHTML);
+                            selectedData = row.innerHTML;
+                            statusElm = row.querySelector('input[name="status"]')
+                            statusValue = ""
+                            if (statusElm) {
+                                statusValue = statusElm.value
+                            }
+                            // console.log(statusValue)
+                            // Tạo menu chuột phải
+                            const menu = document.createElement("div");
+                            menu.setAttribute("name", "menus");
+
+                            menu.style.position = "fixed";
+                            menu.style.backgroundColor = "white";
+                            menu.style.top = `${event.clientY}px`;
+                            menu.style.left = `${event.clientX}px`;
+                            menu.style.boxShadow = "0px 0px 10px gray";
+                            menu.style.padding = "10px";
+                            menu.innerHTML = `
+                        <div class="menu-item" id="select-item">Select</div>
+                        <div class="menu-item" id="deselect-item">Deselect</div>
+            <div class="menu-item" id="copy-item">Copy</div>
+            <div class="menu-item" id="selectall-item">Select all mails</div>
+            <div class="menu-item" id="selectall-item-no-running">Select mails that has not been run</div>
+            <div class="menu-item" id="selectall-item-running">Select mails has been running</div>
+            <div class="menu-item" id="selectall-item-status" value="${statusValue}">Select mails with status is '${statusValue}'</div>
+            <div class="menu-item" id="deselectall-item">Deselect all</div>
+            <div class="menu-item" id="deleteall-item">Delete selected mails</div>
+            <div class="menu-item" id="exportall-item">Export selected mails</div>
+            <div class="menu-item" id="runall-item">Run selected mails</div>
+            `;
+
+                            document.body.appendChild(menu);
+
+                            var langselect = localStorage.getItem("lang")
+                            var lang = JSON.parse(localStorage.getItem("langdata"))
+                            // console.log(lang)
+                            if (langselect == "vi") {
+                                $(".menu-item").each(function () {
+                                    var labelText = $(this).text().trim();
+
+                                    var newvalue = lang[labelText];
+                                    if (newvalue) {
+                                        $(this).html(newvalue);
+                                    } else {
+                                        if (labelText.startsWith("Select mails with status is")) {
+                                            newvalue = labelText.replace("Select mails with status is", "Chọn mail trạng thái là")
+                                            $(this).html(newvalue);
+                                        }
+                                    }
+                                    console.log(labelText, newvalue)
+                                })
+                            }
+
+
+                            if (statusValue == "") {
+                                $("#selectall-item-status").css("display", "none");
+                            }
+                            $("#copy-item").css("display", "none");
+                            const checkbox = row.querySelector("input[type='checkbox']");
+                            const checked = checkbox.checked;
+                            if (checked) {
+                                $("#select-item").css("display", "none");
+                            } else {
+                                $("#deselect-item").css("display", "none");
+                            }
+                            // Thêm sự kiện cho menu sao chép
+                            $("#copy-item").bind("click", function () {
+                                navigator.clipboard.writeText(selectedData);
+                                menu.remove();
+                            });
+                            $("#runall-item").bind("click", function () {
+                                if (selected.length == 0) {
+                                    toastError("Please select the mail to run first");
+                                    return;
+                                }
+                                handle_account("run", selected)
+                                // eel.runAccountsThread(selected)();
+                            });
+                            $("#deleteall-item").bind("click", function () {
+                                if (confirm("Delete confirmation!") == false) {
+                                    toastWarning("Cannel delete");
+                                    return;
+                                }
+                                if (selected.length == 0) {
+                                    toastError("Please select the emails to delete first");
+                                    return;
+                                }
+                                handle_account("delete", selected).then(callback => {
+                                    load_mail(0)
+                                    selected = []
+                                })
+
+                            });
+                            $("#exportall-item").bind("click", function () {
+                                if (selected.length == 0) {
+                                    toastError("Please select the mail to export first");
+                                    return;
+                                }
+                                handle_account("export", selected)
+                                // eel.exportAccounts(selected)(function (callback) {
+                                //     // var msg = callback.msg
+                                //     // console.log(msg)
+                                //     // if (msg == "Success") {
+                                //     //     alert("Export email successfully")
+                                //     // } else {
+                                //     //     alert("Export mail failed")
+                                //     // }
+                                // });
+                            });
+                            // Thêm sự kiện cho menu xóa
+                            // document
+                            //     .getElementById("delete-item")
+                            //     .addEventListener("click", function () {
+                            //         row.remove();
+                            //         menu.remove();
+                            //     });
+                            $("#select-item").bind("click", function () {
+                                const checkbox = row.querySelector(
+                                    "input[type='checkbox']"
+                                );
+                                checkbox.checked = true;
+                                selectedPush(checkbox.value);
+                                showSelected()
+
+                            });
+                            $("#deselect-item").bind("click", function () {
+                                const checkbox = row.querySelector(
+                                    "input[type='checkbox']"
+                                );
+                                checkbox.checked = false;
+                                selectedRemove(checkbox.value);
+                                showSelected()
+                            });
+                            $("#selectall-item-running").bind("click", function () {
+
+                                handle_account("select", "1").then((callback) => {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    // console.log(selected)
+                                    checkboxEvent()
+                                })
+
+                                // eel.selectMails("1")(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     // console.log(selected)
+                                //     checkboxEvent()
+                                // })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+                            $("#selectall-item-status").bind("click", function () {
+                                var value = $(this).attr("value");
+                                handle_account("select", value).then((callback) => {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    console.log(selected)
+                                    checkboxEvent()
+                                })
+
+                                // eel.selectMails(value)(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     console.log(selected)
+                                //     checkboxEvent()
+                                // })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+                            $("#selectall-item-no-running").bind("click", function () {
+
+
+                                handle_account("select", "").then((callback) => {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    // console.log(selected)
+                                    checkboxEvent()
+                                })
+
+                                // eel.selectMails("")(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     // console.log(selected)
+                                //     checkboxEvent()
+                                // })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+                            $("#selectall-item").bind("click", function () {
+
+                                handle_account("select", "all").then((callback) => {
+                                    var data = callback.data
+                                    selected = selected.concat(data);
+                                    selected = selected.map(number => number.toString());
+                                    // console.log(selected)
+                                    checkboxEvent()
+                                })
+
+                                // eel.selectMails("all")(function (callback) {
+                                //     var data = callback.data
+                                //     selected = selected.concat(data);
+                                //     selected = selected.map(number => number.toString());
+                                //     // console.log(selected)
+                                //     checkboxEvent()
+                                // })
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = true;
+                                //     value = checkboxes[i].value;
+                                //     selectedPush(value);
+                                // }
+                            });
+
+                            $("#deselectall-item").bind("click", function () {
+                                selected = []
+                                checkboxEvent()
+                                // checkboxes = document.getElementsByName("mails");
+                                // for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                //     checkboxes[i].checked = false;
+                                //     value = checkboxes[i].value;
+                                //     selectedRemove(value);
+                                // }
+                            });
+                            addEventListener("click", (event) => {
+                                menu.remove();
+                            });
+                            // Thêm hiệu ứng đổi màu khi di chuột vào menu
+                            const menuItems = document.querySelectorAll(".menu-item");
+                            menuItems.forEach(function (item) {
+                                item.addEventListener("mouseover", function () {
+                                    item.style.color = "white";
+                                    item.style.backgroundColor = "green";
+                                });
+                                item.addEventListener("mouseout", function () {
+                                    item.style.backgroundColor = "white";
+                                    item.style.color = "black";
+                                });
+                            });
+                        }
+                    });
+                    resolve();
+                });
+            }
+
+            var currentPageNum = 1;
+            function loadPage() {
+
+
+                send_message({
+                    action: "get_count_mail",
+                    sender: "",
+                    args: [],
+                    form: "",
+                }).then((callback) => {
+                    currentPageNum = parseInt(currentPageNum);
+                    // console.log(callback);
+                    var count_item = callback.data;
+                    // alert(count_item);
+                    var html = generateHTML(currentPageNum, count_item);
+                    print(callback.data)
+                    setHtmlCssSelector("#load_page", html);
+
+                })
+
+
+
+            }
+            function load_all() {
 
                 loadPage()
                 loadTableMails()
                 clickPage()
-                // }, false);
-            });
-
-
+            }
         </script>
 
 
