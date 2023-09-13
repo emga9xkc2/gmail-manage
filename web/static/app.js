@@ -297,6 +297,8 @@ function onMessage(data) {
             change_language(data.change_to);
         } else if (action == "load_url") {
             window.location.href = data.url;
+        } else if (action == "load_all") {
+            load_all();
         } else if (action == "load_mail") {
             load_mail(data.action);
         }
