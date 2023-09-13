@@ -263,6 +263,8 @@ function onMessage(data) {
             return;
         } else if (action == "set_value") {
             gid(data.id).value = data.value;
+        } else if (action == "get_checked") {
+            return gid(data.id).checked;
         } else if (action == "set_checked") {
             gid(data.id).checked = JSON.parse(data.checked);
         } else if (action == "set_checked_radio") {
