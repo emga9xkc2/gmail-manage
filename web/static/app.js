@@ -87,6 +87,7 @@ Mail nhận thư kháng disable | Restore disable contact
 Email khôi phục ngẫu nhiên | Email recovery random
 Đuôi email khôi phục | Email recovery domain
 Mật khẩu ngẫu nhiên | Password random
+Xóa email thay thế | Delete alternative email
 Kích hoạt tài khoản | Active account
 Giải captcha | Solve captcha
 Nhập khẩu | Import
