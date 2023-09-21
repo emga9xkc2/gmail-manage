@@ -57,6 +57,10 @@ function change_language(change_to) {
     var text_vn_en = `Kiểm tra youtube | Check info youtube
 Kiểm tra ngày tạo | Check date create
 Đổi mật khẩu | Change password
+Sử dụng | Use
+Cài đặt email kháng | Setup email want restore disable
+Dừng tool khi kháng xong hết | Stop the tool when it finishes running
+Số account chạy / lượt: | Number of running accounts / turn:
 Đổi email khôi phục | Change email recovery
 Xóa số điện thoại | Delete phone recovery
 Kiểm tra số điện thoại | Check phone recovery
@@ -88,6 +92,8 @@ Email khôi phục ngẫu nhiên | Email recovery random
 Đuôi email khôi phục | Email recovery domain
 Mật khẩu ngẫu nhiên | Password random
 Xóa email thay thế | Delete alternative email
+Cài đặt email nhận thư kháng | Setup email contact
+Cài đặt nội dung kháng | Setup content
 Kích hoạt tài khoản | Active account
 Giải captcha | Solve captcha
 Nhập khẩu | Import
@@ -145,6 +151,19 @@ Mở file hconfig | Open hconfig`;
         }
     });
     var elements = document.querySelectorAll("input");
+    elements.forEach(function (element) {
+        var text = element.textContent.trim();
+        text = text.replace(/[\n\t]/g, "");
+        text = text.replace(/\s+/g, " ");
+
+        if (text in translations) {
+            var newtext = translations[text];
+            element.textContent = " " + newtext;
+        } else {
+            console.log(text);
+        }
+    });
+    var elements = document.querySelectorAll("button");
     elements.forEach(function (element) {
         var text = element.textContent.trim();
         text = text.replace(/[\n\t]/g, "");
