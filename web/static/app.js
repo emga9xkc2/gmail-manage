@@ -58,6 +58,7 @@ function change_language(change_to) {
 Kiểm tra ngày tạo | Check date create
 Đổi mật khẩu | Change password
 Sử dụng | Use
+Thêm email thay thế | Add alternative email
 Cài đặt email kháng | Setup email want restore disable
 Dừng tool khi kháng xong hết | Stop the tool when it finishes running
 Số account chạy / lượt: | Number of running accounts / turn:
