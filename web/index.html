@@ -133,6 +133,33 @@
             left: 20px;
             z-index: 999;
         }
+
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 2px dotted rgb(255, 0, 0);
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 100%;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            bottom: 30px;
+            left: 0%;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
     </style>
 </head>
 
@@ -240,6 +267,7 @@
                                 for="restoredisable2_bypasscaptcha">
                                 Giải captcha</label>
                         </div>
+
                     </div>
 
                     <div class="w3-row" style="margin-bottom: 10px;">
@@ -254,6 +282,12 @@
                     <div class="dialog-input">
                         <label for="restoredisable2_account_turn">Số account chạy / lượt: </label>
                         <input type="text" id="restoredisable2_account_turn" placeholder="1" style="width: 35%;">
+                    </div>
+                    <div class="dialog-input">
+                        <label for="restoredisable2_sleep_reload" class="tooltip">Thời gian tải lại trang khi bị
+                            captcha: <span class="tooltiptext">Khi cài thời gian > 0 sẽ tự động không chạy giải
+                                captcha</span></label>
+                        <input type="text" id="restoredisable2_sleep_reload" placeholder="0" style="width: 35%;">
                     </div>
 
                     <!-- <div class="dialog-input">
