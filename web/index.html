@@ -1156,43 +1156,43 @@
 
 
 
-                send_message({
-                    action: "load_hide_column",
-                    sender: "",
-                    args: [],
-                    form: "",
-                }).then((callback) => {
-                    data = callback.data;
-                    i = -1;
-                    html = "";
-                    j = 0;
-                    adder = false;
-                    for (const key in data) {
-                        adder = false;
-                        const value = data[key];
-                        i = i + 1;
-                        j = j + 1;
-                        if (i % 3 === 0) {
-                            html = html + `<div class="w3-row">`;
-                        }
-                        html =
-                            html +
-                            `<div class="w3-third"><input type="checkbox" name="checkhidedash" id="hide${key}"><label for="${key}"> ${value}</label></div>`;
-                        if (j % 3 === 0) {
-                            html = html + `</div>`;
-                            adder = true;
-                        }
-                    }
-                    if (adder == false) {
-                        html = html + `</div>`;
-                    }
-                    setHtmlCssSelector("#load-hidedash", html);
-                    $("*[name='checkhidedash']").bind('click', function (ev) {
-                        eel.updateSetting("check" + "_" + this.id, this.checked)()
-                    });
+                // send_message({
+                //     action: "load_hide_column",
+                //     sender: "",
+                //     args: [],
+                //     form: "",
+                // }).then((callback) => {
+                //     data = callback.data;
+                //     i = -1;
+                //     html = "";
+                //     j = 0;
+                //     adder = false;
+                //     for (const key in data) {
+                //         adder = false;
+                //         const value = data[key];
+                //         i = i + 1;
+                //         j = j + 1;
+                //         if (i % 3 === 0) {
+                //             html = html + `<div class="w3-row">`;
+                //         }
+                //         html =
+                //             html +
+                //             `<div class="w3-third"><input type="checkbox" name="checkhidedash" id="hide${key}"><label for="${key}"> ${value}</label></div>`;
+                //         if (j % 3 === 0) {
+                //             html = html + `</div>`;
+                //             adder = true;
+                //         }
+                //     }
+                //     if (adder == false) {
+                //         html = html + `</div>`;
+                //     }
+                //     setHtmlCssSelector("#load-hidedash", html);
+                //     $("*[name='checkhidedash']").bind('click', function (ev) {
+                //         eel.updateSetting("check" + "_" + this.id, this.checked)()
+                //     });
 
 
-                })
+                // })
 
 
 
