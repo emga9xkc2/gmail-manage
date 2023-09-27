@@ -272,6 +272,7 @@ function gid(x) {
 function gselector(x) {
     return document.querySelector(x);
 }
+
 function onMessage(data) {
     try {
         if (typeof data == "string") {
