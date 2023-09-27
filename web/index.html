@@ -1351,9 +1351,12 @@
                     const table = document.getElementById("table_mail");
 
                     table.addEventListener("contextmenu", function (event) {
+                        console.log("here")
                         event.preventDefault();
+                        // event.stopPropagation();
                         let selectedData;
-
+                        // debugger;
+                        // event.target.nodeName === "TD"
                         if (event.target.nodeName === "TD") {
                             const el = document.getElementsByName("menus");
                             if (el.length > 0) {
@@ -1375,6 +1378,7 @@
                             // Tạo menu chuột phải
                             const menu = document.createElement("div");
                             menu.setAttribute("name", "menus");
+                            menu.id = "test123"
 
                             menu.style.position = "fixed";
                             menu.style.backgroundColor = "white";
