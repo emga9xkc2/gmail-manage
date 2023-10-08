@@ -21,6 +21,12 @@
                 args: value
             });
         }
+        function set_run_status(status = "run,pause,stop") {
+            sendMessage({
+                action: "set_run_status",
+                sender: status,
+            });
+        }
         function str_to_bool(myValue) {
             return String(myValue).toLowerCase() === "true";
         }
