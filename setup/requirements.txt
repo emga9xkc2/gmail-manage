@@ -11,7 +11,7 @@ requests
 SQLAlchemy
 
 #timestring
-
+mitmproxy
 
 # pymem
 #pyautogui
