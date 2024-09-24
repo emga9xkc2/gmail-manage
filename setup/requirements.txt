@@ -6,7 +6,7 @@ tqdm
 playwright==1.31.1
 #
 # gevent
-#requests
+requests
 
 SQLAlchemy
 
