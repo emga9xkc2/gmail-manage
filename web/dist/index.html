@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" type="image/x-icon" href="/favicon.ico"><title>React with Webpack</title><script defer="defer" src="bundle.js"></script></head><body><div id="app"></div><script src="/eel.js"></script><script>document.addEventListener('contextmenu', event => event.preventDefault());
+
+        async function sendMessage(data) {
+            if (typeof data == "string") {
+                data = {
+                    action: data,
+                };
+            }
+
+            data = JSON.stringify(data);
+
+            //   alert(data);
+            a = await eel.on_message(data)();
+            // alert(a);
+            return a;
+        }
+        function update_ini(key, value) {
+            sendMessage({
+                action: "update_ini",
+                sender: key,
+                args: value
+            });
+        }
+        function set_run_status(status = "run,pause,stop") {
+            sendMessage({
+                action: "set_run_status",
+                sender: status,
+            });
+        }
+        function str_to_bool(myValue) {
+            return String(myValue).toLowerCase() === "true";
+        }
+        function open_file(filename) {
+            sendMessage({
+                action: "open_file",
+                args: [filename]
+            });
+        }
+        async function get_ini(key) {
+            return sendMessage({
+                action: "get_ini",
+                sender: key
+            });
+        }
+        // function onMessage(data) {
+        //     try {
+        //         if (typeof data == "string") {
+        //             data = JSON.parse(data);
+        //         }
+        //         let action = data.action;
+
+        //         if (action == "set_html") {
+        //             gid(data.id).innerHTML = data.html;
+        //             return;
+        //         } else if (action == "set_value") {
+        //             gid(data.id).value = data.value;
+        //         } else if (action == "get_checked") {
+        //             return gid(data.id).checked;
+        //         } else if (action == "set_checked") {
+        //             gid(data.id).checked = JSON.parse(data.checked);
+        //         } else if (action == "set_checked_radio") {
+        //             gselector(
+        //                 "input[type='radio'][name='" +
+        //                 data.name +
+        //                 "'][value='" +
+        //                 data.value_checked +
+        //                 "']"
+        //             ).checked = true;
+        //         } else if (action == "set_style") {
+        //             gid(data.id).style[data.style_name] = data.style_value;
+        //         } else if (action == "set_style_selector") {
+        //             gselector(data.selector).style[data.style_name] = data.style_value;
+        //         } else if (action == "set_display_selector") {
+        //             gselector(data.selector).style["display"] = data.display;
+        //         } else if (action == "toast_success") {
+        //             // messageApi.open({
+        //             //     type: "success",
+        //             //     content: "This is a success message",
+        //             // });
+        //             toastr.success(data.msg);
+        //         } else if (action == "toast_warning") {
+        //             toastr.warning(data.msg);
+        //         } else if (action == "toast_info") {
+        //             toastr.info(data.msg);
+        //         } else if (action == "toast_error") {
+        //             toastr.error(data.msg);
+        //         } else if (action == "get_value") {
+        //             return gid(data.id).value;
+        //         } else if (action == "load_setting") {
+        //             return gid(data.id).value;
+        //         } else if (action == "change_language") {
+        //             change_language(data.change_to);
+        //         } else if (action == "load_url") {
+        //             window.location.href = data.url;
+        //         } else if (action == "load_all") {
+        //             load_all();
+        //         } else if (action == "load_mail") {
+        //             load_mail(data.action);
+        //         }
+        //     } catch (ex) {
+        //         console.log(ex);
+        //     }
+        // }
+        // function onMessage2(data) {
+        //     try {
+        //         if (typeof data == "string") {
+        //             data = JSON.parse(data);
+        //         }
+        //         let action = data.action;
+        //         console.log({ data, action })
+        //     } catch (ex) {
+        //         console.log(ex);
+        //     }
+        // }
+
+        // console.log("fl1-v1.1", { eel })
+        // eel.expose(onMessage2);
+
+        // console.log("eel", { eel });
+
+        function onMessage(data) {
+            let _dataJson
+            // console.log("data", { data }, "nhận 1 lần")
+            try {
+                if (typeof data == "string") {
+                    _dataJson = JSON.parse(data);
+                }
+            } catch (error) {
+                console.error(error)
+            }
+            const event = new CustomEvent('onMessage', {
+                detail: _dataJson
+            });
+            window.dispatchEvent(event);
+
+        }
+        eel.expose(onMessage);</script></body></html>
